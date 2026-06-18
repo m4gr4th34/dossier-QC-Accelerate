@@ -25,15 +25,24 @@ Any edit to a number updates all three in the same commit. When a check
 fails: **fix the paper, never widen the tolerance.** The tolerances in the
 checks are exactly what the manuscript states — not padded.
 
-**Known limitation (and roadmap).** The survey scaffold now single-sources its
-avenue **data** via `avenues.json` — read by both `index.html` and
-`verification/verify_numbers.py` — which closes the data-drift hole: the
-editions and the verifier can no longer disagree about what the avenues are.
-What remains hand-mirrored is the three consistency-**check implementations**
-across Python and JS — simple invariants (at least one avenue; every FORECAST
-carries a dated signpost; all forecast probabilities in [0,100]) that rarely
-change. Full logic unification — generating one set of checks from the other,
-or a shared declarative spec — stays the roadmap direction if the checks
+**Known limitation (and roadmap).** The survey scaffold single-sources its avenue
+**data** AND its consistency-check **rules** via `avenues.json` — both read by
+`index.html` and `verification/verify_numbers.py`. The avenue list lives in
+the `avenues` block of `avenues.json`; the check thresholds (minimum avenue
+count, whether a FORECAST signpost is mandatory, the forecast probability
+bounds) live in its `checks` block. Change a rule there and the page and the
+verifier both
+enforce it on next run — a threshold can no longer drift between them.
+
+What is still written in each language is the check **logic itself** — the few
+lines that filter forecasts, count signposts, and compare against the rules.
+These are near-trivial and rarely change, and unifying them across Python and JS
+would require codegen or a declarative check-DSL that, for three invariants,
+would be harder to read than the code it replaces. So the residual is small and
+named: if you add a genuinely new *kind* of check (not just a new threshold),
+write it in both `buildChecks()` (index.html) and `verify_numbers.py`, and put
+any new threshold it needs in the `checks` block of `avenues.json` so that part
+stays single-sourced. Full logic unification stays the roadmap direction only if the checks
 proliferate. (The manuscript prose and claim ledger are still hand-synced too;
 every numeric edit touches all of them in one commit.)
 
@@ -232,18 +241,30 @@ never auto-applied by a template sync.
 
 **Publish CTA — keep it canonical.** The publish-like-this CTA band (before the footer on index.html, paper.html, and dossier.html) intentionally points at the canonical open-dossier-template's GETTING-STARTED.md — the instructions-first front door — not at this dossier's own repo and not at the template's repo root. Every dossier funnels new authors straight into the step-by-step guide. Leave these URLs as the canonical GETTING-STARTED.md.
 
-## The Project constitution (`PROJECT-INSTRUCTIONS.md`)
+## The Project constitution (`CLAUDE.md`)
 
 For authors who run a dossier as a Claude Project (the optional power-path in
-GETTING-STARTED.md), the repo ships **`PROJECT-INSTRUCTIONS.md`** — a versioned
-"constitution" the Project's Instructions point at with one line: *"Read
-PROJECT-INSTRUCTIONS.md in the synced repo and follow it…"*. It is deliberately
-**parallel to `CLAUDE.md`**: the same doctrine, binding the strategy-room chat
-the way `CLAUDE.md` binds Claude Code. Treat it as machinery — per dossier, fill
-in only its `[TOPIC]` line and Standing-context list; everything else is shared
-doctrine, upgraded via the template-machinery sync (it's on the machinery list
-in the README's Rituals section). If you revise your working rules, update both
-`CLAUDE.md` and `PROJECT-INSTRUCTIONS.md` so the two rooms stay in lockstep.
+GETTING-STARTED.md), **`CLAUDE.md` is the single constitution** — the one file
+that binds both rooms. Claude Code reads it automatically every session, and the
+Project's Instructions point at the same file with the strategy-room pointer:
+*"Your full constitution is CLAUDE.md — read it and follow it. Note specifically:
+this is the strategy room. You CANNOT push to the repo; you decide here and hand
+Code paste-ready instructions. (Full role split and standing context:
+CLAUDE.md.)"* That explicit cannot-push guardrail is only safe once `CLAUDE.md`
+is the full constitution — so on an OLDER dossier still on the slim workbench
+`CLAUDE.md`, do the constitution-collapse migration (README Rituals →
+Structural migrations → Migration B) before pasting it. A project that holds more
+than one dossier repo uses the multi-repo pointer variant instead (see
+GETTING-STARTED.md) — it keeps the same cannot-push role rule but works from the
+active dossier's `CLAUDE.md`, and asks which dossier is active when that's
+ambiguous. Treat it as machinery — per dossier, fill in
+only its `## What this project is` topic line and its `## Standing context`
+list; everything else is shared doctrine, upgraded via the template-machinery
+sync (it's on the machinery list in the README's Rituals section).
+**`PROJECT-INSTRUCTIONS.md`** is now only a back-compat redirect with no
+doctrine of its own — it exists so older Projects whose Instructions still point
+at it keep working; new Projects point straight at `CLAUDE.md`. There is no
+second copy to keep in lockstep: revise your working rules in `CLAUDE.md` alone.
 
 ## Design identity (do not reinvent)
 
