@@ -122,4 +122,27 @@ labeled one is not.**
 - claim_ledger.csv  — every claim, typed, with honest status
 
 ## Standing context
-- TODO: list this dossier's open claims and review posture here.
+- **Topic:** Dossier QC-Accelerate — concrete ways AI and robotics could shorten
+  the path to fault-tolerant, scalable quantum computing: what's already working,
+  what's plausible, and what the remaining conceptual gates are.
+- **Open claims:** None entered yet — built during recon. Anticipated structure:
+  documented AI/robotics-in-QC results (calibration auto-tuning, ML quantum-error-
+  correction decoders, materials screening, autonomous/self-driving labs) asserted
+  as CITE with sources; the "how much this compresses the timeline to FTQC"
+  judgments posted as OPEN forecasts with falsifiable signposts.
+- **Open red-team findings:** None yet — adversarial pass comes after the first draft.
+- **Anything a fresh session must know:**
+  - **Framing discipline (the spine):** separate the *engineering/search layer* —
+    where AI and robotics demonstrably help (calibration auto-tuning, ML QEC
+    decoders, materials screening, autonomous labs); cite real, recent results,
+    verify don't recall — from the *conceptual physics gates* (topological-qubit
+    existence, novel low-loss photonics, and the like) where AI is currently weak.
+    That science-vs-scale-up distinction is the load-bearing structure of the whole
+    dossier.
+  - **Boldest claim and its label:** "AI/robotics materially shortens the road to
+    FTQC" → OPEN-UNVERIFIED, posted as a FORECAST with a falsifiable signpost — an
+    AI credited with a genuinely *conceptual* QC advance (a new code, a new qubit
+    mechanism, a physics insight), not merely an engineering speedup.
+  - **Sourcing rule:** verify every specific recent result via search before
+    asserting it; label anything unsourceable rather than stating it. The topic is
+    hype-prone, so CITE only what a hostile referee could check.
