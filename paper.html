@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Self-Explaining Edition — DOSSIER NNN (Open Dossier)</title>
+<title>Self-Explaining Edition — Accelerating Quantum Computing (Open Dossier)</title>
 <meta name="description" content="YOUR ONE-LINE DESCRIPTION. A survey that explains itself.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,800;1,400;1,600&family=IBM+Plex+Mono:wght@400;600&display=swap');
@@ -104,13 +104,13 @@
 
 <header>
   <div class="eyebrow">An Open Dossier · <b>NNN</b> · self-explaining edition · survey · v1.0</div>
-  <h1>YOUR PLAIN-LANGUAGE TITLE</h1>
-  <div class="byline">YOUR NAME — YOUR AFFILIATION</div>
+  <h1>Accelerating Quantum Computing</h1>
+  <div class="byline">Irfan Ali-Khan — Independent Researcher</div>
   <div class="provenance" role="contentinfo" aria-label="Provenance and verification">
     <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
     <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading\u2026 \u2197</span></a>
     <a class="pv-item" href="verify.html" target="_blank" rel="noopener"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">verify proof \u2197</span></a>
-    <a class="pv-item" href="https://github.com/YOURUSER/YOURREPO" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history \u2197</span></a>
+    <a class="pv-item" href="https://github.com/m4gr4th34/dossier-QC-Accelerate" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history \u2197</span></a>
   </div>
   <div class="howto">
     <b>How to read this:</b> the whole survey is on this one page, written to explain itself.
@@ -122,7 +122,7 @@
     <a class="btn primary" href="paper.html">Self-explaining edition</a>
     <a class="btn" href="paper/manuscript.pdf">Read the PDF</a>
     <a class="btn" href="dossier.html">Audit trail</a>
-    <a class="btn" href="https://github.com/YOURUSER/YOURREPO">Source &amp; issues</a>
+    <a class="btn" href="https://github.com/m4gr4th34/dossier-QC-Accelerate">Source &amp; issues</a>
   </div>
 </header>
 
@@ -269,13 +269,13 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
   const d=document.getElementById('pv-doi'), v=document.getElementById('pv-doi-v');
   if(!p.version_doi || p.version_doi.indexOf('TODO')===0){
     v.textContent='DOI after first release';
-    d.href='https://github.com/YOURUSER/YOURREPO';
+    d.href='https://github.com/m4gr4th34/dossier-QC-Accelerate';
   } else {
     d.href='https://doi.org/'+p.version_doi; v.textContent=p.version_doi+' \u2197';
   }
   document.getElementById('pv-state').textContent='release '+p.release_tag+' (+ live edits)';
 }).catch(()=>{document.getElementById('pv-doi-v').textContent='see repository \u2197';
-  document.getElementById('pv-doi').href='https://github.com/YOURUSER/YOURREPO';});
+  document.getElementById('pv-doi').href='https://github.com/m4gr4th34/dossier-QC-Accelerate';});
 </script>
 </body>
 </html>

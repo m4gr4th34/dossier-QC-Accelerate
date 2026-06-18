@@ -1,7 +1,7 @@
-# open-dossier-template
+# dossier-QC-Accelerate
 
-**The starting point for every Open Dossier publication.**
-Click "Use this template" to create your Dossier NNN in one step.
+**Accelerating Quantum Computing** — an Open Dossier publication by Irfan Ali-Khan (Independent Researcher).
+A living, citable, self-verifying research publication. *Working draft — research in progress.*
 
 <!-- AGENT: after the author's GitHub Pages site is live, replace this comment with a quick-links line placed HERE (immediately after the title/tagline, above the GETTING-STARTED line and the badge) so visitors can open the live result in one click. Use the author's real Pages URL:
 ### ▶ [Read the living paper](https://USER.github.io/REPO/) · [Self-explaining edition](https://USER.github.io/REPO/paper.html) · [Run the checks](https://USER.github.io/REPO/#verify) · [Audit trail](https://USER.github.io/REPO/dossier.html)
@@ -11,7 +11,7 @@ Rationale: lead with the live result for the skeptic, then GETTING-STARTED for t
 ### 📖 Live preview (work in progress)
 > **This dossier is an active draft — not yet released.** Sections, claims, and checks may be incomplete. Shared early so the ideas can be read and discussed as they develop.
 
-▶ **[Read the self-explaining edition](https://YOURUSER.github.io/YOURREPO/paper.html)** · [Interactive edition](https://YOURUSER.github.io/YOURREPO/) · [Audit trail](https://YOURUSER.github.io/YOURREPO/dossier.html)
+▶ **[Read the self-explaining edition](https://m4gr4th34.github.io/dossier-QC-Accelerate/paper.html)** · [Interactive edition](https://m4gr4th34.github.io/dossier-QC-Accelerate/) · [Audit trail](https://m4gr4th34.github.io/dossier-QC-Accelerate/dossier.html)
 
 ## How this works (the pre-release operating model)
 
@@ -49,7 +49,7 @@ You bring the idea and the judgment. An AI agent does the rest — drafting, typ
 
 The first scientists to publish this way will look, in hindsight, like the first people who emailed instead of mailed.
 
-[![claims: verified](https://github.com/m4gr4th34/open-dossier-template/actions/workflows/verify.yml/badge.svg)](https://github.com/m4gr4th34/open-dossier-template/actions/workflows/verify.yml)
+[![claims: verified](https://github.com/m4gr4th34/dossier-QC-Accelerate/actions/workflows/verify.yml/badge.svg)](https://github.com/m4gr4th34/dossier-QC-Accelerate/actions/workflows/verify.yml)
 
 ---
 

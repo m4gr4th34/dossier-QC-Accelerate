@@ -1,18 +1,18 @@
 cff-version: 1.2.0
 message: "If you use or build on this work, please cite it as below."
 type: software
-title: "DOSSIER NNN — YOUR TITLE (Open Dossier format)"
+title: "Accelerating Quantum Computing (Open Dossier format)"
 authors:
-  - family-names: "YOUR FAMILY NAME"
-    given-names: "YOUR GIVEN NAME"
-    affiliation: "Independent Researcher, CITY, COUNTRY"
+  - family-names: "Ali-Khan"
+    given-names: "Irfan"
+    affiliation: "Independent Researcher"
 version: "1.0"
 date-released: "YYYY-MM-DD"
 license: "CC-BY-4.0"
-repository-code: "https://github.com/YOURUSER/YOURREPO"
-url: "https://YOURUSER.github.io/YOURREPO/"
+repository-code: "https://github.com/m4gr4th34/dossier-QC-Accelerate"
+url: "https://m4gr4th34.github.io/dossier-QC-Accelerate/"
 # doi: "10.5281/zenodo.XXXXXXX"   # uncomment and fill after first Zenodo release
 keywords:
   - open dossier
   - verified open research
-  - YOUR FIELD
+  - quantum computing
