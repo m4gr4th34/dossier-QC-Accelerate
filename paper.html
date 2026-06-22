@@ -4,278 +4,175 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Self-Explaining Edition — Accelerating Quantum Computing (Open Dossier)</title>
-<meta name="description" content="YOUR ONE-LINE DESCRIPTION. A survey that explains itself.">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,800;1,400;1,600&family=IBM+Plex+Mono:wght@400;600&display=swap');
   :root{
     --ink:#101d26;--ink2:#42525c;--paper:#f6f8f9;--card:#ffffff;
-    --teal:#0e7c7b;--teal-soft:#e3f0f0;--coral:#e4572e;--coral-soft:#fbe9e3;--violet:#6b4e9b;--violet-soft:#efe9f6;
-    --pass:#1e8e5a;--open:#b07d1f;--open-soft:#fdf6e9;--line:#d8e0e4;
-    --serif:'Spectral',Georgia,serif;
-    --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+    --teal:#0e7c7b;--teal-soft:#e3f0f0;--coral:#e4572e;--coral-soft:#fbe9e3;
+    --violet:#6b4e9b;--violet-soft:#efe9f6;--pass:#1e8e5a;--open:#b07d1f;--open-soft:#fdf6e9;--line:#d8e0e4;
+    --serif:'Spectral',Georgia,serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65}
   .wrap{max-width:720px;margin:0 auto;padding:0 20px}
   a{color:var(--teal)}
-  header{padding:54px 0 10px}
+  header{padding:48px 0 8px}
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
   .eyebrow b{color:var(--coral)}
   h1{font-family:var(--serif);font-weight:800;font-size:clamp(28px,5vw,42px);line-height:1.12;margin:.4em 0 .2em;letter-spacing:-.01em}
+  .sub{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink2);margin:.1em 0 .5em}
   .byline{font-family:var(--serif);font-style:italic;color:var(--ink2);margin-bottom:18px}
-  .howto{background:var(--card);border:1.5px solid var(--ink);padding:14px 16px;font-size:15px;margin:18px 0 8px}
-  .howto .mono{font-family:var(--mono);font-size:13px}
-  h2{font-family:var(--serif);font-weight:600;font-size:27px;margin:48px 0 6px;line-height:1.2}
-  h2 .num{color:var(--coral);font-family:var(--mono);font-size:15px;font-weight:600;vertical-align:middle;margin-right:10px}
-  h3{font-family:var(--serif);font-weight:600;font-size:20px;margin:26px 0 2px}
-  p{margin:14px 0;max-width:68ch}
-
-  /* tappable terms */
-  .term{background:linear-gradient(transparent 70%, var(--teal-soft) 70%);border:none;border-bottom:1.5px dashed var(--teal);
-        padding:0 1px;font:inherit;color:inherit;cursor:pointer;text-align:left}
-  .term:focus-visible{outline:2.5px solid var(--coral);outline-offset:2px}
-  /* citation chips */
-  .cite{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--violet);background:var(--violet-soft);
-        border:1px solid var(--violet);border-radius:10px;padding:1px 8px;cursor:pointer;vertical-align:2px}
-  .cite:focus-visible{outline:2.5px solid var(--coral);outline-offset:2px}
-  /* the expansion card both produce */
-  .popcard{display:block;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--teal);
-           padding:12px 14px;margin:10px 0;font-size:15px;color:var(--ink2);max-width:68ch;animation:open .18s ease-out}
-  .popcard.citecard{border-left-color:var(--violet)}
-  .popcard b{color:var(--ink)}
-  .popcard .src{font-family:var(--mono);font-size:11.5px;color:var(--ink2);display:block;margin-top:6px}
-  @keyframes open{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion:reduce){.popcard{animation:none}}
-
-  /* go-deeper layers */
-  details.deeper{background:var(--card);border:1px solid var(--line);margin:16px 0}
-  details.deeper summary{cursor:pointer;padding:12px 15px;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--violet);list-style:none}
-  details.deeper summary::-webkit-details-marker{display:none}
-  details.deeper summary::before{content:'\25B8 ';color:var(--violet)}
-  details.deeper[open] summary::before{content:'\25BE '}
-  details.deeper .body{padding:0 15px 14px;font-size:15px;color:var(--ink2)}
-  details.deeper .eq{font-family:var(--mono);font-size:14px;background:var(--paper);padding:10px 12px;margin:8px 0;overflow-x:auto}
-
-  /* ===== honest-label callouts at the claim site =====
-     One per survey status that needs a visible home in prose:
-       .openclaim  amber   OPEN-UNVERIFIED  (the author's own open claim)
-       .forecast   violet  FORECAST         (labeled estimate + dated signpost)
-       .reported   coral   REPORTED         (interested-party / not independently reproduced)
-     ESTABLISHED needs no box — it is asserted plainly, with citations. */
-  .openclaim,.forecast,.reported{padding:14px 16px;margin:18px 0;font-size:15.5px;border:1px solid;border-left-width:5px}
-  .openclaim{background:var(--open-soft);border-color:var(--open)}
-  .forecast{background:var(--violet-soft);border-color:var(--violet)}
-  .reported{background:var(--coral-soft);border-color:var(--coral)}
-  .openclaim .tag,.forecast .tag,.reported .tag{font-family:var(--mono);font-size:11px;padding:2px 7px;margin-right:8px;border:1px solid}
-  .openclaim .tag{color:var(--open);border-color:var(--open)}
-  .forecast .tag{color:var(--violet);border-color:var(--violet)}
-  .reported .tag{color:var(--coral);border-color:var(--coral)}
-
-  .punch{font-family:var(--serif);font-style:italic;font-size:20px;border-left:4px solid var(--coral);padding:6px 0 6px 16px;margin:26px 0;max-width:60ch}
-  footer{margin-top:56px;padding:22px 0 60px;border-top:3px solid var(--ink);font-size:14px;color:var(--ink2)}
-  .mono{font-family:var(--mono)}
-  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
-  .btn{font-family:var(--mono);font-size:13.5px;font-weight:600;text-decoration:none;padding:11px 16px;border:1.5px solid var(--ink);color:var(--ink);background:var(--card)}
-  .btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
-  .cta{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 4px}
-  .btn:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
-.provenance{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 4px;border:1.5px solid var(--ink);background:var(--card);font-family:var(--mono);font-size:12px;overflow:hidden}
-.provenance .pv-item{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-right:1px solid var(--line);text-decoration:none;color:var(--ink);min-width:0}
-.provenance .pv-item:last-child{border-right:none}
-.provenance a.pv-item:hover{background:var(--teal-soft,#e3f0f0)}
-.provenance .pv-k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
-.provenance .pv-v{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.provenance a.pv-item .pv-v{color:var(--teal)}
-#pv-state{color:var(--open,#b07d1f)}
-@media(max-width:560px){.provenance .pv-item{flex:1 1 45%;border-bottom:1px solid var(--line)}}
-.publish-cta{margin:46px 0 8px;padding:22px 24px;border:1.5px solid var(--teal);background:var(--teal-soft,#e3f0f0);
-  display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;justify-content:space-between}
-.publish-cta .pc-text{flex:1 1 320px;min-width:0}
-.publish-cta .pc-h{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--ink);margin:0 0 3px}
-.publish-cta .pc-sub{font-size:14px;color:var(--ink2);margin:0}
-.publish-cta a.pc-btn{flex:0 0 auto;font-family:var(--mono);font-size:14px;font-weight:600;text-decoration:none;
-  background:var(--teal);color:#fff;padding:12px 20px;white-space:nowrap}
-.publish-cta a.pc-btn:hover{background:#0a615f}
+  .howto{background:var(--card);border:1.5px solid var(--ink);padding:14px 16px;font-size:15px;margin:18px 0 8px;border-radius:4px}
+  .cta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px}
+  .btn{font-family:var(--mono);font-size:13px;text-decoration:none;border:1.4px solid var(--line);color:var(--ink);padding:8px 13px;border-radius:3px;background:var(--card)}
+  .btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+  h2{font-family:var(--serif);font-weight:800;font-size:26px;margin:42px 0 6px;letter-spacing:-.01em}
+  h2 .num{font-family:var(--mono);font-size:15px;color:var(--coral);margin-right:10px;font-weight:600}
+  p{margin:14px 0}
+  .punch{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--ink);border-left:3px solid var(--coral);padding-left:14px;margin:18px 0}
+  button.term{font:inherit;color:var(--violet);background:none;border:none;border-bottom:1.5px dashed var(--violet);padding:0;cursor:pointer}
+  button.cite{font-family:var(--mono);font-size:.72em;vertical-align:super;color:#fff;background:var(--teal);border:none;border-radius:3px;padding:1px 5px;margin:0 1px;cursor:pointer}
+  .panel{background:var(--violet-soft);border-left:3px solid var(--violet);padding:11px 14px;margin:8px 0;font-size:15px;border-radius:3px}
+  .panel.cite{background:var(--teal-soft);border-left-color:var(--teal)}
+  .panel .who{font-family:var(--mono);font-size:12px;color:var(--ink2);display:block;margin-bottom:3px}
+  .panel .src{font-family:var(--mono);font-size:12px;color:var(--ink2);display:block;margin-top:5px}
+  .openclaim{background:var(--open-soft);border:1.4px solid var(--open);border-radius:5px;padding:13px 16px;margin:20px 0}
+  .openclaim .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--open);font-weight:600}
+  .openclaim.forecast{background:var(--violet-soft);border-color:var(--violet)}
+  .openclaim.forecast .tag{color:var(--violet)}
+  figure{margin:24px 0;text-align:center}
+  figure img{max-width:100%;border:1px solid var(--line);border-radius:4px;background:#fff}
+  figcaption{font-size:14px;color:var(--ink2);margin-top:8px;font-style:italic}
+  details.deeper{margin:14px 0;border:1px dashed var(--line);border-radius:4px;padding:6px 12px;background:var(--card)}
+  details.deeper summary{font-family:var(--mono);font-size:13px;color:var(--teal);cursor:pointer}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin:16px 0;font-family:var(--mono)}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  th{background:var(--teal-soft)}
+  footer{margin:50px 0 70px;font-size:14px;color:var(--ink2);border-top:1px solid var(--line);padding-top:18px}
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <header>
-  <div class="eyebrow">An Open Dossier · <b>NNN</b> · self-explaining edition · survey · v1.0</div>
+  <div class="eyebrow">An Open Dossier · <b>QC-Accelerate</b> · self-explaining edition · survey · draft</div>
   <h1>Accelerating Quantum Computing</h1>
+  <div class="sub">How AI and robotics might shorten the road to a real quantum computer — a descent from surface tricks to the floor of the problem, with a simulation at the bottom.</div>
   <div class="byline">Irfan Ali-Khan — Independent Researcher</div>
-  <div class="provenance" role="contentinfo" aria-label="Provenance and verification">
-    <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
-    <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading\u2026 \u2197</span></a>
-    <a class="pv-item" href="verify.html" target="_blank" rel="noopener"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">verify proof \u2197</span></a>
-    <a class="pv-item" href="https://github.com/m4gr4th34/dossier-QC-Accelerate" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history \u2197</span></a>
-  </div>
   <div class="howto">
-    <b>How to read this:</b> the whole survey is on this one page, written to explain itself.
-    Tap any <button class="term" data-d="Like this! Underlined-dashed words expand in place with a plain-language explanation. Tap again to close. You never leave the page.">underlined term</button>
-    for a plain-language explanation. Tap any <button class="cite" data-c="demo">ref</button> to see what that source actually showed, in two sentences. Each avenue carries an honest label — <span class="mono">established, open, forecast, or reported</span> — colored to match the <a href="index.html">landscape</a>. <span class="mono">No rabbit holes. No prerequisites.</span>
+    <b>How to read this:</b> the whole piece is on this page, written to explain itself — no prerequisites, no clicking required. Tap any
+    <button class="term" data-d="Like this! Dashed words open a plain-language explanation right here. Tap again to close. You never leave the page.">underlined term</button>
+    for a plain-language note, or any <button class="cite" data-c="DEMO">ref</button> to see, in two sentences, what that source actually showed. Each open question wears an honest amber label at the exact spot it comes up.
   </div>
   <div class="cta">
     <a class="btn" href="index.html">The landscape</a>
     <a class="btn primary" href="paper.html">Self-explaining edition</a>
     <a class="btn" href="paper/manuscript.pdf">Read the PDF</a>
     <a class="btn" href="dossier.html">Audit trail</a>
-    <a class="btn" href="https://github.com/m4gr4th34/dossier-QC-Accelerate">Source &amp; issues</a>
+    <a class="btn" href="https://github.com/m4gr4th34/dossier-QC-Accelerate">Source</a>
   </div>
 </header>
 
-<!-- ============================================================
-     AUTHOR INSTRUCTIONS (delete this comment when done):
-     This is the SURVEY-shaped self-explaining edition. The arc:
-       01 the field, and why survey it (problem as a story)
-       02 established foundations (plain prose + citations)
-       03 the avenues, one by one (each labeled in place)
-       04 what would settle the open questions
-       05 synthesis
-     Conventions:
-     - Wrap technical terms:  <button class="term" data-d="3-5 sentence plain explanation">term</button>
-     - Cite with chips:       <button class="cite" data-c="KEY">Venue 'YY</button>  (+ add KEY to CITES below)
-     - ESTABLISHED claims are asserted plainly, with citations. No box.
-     - OPEN-UNVERIFIED claims get an amber .openclaim box at the claim site.
-     - FORECAST claims get a violet .forecast box: state the estimate, the
-       reasoning, and the MANDATORY dated, falsifiable signpost.
-     - REPORTED items get a coral .reported box: name the interested-party
-       source, state plainly it is not independently reproduced, and give
-       the mundane candidate explanation with equal prominence.
-     - A genuine scientific DISPUTE is not a new status: render it as an
-       ESTABLISHED meta-claim ("the field is divided on X") citing both sides.
-     ============================================================ -->
+<h2><span class="num">1</span>The thousand-to-one problem</h2>
+<p>A <button class="term" data-d="The quantum version of a bit. A normal bit is 0 or 1; a qubit can be a blend of both at once, and that blend is where a quantum computer's power comes from. The surprising part: the blend is so delicate that almost anything — a stray photon, a faint vibration, a flicker of heat — can destroy it.">qubit</button> is the most powerful and the most fragile object in computing. Its power comes from holding a blend of 0 and 1 at once; its fragility comes from exactly the same place, because that blend leaks into the surrounding world at the slightest disturbance. We call the leak <button class="term" data-d="The process where a qubit's delicate quantum blend leaks into its surroundings and decays into ordinary randomness. It is the central enemy of quantum computing, and it can happen in millionths of a second or faster.">decoherence</button>, and fighting it is the whole game.</p>
+<p>The field's answer is <button class="term" data-d="Spreading one protected 'logical' qubit's information across many physical qubits, so that if a few go wrong the whole can be repaired. The catch that makes it hard: you must detect and fix errors without ever looking at the information directly — looking would collapse the very blend you are protecting.">quantum error correction</button>: don't rely on one fragile qubit, spread its information across many and let them cross-check each other. The leading scheme, the <button class="term" data-d="The leading error-correcting code: a 2D grid of qubits constantly checking their neighbours' parity. It is forgiving enough to be the field's workhorse — and greedy enough that it is the main reason useful machines need such enormous qubit counts.">surface code</button>, works — but it is hungry. At today's error rates you spend roughly a <em>thousand</em> physical qubits to buy a single reliable one. That one ratio, the <button class="term" data-d="How many physical qubits you must spend to get one reliable logical qubit. Today it is around 1000-to-1. This single number is why 'a useful quantum computer' translates into 'millions of qubits' and 'maybe the 2040s.'">overhead</button>, is why a useful quantum computer reads as <em>millions</em> of qubits and <em>maybe the 2040s</em>.</p>
+<p class="punch">The wall isn't that we can't correct the errors. It's that correcting them costs a thousand-to-one — and that price is set by the physical qubit, not the software.</p>
 
-<h2><span class="num">01</span>THE FIELD, AND WHY SURVEY IT</h2>
+<h2><span class="num">2</span>One idea, going deeper</h2>
+<p>This dossier is the record of a single session in which an AI was pushed, again and again, to stop improving the machine we have and instead rethink the thing a qubit is <em>made of</em>. What came out was a ladder — a sequence of ideas getting steadily deeper — held together by one move that repeats at every rung:</p>
+<p class="punch">Hide the information where the noise cannot reach it.</p>
+<p>You can hide it in a cleverly chosen setting of a knob (shallow). You can hide it in a new material or molecule (deeper). You can hide it in the abstract structure of an error-correcting code (deeper still). And at the very bottom, you can hide it inside the laws of motion themselves — so the qubit isn't a thing you guard, but a state the physics keeps restoring on its own. We'll start at that floor, because it reframes everything above it, and then climb back up to the nearer, more buildable rungs.</p>
 
-<p>Open with the field as a story: what is the question everyone in this area is
-circling, why is it hard, and why is a map of the whole landscape — rather than one
-more result — the useful thing to publish right now? Introduce your first
-<button class="term" data-d="Replace this with a 3-5 sentence plain-language explanation of the term, written for a smart non-specialist. What is it, why does it matter to this field, and what is the one surprising thing about it?">tappable term</button>
-here, and your first sourced claim
-<button class="cite" data-c="ref1">Journal 'YY</button>.</p>
+<h2><span class="num">3</span>The floor: a qubit that heals itself</h2>
+<p>Every quantum computer today runs on one philosophy: <strong>isolate and correct</strong>. Build a nearly perfect, sealed-off qubit, watch it constantly, and patch errors in real time with a fast classical <button class="term" data-d="The classical algorithm that reads the pattern of cross-checks coming off an error-correcting code and works out which error occurred. It has to do this in real time — faster than new errors arrive — which is its own hard problem.">decoder</button>. The thousand-to-one overhead is the cost of that constant babysitting.</p>
+<p>The floor is a different philosophy: <strong>organize, and let the physics correct</strong>. Imagine a marble in a bowl. Nudge it and it rolls back to the bottom — not because anyone is watching and pushing, but because that's what the shape of the bowl <em>does</em>. Now imagine building a quantum system whose "bottom of the bowl" — its <button class="term" data-d="The state a system settles into and returns to after a disturbance, like a marble at the bottom of a bowl. The deep idea: you can engineer the bowl so its bottom is a working qubit, so the system keeps falling back into the right state by itself.">steady state</button> — <em>is</em> a working qubit. Then errors heal themselves, the way a magnet holds its north pole for years with nobody tending it.</p>
+<p>The trick that makes this possible has a counter-intuitive name: <button class="term" data-d="Normally a system leaking energy into its environment is the disaster we call decoherence. Engineered dissipation flips the script: you deliberately design the leak so that it constantly pumps the system back into the correct state. You turn the usual enemy into the error-corrector.">engineered dissipation</button>. Normally, energy leaking into the environment <em>is</em> the disaster. But if you sculpt the leak carefully, you can make it forever push the system back toward the right state. The enemy becomes the janitor.</p>
+<p>Three completely separate roads led to this same floor in one session:</p>
+<p><strong>Self-correcting matter.</strong> A <button class="term" data-d="A material that stores a qubit passively, protected by its global structure and an energy gap — like a magnet remembering its orientation with no upkeep. Whether one can exist in our ordinary 3D world (not just in 4D theory) was an open question for about twenty years.">self-correcting memory</button> stores a qubit passively, held by an energy gap and global structure so that local noise simply cannot add up to a logical error.</p>
+<p><strong>Biology, read honestly.</strong> This is where the topic is most over-hyped, so it pays to be strict. The famous claim that photosynthesis runs a "quantum search" did <em>not</em> survive scrutiny: the long-lived signals turned out to be ordinary vibrations, and the truly quantum part dies in tens of femtoseconds <button class="cite" data-c="PHO">PNAS '17</button>. But one case is real — a migratory bird's compass appears to use a <button class="term" data-d="A light-created pair of molecules whose quantum spins are sensitive to Earth's magnetic field — the leading explanation for how migratory birds sense magnetic north. Remarkably, it is room-temperature quantum behaviour happening inside a living eye.">radical pair</button> in its eye <button class="cite" data-c="MAG">Nature '21</button>. And notice <em>what</em> survives there: <button class="term" data-d="A quantum property of particles, like a tiny built-in compass needle. Crucially, spin barely couples to heat and vibration, so it stays coherent far longer than most things — which is exactly why both nature and engineers like to hide qubits in it.">spin</button>, the one degree of freedom heat barely touches. Nature didn't break the rules; it found the same hiding place we keep finding. Its real lesson is the deeper one: robust function as a <em>steady state of an open system</em> — homeostasis, not isolation.</p>
+<p><strong>Engineered dissipation in the lab.</strong> This isn't theory. Physicists have already protected a qubit using sculpted dissipation alone — continuous drives, no measurement, no fast feedback — and extended its life <button class="cite" data-c="AQEC">Nature '20</button>.</p>
+<p>Three roads, one destination: <strong>the qubit as a self-healing state of engineered dynamics.</strong> And the object an AI would search to find one is the system's full equation of motion — its <button class="term" data-d="The master equation for an open quantum system: the Hamiltonian (the system's own energy) plus the engineered leaks to its environment. This is the 'design object' at the floor — choose it well and the qubit protects itself. Humans are famously bad at reasoning about it, which is exactly why it suits a machine search.">Lindbladian</button>.</p>
+<p class="punch">The dream qubit isn't one you watch and fix. It's one that fixes itself, because that's what its physics does.</p>
 
-<p class="punch">End the opening with the one line a reader should carry into the rest of the survey.</p>
+<h2><span class="num">4</span>We didn't just say it — we ran it</h2>
+<p>Ideas are cheap. So at the floor, the AI built and ran the smallest honest version of the thing — one oscillator, ~60 lines, no quantum libraries — and reported what came out, including the part of the story it had to delete.</p>
+<p>The setup is a single microwave oscillator with one sculpted leak (<button class="term" data-d="A qubit encoded in two mirror-image states of a microwave oscillator — named after Schrödinger's cat, which was both alive and dead. Its magic: make the 'cat' bigger and one whole type of error vanishes exponentially fast.">two-photon dissipation</button>, the recipe behind "cat qubits") and one unavoidable real-world noise (ordinary one-photon loss). We then simply read the system's equation of motion and ask what it does.</p>
 
-<h2><span class="num">02</span>ESTABLISHED FOUNDATIONS</h2>
+<p><strong>Result 1 — the steady state <em>is</em> a qubit.</strong> The engineered dynamics have exactly enough room at the "bottom of the bowl" to hold one logical qubit, walled off from everything else by a clean gap. We didn't put a qubit there by hand; it is what the dynamics settle into. (Swap in a one-photon leak instead and the bottom of the bowl shrinks to a single point — it can't hold a qubit at all. The <em>form</em> of the leak decides whether a qubit even exists.)</p>
+<figure><img src="verification/floor-sim/fig1_qubit_manifold.png" alt="Spectrum showing four zero-modes forming one logical qubit, separated by a dissipative gap"><figcaption>The engineered dynamics leave exactly one logical qubit's worth of states at "rest" (the four circled points), cleanly separated by a gap. The protection is built into the physics, not bolted on.</figcaption></figure>
 
-<p>State plainly what the field has actually demonstrated — the bedrock every avenue
-shares. These are ESTABLISHED claims: asserted directly, each with a citation
-<button class="cite" data-c="ref2">Journal 'YY</button>. Being confident here is correct, not
-incautious; documented facts are bedrock, and timidity about them is its own kind of
-dishonesty. Save the hedging for the claims that have earned it.</p>
+<p><strong>Result 2 — it protects itself, lopsidedly.</strong> Switch on the real-world noise and watch the two kinds of error behave completely differently. One kind (bit-flips) is suppressed <em>exponentially</em> as you make the cat bigger; the other (phase-flips) only creeps up slowly. The gap between them — the <button class="term" data-d="When one kind of error becomes vastly rarer than another. A lopsided qubit is a gift: if you only really have to worry about one error type, you can correct it with a small, cheap code instead of the greedy surface code — which is how you escape the thousand-to-one overhead.">noise bias</button> — blows up from about 40 to about 30 million across the range.</p>
+<figure><img src="verification/floor-sim/fig2_autonomous_protection.png" alt="Bit-flip error falling exponentially, phase-flip rising linearly, and the noise bias growing exponentially"><figcaption>Left: bit-flip error falls off a cliff (∝ e<sup>−2.3 n̄</sup>) while phase-flip rises gently. Right: the bias between them grows exponentially. There is no error-correcting code and no decoder anywhere in this simulation — the protection is the steady state itself.</figcaption></figure>
 
-<details class="deeper"><summary>Go deeper: NAME THE TECHNICAL LAYER</summary>
-<div class="body">Equations and formal detail live here, collapsed by default. The
-narrative above must be complete without opening this.
-<div class="eq">your_equation = goes / here</div></div>
-</details>
+<table>
+<tr><th>cat size n̄</th><th>bit-flip</th><th>phase-flip</th><th>bias</th></tr>
+<tr><td>1</td><td>2.3×10⁻³</td><td>0.099</td><td>44</td></tr>
+<tr><td>3</td><td>1.0×10⁻⁵</td><td>0.297</td><td>2.9×10⁴</td></tr>
+<tr><td>6</td><td>~1.8×10⁻⁸</td><td>0.60</td><td>3.2×10⁷</td></tr>
+</table>
+<p>That exponential lopsidedness is the whole point: a qubit that mostly makes only <em>one</em> kind of error can be protected by a small, cheap code instead of the greedy surface code. That is how the thousand-to-one overhead collapses — and here it falls straight out of the physics, with no code in sight. The same mechanism has been pushed toward full fault tolerance on paper, with the dissipation doing the correcting <button class="cite" data-c="SC">npj QI '23</button>.</p>
+<p class="punch">No code, no decoder, no measurement — and the qubit still protects itself, exponentially.</p>
 
-<h2><span class="num">03</span>THE AVENUES</h2>
+<p><strong>The result we cut.</strong> The tidy story was going to be: let a blank search <em>discover</em> the protecting recipe on its own. The numbers refused. An unconstrained search wandered into dead-ends that stored nothing useful, and a richer attempt gave answers that changed when we changed a numerical setting — a sign the metric itself was confused, not converged. So we deleted that claim rather than dress it up.</p>
+<div class="openclaim"><span class="tag">Open · unverified · ledger C10</span>
+<p style="margin:6px 0 0">Whether a search can reliably <em>discover</em> a new self-protecting dissipation — and what protection metric is robust enough to optimise against — is open. Our toy attempts failed honestly. This is posted as a challenge: the first robust, cutoff-independent discovery loop closes it, with named credit.</p></div>
+<div class="openclaim forecast"><span class="tag">Forecast · ledger C11/C12</span>
+<p style="margin:6px 0 0">The floor in full — a single piece of engineered matter that is a self-correcting memory <em>and</em> runs protected logical gates with no decoder — is a north star, not a result. Protected universal gates under continuous dissipation remain unsolved. We label this a forecast; its signpost is the first demonstrated protected non-trivial gate under engineered dissipation.</p></div>
 
-<p>The heart of the survey: walk each avenue in turn, and label each exactly as
-strongly as its evidence allows. The four conventions below show every status home.</p>
+<h2><span class="num">5</span>Climbing back up: the nearer rungs</h2>
+<p>The floor is the horizon. These rungs are closer, and each is the same idea — hide the qubit from the noise — at a shallower, more buildable depth.</p>
+<p><strong>Rung 4 — a self-correcting memory.</strong> Solve storage even if the gates stay ordinary. Long thought impossible in our 3D world, a 2026 preprint claims a passive 3D self-correcting memory — though, to its credit, it lists the stability, fabrication, and gate questions still open <button class="cite" data-c="SCM">arXiv '26</button>.</p>
+<div class="openclaim"><span class="tag">Open · caveated · ledger C08</span>
+<p style="margin:6px 0 0">A realizable 3D self-correcting quantum memory is claimed but not settled: key stability conditions are unproven and fabrication is unaddressed, by the authors' own account. Treated here as a fresh, caveated result, not a fact.</p></div>
+<p><strong>Rung 3 — a genuinely new material, found by AI.</strong> Maybe the winning qubit hasn't been built because nobody has searched the space. Computers are now screening tens of thousands of crystal defects for better-than-NV spin qubits — including room-temperature, telecom-wavelength, noise-protected candidates no human had picked <button class="cite" data-c="DEF">screening '23–'25</button>. A wilder cousin: design the qubit as a <em>molecule</em>, then make Avogadro's number of perfectly identical copies by chemistry — room-temperature coherence is already demonstrated <button class="cite" data-c="MOL">Nat. Commun. '14</button>. The catch the search must respect, not wish away: long life wants weak coupling to the world, but gates want strong coupling. AI shrinks the search; it doesn't repeal the trade-off.</p>
+<p><strong>Rung 2 — AI designs the qubit's circuit.</strong> Not a better-tuned transmon, a different one. Open-source tools now design superconducting qubits by gradient descent, even rediscovering the protected "<button class="term" data-d="A type of superconducting qubit with noise protection built into its circuit, more elaborate than the common transmon. Telling detail: an AI optimiser can rediscover it starting from a blank circuit — and once found a coupler that beat a human's design.">fluxonium</button>" from a blank circuit, and once finding a component that beat a human's design <button class="cite" data-c="SQ">qubit-discovery '24</button>.</p>
+<p><strong>Rung 1 — the engineering layer that already works today.</strong> The shallow but real wins, with receipts. AI <button class="term" data-d="A neural-network decoder from Google: instead of a hand-written algorithm reading the error cross-checks, a transformer (the same kind of model behind chatbots) learns to do it — and beats the classical method on real hardware.">neural-net decoders</button> now beat the classical method on real hardware <button class="cite" data-c="AQ">Nature '24</button>, and surface codes have crossed "below threshold" with real-time decoding <button class="cite" data-c="BT">Nature '24</button>. These make the machine we have better. They don't change what it's made of — which is why they sit at the <em>top</em> of the ladder, not the bottom.</p>
+<p class="punch">The same idea, at four depths — and the shallow rungs already work.</p>
 
-<h3>Avenue A — a mature, documented direction</h3>
-<p>Describe it in plain language and assert what is established about it, with sources
-<button class="cite" data-c="ref1">Journal 'YY</button>. No callout box — established prose carries itself.</p>
-
-<h3>Avenue B — a direction with a central open question</h3>
-<p>Lay out the avenue, then mark the open question honestly, right where it arises:</p>
-<div class="openclaim">
-<span class="tag">OPEN-UNVERIFIED</span><b>Honest label:</b> DESCRIBE THE UNVERIFIED CLAIM. State that it is claim <span class="mono">CNN</span> in the public ledger and an open challenge: <b>the first person to confirm or refute it gets named credit in the next version.</b>
-</div>
-
-<h3>Avenue C — a direction you are making a forward bet on</h3>
-<p>Where you offer a judgment about how an avenue will develop, label it as a forecast —
-never smuggle an estimate in as a fact:</p>
-<div class="forecast">
-<span class="tag">FORECAST</span><b>Labeled estimate:</b> STATE THE ESTIMATE (e.g. ~35%) AND THE REASONING BEHIND IT. <b>Signpost:</b> name the dated, falsifiable event that will later mark this right or wrong (e.g. "by 2030, X is demonstrated at scale Y"). A forecast without a dated signpost is just an opinion with a number on it; the signpost is its verifier.
-</div>
-
-<h3>Avenue D — a direction sourced only to an interested party</h3>
-<p>Some avenues live mostly on vendor roadmaps, press-release figures, or claims that
-have not been independently reproduced. Record them — but mark the provenance plainly:</p>
-<div class="reported">
-<span class="tag">REPORTED</span><b>Non-independent source:</b> NAME THE INTERESTED-PARTY SOURCE and state plainly it is not independently reproduced. Give the mundane candidate explanation with at least equal prominence (or state that none has been identified). This is recorded for completeness; it is NOT the author's claim, and it gets no vote on any other claim's status.
-</div>
-
-<h2><span class="num">04</span>WHAT WOULD SETTLE THE OPEN QUESTIONS</h2>
-
-<p>For each open avenue, spell out the specific result, measurement, or signpost that
-would move it from open to established. This is what turns a survey from a snapshot into
-an instrument: a reader knows exactly what work is worth doing next, and your OPEN claims
-become standing invitations with named credit attached.</p>
-
-<h2><span class="num">05</span>SYNTHESIS</h2>
-
-<p>Pull the landscape together: which avenues are solid, which are live bets, which are
-mostly noise, and what the honest shape of the field is once every claim wears its true
-label. Close on the line you want to leave the reader with.</p>
-
-<p class="punch">End with the line your readers should carry away.</p>
-
-<div class="publish-cta">
-  <div class="pc-text">
-    <p class="pc-h">Want to publish like this?</p>
-    <p class="pc-sub">You just read a survey that explains itself. You can publish one too — Open Dossier is a free template, and an AI agent does the drafting, typesetting, citations, and verification. Idea to live publication in an afternoon.</p>
-  </div>
-  <a class="pc-btn" href="https://github.com/m4gr4th34/open-dossier-template/blob/main/GETTING-STARTED.md">Publish your own \u2192</a>
-</div>
+<h2><span class="num">6</span>What this says about AI</h2>
+<p>The session is itself the artifact. In one sitting an AI was pushed from surface tweaks down to a genuine reconception of a qubit, naming a single spine that ran through every level, grounding each rung in current literature rather than memory, and then <em>executing</em> — building and running a simulation at the floor.</p>
+<p>The most important moment wasn't a result. It was the deletion. The tidy "AI rediscovers the recipe" story died on contact with its own numbers, and the AI reported the death instead of staging a success.</p>
+<p class="punch">The striking part wasn't that the machine went deep. It's that it then checked itself — and told us where it failed.</p>
 
 <footer>
-  <b>About this edition:</b> this page is the complete survey in self-explaining form. The <a href="paper/manuscript.pdf">formal PDF</a> exists for tradition and archives; the <a href="index.html">landscape</a> carries the avenue cards and the consistency console; the <a href="dossier.html">audit trail</a> carries the citation audit and the receipts.
-  <br><br><span class="mono">An Open Dossier · CC BY 4.0 · AI-assistance: DESCRIBE YOUR USE and state your actual review basis · every verification label is true</span>
+<p>Open Dossier · QC-Accelerate · self-explaining edition · working draft. Every claim above carries an honest label; open and forecast claims are posted as challenges with named credit. The floor simulation is fully reproducible: <span style="font-family:var(--mono)">verification/floor-sim/</span> (run <span style="font-family:var(--mono)">figures.py</span>; it self-tests on every run). — <em>Don't trust this paper; run it.</em></p>
 </footer>
 
 </div>
-
 <script>
-// citation database — add an entry per chip:
-// KEY: {who:"Author(s) (Year)", what:"What they showed, 2 sentences, plain language.", src:"Journal Vol, Page"}
 const CITES = {
-  demo: {who:"This is a citation chip", what:"Tap any chip like this one and you get the source plus a two-sentence plain-language summary of what it actually showed \u2014 instead of a bare [7] sending you down a rabbit hole.", src:"You never leave the page."},
-  ref1: {who:"REPLACE \u2014 Author et al. (Year)", what:"REPLACE \u2014 what this source demonstrated, in plain language, and why it matters to this survey.", src:"Journal Vol, Page (Year)"},
-  ref2: {who:"REPLACE \u2014 Author et al. (Year)", what:"REPLACE.", src:"Journal Vol, Page (Year)"}
+  DEMO:{who:"This is a demo chip.",what:"Real chips show, in two plain sentences, what a source actually demonstrated and why it matters here — so you never need to leave the page.",src:"—"},
+  AQ:{who:"Bausch et al., Google DeepMind & Google Quantum AI, 2024.",what:"A transformer neural network learned to decode the surface code and beat the standard matching decoder on real Sycamore-processor data. A 2025 successor runs in real time and handles colour codes too.",src:"Nature 634 (2024); arXiv 2025."},
+  BT:{who:"Google Quantum AI, 2024.",what:"Showed a surface-code memory whose logical error rate falls as the code grows — the 'below threshold' milestone — while decoding in real time.",src:"Nature 638 (2024)."},
+  AQEC:{who:"Bosonic-qubit experiment, 2020.",what:"Protected a qubit using engineered dissipation alone — continuous drives, no measurement, no fast feedback — and still extended its coherence.",src:"Nature 590 (2020)."},
+  SC:{who:"Squeezed-cat autonomous QEC, 2023.",what:"Showed that structured dissipation can stabilise and autonomously correct a cat-type qubit, pointing toward low-overhead fault tolerance.",src:"npj Quantum Information 9 (2023)."},
+  SQ:{who:"Rajabzadeh et al., Stanford, 2024.",what:"Open-source, autodifferentiable tools (SQcircuit / qubit-discovery) that design superconducting qubits by gradient descent, rediscovering fluxonium. An earlier effort found a coupler beating a human proposal.",src:"arXiv 2024; npj Quantum Information 2021."},
+  DEF:{who:"High-throughput DFT groups, 2023–2025.",what:"Computational screens of tens of thousands of crystal defects to find spin qubits beyond the NV centre — including clock-transition, telecom-band candidates no human had prioritised.",src:"Multiple; 'Beyond Diamond' arXiv 2025; CaO clock-defect prediction."},
+  MOL:{who:"Molecular-spin chemists, 2014–2023.",what:"Designer molecules showing electron-spin coherence at room temperature, tunable by chemistry, with perfectly identical copies made by synthesis.",src:"Nat. Commun. 5 (2014); JACS 2023."},
+  MAG:{who:"Xu et al., 2021.",what:"Showed cryptochrome-4 from a migratory robin is magnetically sensitive in a test tube, supporting the radical-pair compass — a room-temperature quantum effect in biology.",src:"Nature 594 (2021)."},
+  PHO:{who:"Duan et al., 2017.",what:"Found electronic coherence in the photosynthetic FMO complex dies in ~60 femtoseconds and isn't needed for its efficiency — deflating the 'quantum photosynthesis' story.",src:"PNAS 114 (2017)."},
+  SCM:{who:"Caltech / UC San Diego / Hon Hai, 2026.",what:"A claimed 3D passive self-correcting quantum memory in which the material resists thermal noise on its own — but the authors flag that key stability, fabrication, and gate questions remain open.",src:"arXiv, May 2026."}
 };
-// one shared toggle behavior for terms and citations
-function closeCard(btn){ const c = btn._card; if(c){ c.remove(); btn._card = null; btn.setAttribute('aria-expanded','false'); } }
-function toggle(btn, html, extraClass){
-  if(btn._card){ closeCard(btn); return; }
-  const card = document.createElement('span');
-  card.className = 'popcard' + (extraClass ? ' ' + extraClass : '');
-  card.innerHTML = html;
-  const block = btn.closest('p, .howto, .body, .openclaim, .forecast, .reported') || btn.parentNode;
-  block.insertAdjacentElement('afterend', card);
-  btn._card = card; btn.setAttribute('aria-expanded','true');
-}
-document.querySelectorAll('.term').forEach(btn=>{
-  btn.setAttribute('aria-expanded','false');
-  btn.addEventListener('click', ()=> toggle(btn, btn.dataset.d));
-});
-document.querySelectorAll('.cite').forEach(btn=>{
-  btn.setAttribute('aria-expanded','false');
-  btn.addEventListener('click', ()=>{
-    const c = CITES[btn.dataset.c];
-    if(!c) return;
-    toggle(btn, '<b>'+c.who+':</b> '+c.what+'<span class="src">'+c.src+'</span>', 'citecard');
+function closeAll(except){document.querySelectorAll('.panel').forEach(p=>{if(p!==except)p.remove();});}
+document.querySelectorAll('button.term').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const n=b.nextSibling;
+    if(n&&n.classList&&n.classList.contains('panel')){n.remove();return;}
+    const d=document.createElement('div');d.className='panel';d.textContent=b.dataset.d;
+    b.parentNode.insertBefore(d,b.nextSibling);
   });
 });
-</script>
-<script>
-fetch('provenance.json').then(r=>r.json()).then(p=>{
-  const d=document.getElementById('pv-doi'), v=document.getElementById('pv-doi-v');
-  if(!p.version_doi || p.version_doi.indexOf('TODO')===0){
-    v.textContent='DOI after first release';
-    d.href='https://github.com/m4gr4th34/dossier-QC-Accelerate';
-  } else {
-    d.href='https://doi.org/'+p.version_doi; v.textContent=p.version_doi+' \u2197';
-  }
-  document.getElementById('pv-state').textContent='release '+p.release_tag+' (+ live edits)';
-}).catch(()=>{document.getElementById('pv-doi-v').textContent='see repository \u2197';
-  document.getElementById('pv-doi').href='https://github.com/m4gr4th34/dossier-QC-Accelerate';});
+document.querySelectorAll('button.cite').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const n=b.nextSibling;
+    if(n&&n.classList&&n.classList.contains('panel')){n.remove();return;}
+    const c=CITES[b.dataset.c]||{who:'',what:'(reference)',src:''};
+    const d=document.createElement('div');d.className='panel cite';
+    d.innerHTML='<span class="who">'+c.who+'</span>'+c.what+'<span class="src">'+c.src+'</span>';
+    b.parentNode.insertBefore(d,b.nextSibling);
+  });
+});
 </script>
 </body>
 </html>
