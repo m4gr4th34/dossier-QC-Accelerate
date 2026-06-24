@@ -50,6 +50,22 @@
   th:first-child,td:first-child{text-align:left}
   th{background:var(--teal-soft)}
   footer{margin:50px 0 70px;font-size:14px;color:var(--ink2);border-top:1px solid var(--line);padding-top:18px}
+  /* provenance bar + publish-cta (template machinery) */
+  .provenance{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 4px;border:1.5px solid var(--ink);background:var(--card);font-family:var(--mono);font-size:12px;overflow:hidden;border-radius:4px}
+  .provenance .pv-item{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-right:1px solid var(--line);text-decoration:none;color:var(--ink);min-width:0}
+  .provenance .pv-item:last-child{border-right:none}
+  .provenance a.pv-item:hover{background:var(--teal-soft)}
+  .provenance .pv-k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+  .provenance .pv-v{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .provenance a.pv-item .pv-v{color:var(--teal)}
+  #pv-state{color:var(--open)}
+  @media(max-width:560px){.provenance .pv-item{flex:1 1 45%;border-bottom:1px solid var(--line)}}
+  .publish-cta{margin:46px 0 8px;padding:22px 24px;border:1.5px solid var(--teal);background:var(--teal-soft);display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;justify-content:space-between;border-radius:4px}
+  .publish-cta .pc-text{flex:1 1 320px;min-width:0}
+  .publish-cta .pc-h{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--ink);margin:0 0 3px}
+  .publish-cta .pc-sub{font-size:14px;color:var(--ink2);margin:0}
+  .publish-cta a.pc-btn{flex:0 0 auto;font-family:var(--mono);font-size:14px;font-weight:600;text-decoration:none;background:var(--teal);color:#fff;padding:12px 20px;white-space:nowrap;border-radius:3px}
+  .publish-cta a.pc-btn:hover{background:#0a615f}
 </style>
 </head>
 <body>
@@ -60,6 +76,12 @@
   <h1>Accelerating Quantum Computing</h1>
   <div class="sub">How AI and robotics might shorten the road to a real quantum computer — a descent from surface tricks to the floor of the problem, with a simulation at the bottom.</div>
   <div class="byline">Irfan Ali-Khan — Independent Researcher</div>
+  <div class="provenance" role="contentinfo" aria-label="Provenance and verification">
+    <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
+    <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading… ↗</span></a>
+    <a class="pv-item" href="verify.html" target="_blank" rel="noopener"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">verify proof ↗</span></a>
+    <a class="pv-item" href="https://github.com/m4gr4th34/dossier-QC-Accelerate" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
+  </div>
   <div class="howto">
     <b>How to read this:</b> the whole piece is on this page, written to explain itself — no prerequisites, no clicking required. Tap any
     <button class="term" data-d="Like this! Dashed words open a plain-language explanation right here. Tap again to close. You never leave the page.">underlined term</button>
@@ -114,9 +136,11 @@
 <p>That exponential lopsidedness is the whole point: a qubit that mostly makes only <em>one</em> kind of error can be protected by a small, cheap code instead of the greedy surface code. That is how the thousand-to-one overhead collapses — and here it falls straight out of the physics, with no code in sight. The same mechanism has been pushed toward full fault tolerance on paper, with the dissipation doing the correcting <button class="cite" data-c="SC">npj QI '23</button>.</p>
 <p class="punch">No code, no decoder, no measurement — and the qubit still protects itself, exponentially.</p>
 
-<p><strong>The result we cut.</strong> The tidy story was going to be: let a blank search <em>discover</em> the protecting recipe on its own. The numbers refused. An unconstrained search wandered into dead-ends that stored nothing useful, and a richer attempt gave answers that changed when we changed a numerical setting — a sign the metric itself was confused, not converged. So we deleted that claim rather than dress it up.</p>
+<p><strong>Where this first failed — and the fix.</strong> The plan was to let a blank search <em>discover</em> the protecting recipe. It failed, and the failure turned out to be instructive: the search was <button class="term" data-d="When an optimiser satisfies the letter of your scoring rule while violating its intent — a notorious failure mode of AI systems. Here the search 'improved' the protection score by quietly destroying the qubit it was supposed to protect.">reward-hacking</button> the metric. Asked to make the bit-flip rate small, it tilted the engineered leak so that single-photon loss drained one of the qubit's two logical states into the other. The score improved only because there was nothing left to flip into — the qubit was collapsing, not protecting.</p>
+<figure><img src="verification/floor-sim/fig3_reward_hacking.png" alt="Code balance collapsing to near zero as the naive bit-flip metric falsely improves"><figcaption>Reward-hacking, caught. As the dissipator is tilted, the two logical states go from balanced (50/50) to lopsided (91/9) — and the naive "bit-flip" score drops <em>because</em> the qubit is dying. A trustworthy metric has to refuse cases like this.</figcaption></figure>
+<p>The repair is a metric that can't be gamed this way, built from complementary checks: a genuine logical qubit must sit below a clean dissipative gap, stay <em>converged</em> across Hilbert-space cutoffs (not a numerical artifact), and — the check that actually catches this failure — be <em>balanced</em>, both logical states comparably populated in the steady state. The gap check alone is fooled here, calling the collapsing cases valid; it was convergence and balance that exposed the mirage. Under the repaired metric, scanning the one-parameter family the search had drifted into selects the symmetric cat as its only balanced, cutoff-robust point. That <em>validates the metric against a known code — it is not yet an autonomous discovery</em>.</p>
 <div class="openclaim"><span class="tag">Open · unverified · ledger C10</span>
-<p style="margin:6px 0 0">Whether a search can reliably <em>discover</em> a new self-protecting dissipation — and what protection metric is robust enough to optimise against — is open. Our toy attempts failed honestly. This is posted as a challenge: the first robust, cutoff-independent discovery loop closes it, with named credit.</p></div>
+<p style="margin:6px 0 0">We now have a gauge- and cutoff-robust metric that recovers the known cat code as the balanced optimum of its family — a validation of the <em>measurement</em>, not a new discovery. The genuinely open question is sharper: can a search <em>discover a loss-correcting code</em>, rather than rediscover the cat? The indicated direction is to climb the symmetry ladder from two-photon to four-photon dissipation — the literature shows the four-component cat turns single-photon loss from an uncorrectable bias into a <em>detectable</em> Z<sub>4</sub> parity syndrome <button class="cite" data-c="MIR">Mirrahimi '14</button>. Our simulation confirms the four-photon manifold is larger (≈16-dimensional, with the honest caveat that its lobes overlap at small cat size) but does not by itself demonstrate that syndrome structure. Closing this is posted as the challenge, with named credit for whoever does.</p></div>
 <div class="openclaim forecast"><span class="tag">Forecast · ledger C11/C12</span>
 <p style="margin:6px 0 0">The floor in full — a single piece of engineered matter that is a self-correcting memory <em>and</em> runs protected logical gates with no decoder — is a north star, not a result. Protected universal gates under continuous dissipation remain unsolved. We label this a forecast; its signpost is the first demonstrated protected non-trivial gate under engineered dissipation.</p></div>
 
@@ -132,8 +156,16 @@
 
 <h2><span class="num">6</span>What this says about AI</h2>
 <p>The session is itself the artifact. In one sitting an AI was pushed from surface tweaks down to a genuine reconception of a qubit, naming a single spine that ran through every level, grounding each rung in current literature rather than memory, and then <em>executing</em> — building and running a simulation at the floor.</p>
-<p>The most important moment wasn't a result. It was the deletion. The tidy "AI rediscovers the recipe" story died on contact with its own numbers, and the AI reported the death instead of staging a success.</p>
-<p class="punch">The striking part wasn't that the machine went deep. It's that it then checked itself — and told us where it failed.</p>
+<p>The most important moment wasn't a result. It was the failure, and what followed it. The tidy "AI rediscovers the recipe" story died on contact with its own numbers — and instead of staging a success, the AI reported the death, went back, found that the search had been <em>reward-hacking</em> its own scoring rule, and rebuilt the metric until it could no longer be gamed.</p>
+<p class="punch">The striking part wasn't that the machine went deep. It's that when it failed, it diagnosed why — and fixed it.</p>
+
+<div class="publish-cta">
+  <div class="pc-text">
+    <p class="pc-h">Publish like this</p>
+    <p class="pc-sub">This is an Open Dossier — a living, self-verifying, citable publication. Fork the format and write your own.</p>
+  </div>
+  <a class="pc-btn" href="https://github.com/m4gr4th34/open-dossier-template/blob/main/GETTING-STARTED.md">Start your own ↗</a>
+</div>
 
 <footer>
 <p>Open Dossier · QC-Accelerate · self-explaining edition · working draft. Every claim above carries an honest label; open and forecast claims are posted as challenges with named credit. The floor simulation is fully reproducible: <span style="font-family:var(--mono)">verification/floor-sim/</span> (run <span style="font-family:var(--mono)">figures.py</span>; it self-tests on every run). — <em>Don't trust this paper; run it.</em></p>
@@ -152,7 +184,8 @@ const CITES = {
   MOL:{who:"Molecular-spin chemists, 2014–2023.",what:"Designer molecules showing electron-spin coherence at room temperature, tunable by chemistry, with perfectly identical copies made by synthesis.",src:"Nat. Commun. 5 (2014); JACS 2023."},
   MAG:{who:"Xu et al., 2021.",what:"Showed cryptochrome-4 from a migratory robin is magnetically sensitive in a test tube, supporting the radical-pair compass — a room-temperature quantum effect in biology.",src:"Nature 594 (2021)."},
   PHO:{who:"Duan et al., 2017.",what:"Found electronic coherence in the photosynthetic FMO complex dies in ~60 femtoseconds and isn't needed for its efficiency — deflating the 'quantum photosynthesis' story.",src:"PNAS 114 (2017)."},
-  SCM:{who:"Caltech / UC San Diego / Hon Hai, 2026.",what:"A claimed 3D passive self-correcting quantum memory in which the material resists thermal noise on its own — but the authors flag that key stability, fabrication, and gate questions remain open.",src:"arXiv, May 2026."}
+  SCM:{who:"Caltech / UC San Diego / Hon Hai, 2026.",what:"A claimed 3D passive self-correcting quantum memory in which the material resists thermal noise on its own — but the authors flag that key stability, fabrication, and gate questions remain open.",src:"arXiv, May 2026."},
+  MIR:{who:"Mirrahimi et al., 2014.",what:"Introduced multi-component 'cat' codes. Unlike the two-component cat, which only biases single-photon loss, the four-photon scheme makes that loss a detectable parity (Z4) syndrome that can be corrected, not merely suppressed.",src:"New J. Phys. 16, 045014 (2014); arXiv 1312.2017."}
 };
 function closeAll(except){document.querySelectorAll('.panel').forEach(p=>{if(p!==except)p.remove();});}
 document.querySelectorAll('button.term').forEach(b=>{
@@ -173,6 +206,19 @@ document.querySelectorAll('button.cite').forEach(b=>{
     b.parentNode.insertBefore(d,b.nextSibling);
   });
 });
+</script>
+<script>
+fetch('provenance.json').then(r=>r.json()).then(p=>{
+  const d=document.getElementById('pv-doi'), v=document.getElementById('pv-doi-v');
+  if(!p.version_doi || p.version_doi.indexOf('TODO')===0){
+    v.textContent='DOI after first release';
+    d.href='https://github.com/m4gr4th34/dossier-QC-Accelerate';
+  } else {
+    d.href='https://doi.org/'+p.version_doi; v.textContent=p.version_doi+' \u2197';
+  }
+  document.getElementById('pv-state').textContent='release '+p.release_tag+' (+ live edits)';
+}).catch(()=>{document.getElementById('pv-doi-v').textContent='see repository \u2197';
+  document.getElementById('pv-doi').href='https://github.com/m4gr4th34/dossier-QC-Accelerate';});
 </script>
 </body>
 </html>
