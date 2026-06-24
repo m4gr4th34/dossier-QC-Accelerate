@@ -1,6 +1,7 @@
-import numpy as np, matplotlib
+import os, numpy as np, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from lindblad import fock_ops, dissipator_super
+OUT=os.path.dirname(os.path.abspath(__file__))
 INK="#101d26";PAPER="#f6f8f9";TEAL="#0e7c7b";CORAL="#e4572e";VIOLET="#6b4e9b"
 plt.rcParams.update({"font.size":11,"axes.edgecolor":INK,"axes.labelcolor":INK,"text.color":INK,
   "xtick.color":INK,"ytick.color":INK,"figure.facecolor":PAPER,"axes.facecolor":PAPER,
@@ -39,7 +40,6 @@ ax.text(0.97,0.55,"loss drains the high-photon\nwell -> code collapses to\none s
 l1,la1=ax.get_legend_handles_labels();l2,la2=ax2.get_legend_handles_labels()
 ax.legend(l1+l2,la1+la2,loc="lower left",fontsize=9.5,framealpha=0.92)
 ax.grid(alpha=0.18)
-fig.tight_layout();fig.savefig("/mnt/user-data/outputs/fig3_reward_hacking.png",dpi=150)
-fig.savefig("fig3_reward_hacking.png",dpi=150)
+fig.tight_layout();fig.savefig(os.path.join(OUT,"fig3_reward_hacking.png"),dpi=150)
 print("balance at t=0:",round(bal[0],3)," at t=2:",round(bal[-1],3))
 print("saved fig3_reward_hacking.png")

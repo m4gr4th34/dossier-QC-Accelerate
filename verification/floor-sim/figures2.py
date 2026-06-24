@@ -1,6 +1,7 @@
-import numpy as np, matplotlib
+import os, numpy as np, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from lindblad import fock_ops, dissipator_super
+OUT=os.path.dirname(os.path.abspath(__file__))
 
 INK="#101d26";PAPER="#f6f8f9";TEAL="#0e7c7b";CORAL="#e4572e";VIOLET="#6b4e9b";OPEN="#b07d1f";PASS="#1e8e5a"
 plt.rcParams.update({"font.size":11,"axes.edgecolor":INK,"axes.labelcolor":INK,"text.color":INK,
@@ -45,7 +46,7 @@ ax2.annotate("parity intact\n(rates defined)",xy=(0,0),xytext=(0.18,0.18),
 ax2.text(0.55,0.55,"qubit dissolving\n(rates undefined)",transform=ax2.transAxes,
    color=CORAL,fontsize=10,bbox=dict(fc=PAPER,ec=CORAL,alpha=0.85))
 ax2.grid(alpha=0.2)
-fig.tight_layout(); fig.savefig("fig3_metric_fix.png",dpi=150); plt.close(fig)
+fig.tight_layout(); fig.savefig(os.path.join(OUT,"fig3_metric_fix.png"),dpi=150); plt.close(fig)
 
 # ---- FIG 4: the right direction — climb the symmetry ladder ----
 def steady_dim(N,k,nbar,thr=1e-6):
@@ -63,7 +64,7 @@ ax.set_ylim(0,18)
 ax.text(0.02,0.95,"k=2: loss → biased qubit\nk=4: loss → detectable $Z_4$ syndrome → correctable",
         transform=ax.transAxes,va="top",fontsize=10.5,
         bbox=dict(fc=PAPER,ec=INK,alpha=0.9))
-fig.tight_layout(); fig.savefig("fig4_symmetry_ladder.png",dpi=150); plt.close(fig)
+fig.tight_layout(); fig.savefig(os.path.join(OUT,"fig4_symmetry_ladder.png"),dpi=150); plt.close(fig)
 print("naive bit-flip across N (the OLD method, for the record):",
       [round(naive(N,3.0),7) for N in [16,24,32,40]])
 print("saved fig3_metric_fix.png, fig4_symmetry_ladder.png")
