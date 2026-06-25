@@ -1,4 +1,4 @@
-# Accelerating Quantum Computing with AI and Robotics: A Self-Verifying Dossier
+# Accelerating Quantum Computing Research Using AI and Robotics: A Self-Verifying Dossier
 
 [![DOI](https://zenodo.org/badge/1273525142.svg)](https://doi.org/10.5281/zenodo.20838232)
 &nbsp;[![checks](https://img.shields.io/badge/claims-CI--verified-1e8e5a)](../../actions)
