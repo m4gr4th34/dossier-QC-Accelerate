@@ -85,10 +85,10 @@
   <h1>Audit Trail — Accelerating Quantum Computing</h1>
   <div class="byline">Irfan Ali-Khan · companion verification record</div>
   <div class="statusbar">
-    <span class="chip"><span class="dot t"></span>avenues&nbsp;<b>N surveyed</b></span>
-    <span class="chip"><span class="dot v"></span>forecasts&nbsp;<b>N (all signposted)</b></span>
-    <span class="chip"><span class="dot g"></span>citations&nbsp;<b>N verified · N flagged</b></span>
-    <span class="chip"><span class="dot o"></span>red team&nbsp;<b>N resolved · N open</b></span>
+    <span class="chip"><span class="dot t"></span>avenues&nbsp;<b>4 surveyed</b></span>
+    <span class="chip"><span class="dot v"></span>forecasts&nbsp;<b>1 (signposted)</b></span>
+    <span class="chip"><span class="dot g"></span>citations&nbsp;<b>3 primary · 6 triangulated · 1 reported</b></span>
+    <span class="chip"><span class="dot o"></span>red team&nbsp;<b>6 resolved · 2 open</b></span>
   </div>
   <div class="cta">
     <a class="btn" href="index.html">The landscape</a>
@@ -109,7 +109,7 @@
 <section>
   <div class="kicker violet">SOURCES — THE CENTREPIECE</div>
   <h2>Citation audit</h2>
-  <p class="lede">In a survey, the citations carry the verification weight: every avenue stands on its sources, so every source is checked against the primary work or triangulated through three or more independent citing works. Interested-party sources (vendor roadmaps, press releases) are marked REPORTED, not verified — the provenance is the point.</p>
+  <p class="lede">In a survey, the citations carry the verification weight: every avenue stands on its sources, so every source is checked against the primary work or triangulated through three or more independent citing works. Interested-party sources (vendor roadmaps, press releases) are marked REPORTED, not verified — the provenance is the point. This audit is in progress: the rows below are the manuscript's reference set, with three primaries re-verified against source this pass and the remainder triangulated across independent citing works.</p>
   <table>
     <thead><tr><th>#</th><th>Reference</th><th>Status</th></tr></thead>
     <tbody id="cites"></tbody>
@@ -121,16 +121,44 @@
   <h2>Red-team findings</h2>
   <p class="lede">A hostile pass over the finished survey, published with it. Resolved findings were fixed before launch; open findings are stated as caveats in the avenues themselves.</p>
 
-  <!-- RESOLVED FINDING EXAMPLE -->
   <details class="finding resolved">
-    <summary><span class="tag res">RESOLVED</span>DESCRIBE WHAT WAS CAUGHT AND FIXED</summary>
-    <div class="body">What was wrong, how it was found, what was corrected. The catch is the point — this is armor, not embarrassment. (For a survey, common catches: an avenue mislabeled ESTABLISHED on an interested-party source; a forecast missing its signpost; a REPORTED item stated without its mundane explanation.)</div>
+    <summary><span class="tag res">RESOLVED</span>Reward-hacking of the discovery metric</summary>
+    <div class="body">A blank search "improved" the bit-flip score by tilting the dissipator so single-photon loss drained one logical state into the other — the qubit was collapsing, not protecting. Caught by adding convergence and balance guards to the metric; kept as open challenge C10 rather than hidden.</div>
   </details>
 
-  <!-- OPEN FINDING EXAMPLE -->
+  <details class="finding resolved">
+    <summary><span class="tag res">RESOLVED</span>Citation year/volume errors corrected against primary sources</summary>
+    <div class="body">Three references carried wrong values: AlphaQubit (Nature 634 → 635), the below-threshold result (2024 → 2025, vol. 638), and Gertler et al. (2020 → 2021, vol. 590). Caught by re-verifying each against the primary source before finalizing the manuscript; corrected.</div>
+  </details>
+
+  <details class="finding resolved">
+    <summary><span class="tag res">RESOLVED</span>Figure-reproducibility bug in fig3.py</summary>
+    <div class="body">The reward-hacking figure's script hard-coded a sandbox output path and aborted before its in-tree save, so an external reader could not reproduce it. Caught by running the figures from a clean checkout; fixed to resolve the output directory from __file__ so it reproduces from any working directory.</div>
+  </details>
+
+  <details class="finding resolved">
+    <summary><span class="tag res">RESOLVED</span>Over-claim in the §4 discovery framing</summary>
+    <div class="body">A draft asserted the search "recovers the cat as the best code in its family" — implying autonomous discovery. Scoped down to "validates the measurement, not a discovery," and the gap-only metric was shown insufficient on its own.</div>
+  </details>
+
+  <details class="finding resolved">
+    <summary><span class="tag res">RESOLVED</span>Novelty over-reach retracted after prior-art search</summary>
+    <div class="body">Prior-art reconnaissance established that "fault tolerance as a phase of matter" and Knill–Laflamme-objective code search are both prior art. The dossier now claims no novel physics (ledger C03); its contribution is the reproducible, honestly-negative synthesis.</div>
+  </details>
+
+  <details class="finding resolved">
+    <summary><span class="tag res">RESOLVED</span>Ledger/paper desynchronization</summary>
+    <div class="body">The paper referenced ledger IDs (C08, C10, C11, C12) that did not yet exist in claim_ledger.csv — it still held the four template placeholder rows. Caught during a release-prep pass; the ledger was authored to match every ID the editions reference.</div>
+  </details>
+
   <details class="finding">
-    <summary><span class="tag open">OPEN</span>DESCRIBE AN OPEN FINDING</summary>
-    <div class="body">What the risk is, why it's open, what would close it. If the author has made a deliberate choice to leave it open (per-claim waiver), state that here.</div>
+    <summary><span class="tag open">OPEN</span>Autonomous discovery is unverified (C10 / C04)</summary>
+    <div class="body">Whether an automated search can discover a loss-correcting code unaided — rather than reproduce the known cat — is unproven. Posted as an open challenge with a dated signpost (C04: a reproduced result beyond the cat family by 2031).</div>
+  </details>
+
+  <details class="finding">
+    <summary><span class="tag open">OPEN</span>Approximate-code caveats not yet bounded in-repo</summary>
+    <div class="body">The Knill–Laflamme correctability of the four-component cat is exact only in the large-α limit; at small cat size the coherent-state lobes overlap. This is stated honestly in the text but not yet quantified with an explicit error bound in the repository.</div>
   </details>
 
   <!-- Add more findings as needed. Use class="finding resolved" for fixed ones. -->
@@ -175,10 +203,16 @@
 //               not independently reproduced — provenance, not a pass)
 // ---------------------------------------------------------------
 const cites = [
-  ["REF1", "Author et al. — Journal Vol, Page (Year)", "V"],
-  ["REF2", "Author et al. — Journal Vol, Page (Year)", "T"],
-  ["REF5", "Vendor roadmap / press release (Year)", "R"],
-  // add all your references here
+  ["AQ",     "Bausch et al. — Nature 635, 834 (2024) · doi:10.1038/s41586-024-08148-8", "V"],
+  ["BT",     "Google Quantum AI — Nature 638, 920 (2025) · doi:10.1038/s41586-024-08449-y", "V"],
+  ["AQEC",   "Gertler et al. — Nature 590, 243 (2021) · doi:10.1038/s41586-021-03257-0", "V"],
+  ["MIR",    "Mirrahimi et al. — New J. Phys. 16, 045014 (2014)", "T"],
+  ["KL",     "Knill & Laflamme — Phys. Rev. A 55, 900 (1997)", "T"],
+  ["BOMBIN", "Bombín — Phys. Rev. X 5, 031043 (2015)", "T"],
+  ["RLQEC",  "Olle, Zen, Puviani, Marquardt — npj Quantum Inf. 10 (2024); arXiv:2311.04750", "T"],
+  ["RLBOS",  "Discovering autonomous QEC via deep RL — Phys. Rev. A (2025); arXiv:2511.12482", "T"],
+  ["SC",     "Squeezed-cat autonomous QEC — npj Quantum Inf. 9 (2023)", "T"],
+  ["SCM",    "3D self-correcting memory — preprint (2026); authors' own open caveats", "R"],
 ];
 const lab = {
   V: ["VERIFIED — primary source", "v"],
