@@ -4,6 +4,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from gate_metric_validation import measure_gate
+import os
 
 kappa2 = 1.0
 eps = 0.05 * kappa2
@@ -43,5 +44,7 @@ ax2.set_title("Conditions (1)+(3): the adiabatic tradeoff\nthe frontier the sear
 ax2.grid(alpha=0.3, which="both")
 
 fig.tight_layout()
-fig.savefig("/mnt/user-data/outputs/gate_metric_validation.png", dpi=150)
-print("saved gate_metric_validation.png")
+_out = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                    "gate_metric_validation.png")
+fig.savefig(_out, dpi=150)
+print(f"saved {_out}")
