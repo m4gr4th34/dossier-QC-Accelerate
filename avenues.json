@@ -1,9 +1,37 @@
 {
   "avenues": [
-    {"name": "PLACEHOLDER avenue A", "thesis": "One-line thesis — what this avenue is and why it's in play.", "status": "ESTABLISHED",     "forecast": null, "signpost": null,   "cites": ["REF1", "REF2"]},
-    {"name": "PLACEHOLDER avenue B", "thesis": "One-line thesis for an avenue with a central open question.",   "status": "OPEN-UNVERIFIED", "forecast": null, "signpost": null,   "cites": ["REF3"]},
-    {"name": "PLACEHOLDER avenue C", "thesis": "One-line thesis for an avenue you're making a forward bet on.",  "status": "FORECAST",        "forecast": 35,   "signpost": "2030", "cites": ["REF4"]},
-    {"name": "PLACEHOLDER avenue D", "thesis": "One-line thesis sourced only to an interested party / roadmap.", "status": "REPORTED",        "forecast": null, "signpost": null,   "cites": ["REF5"]}
+    {
+      "name": "Engineering layer — make today's machine better",
+      "thesis": "AI decoders and below-threshold surface codes improve the qubits we already have, without changing what they're made of.",
+      "status": "ESTABLISHED",
+      "forecast": null,
+      "signpost": null,
+      "cites": ["AQ", "BT"]
+    },
+    {
+      "name": "Designed qubits — search the hardware space",
+      "thesis": "Let AI design the qubit's circuit or screen new materials and molecules: a different qubit, not a better-tuned one. An optimiser rediscovered fluxonium from a blank circuit.",
+      "status": "REPORTED",
+      "forecast": null,
+      "signpost": null,
+      "cites": ["SQ", "DEF", "MOL"]
+    },
+    {
+      "name": "Self-correcting matter — passive storage",
+      "thesis": "Store a qubit in a material whose global structure resists noise on its own. A 3D self-correcting memory is claimed, but key stability and fabrication questions stay open.",
+      "status": "OPEN-UNVERIFIED",
+      "forecast": null,
+      "signpost": null,
+      "cites": ["SCM"]
+    },
+    {
+      "name": "The floor — a qubit that heals itself",
+      "thesis": "Engineer the equation of motion so the qubit is a self-healing steady state. A from-first-principles cat-qubit simulation shows exponential noise bias; a Knill-Laflamme proof shows the four-component cat makes single-photon loss a correctable Z4 syndrome (k=4 minimal). Whether a search can discover such codes unaided is open.",
+      "status": "FORECAST",
+      "forecast": 55,
+      "signpost": "first automated discovery of a loss-correcting bosonic code beyond the cat family, peer-reviewed and reproduced, by 2031",
+      "cites": ["AQEC", "MIR", "RLQEC", "RLBOS"]
+    }
   ],
   "checks": {
     "_comment": "Single source of truth for the consistency-check RULES. Both index.html's console and verification/verify_numbers.py read these, so a threshold can never drift between the page and the verifier. Change a rule HERE and both sides enforce it on next run. (The check LOGIC is still written in each language — see AUTHORING.md — but the rules it enforces live only here.)",
