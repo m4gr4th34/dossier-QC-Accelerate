@@ -1,11 +1,12 @@
 cff-version: 1.2.0
 message: "If you use or build on this work, please cite it as below."
 type: software
-title: "Accelerating Quantum Computing (Open Dossier format)"
+title: "Accelerating Quantum Computing with AI and Robotics: A Self-Verifying Dossier"
 authors:
   - family-names: "Ali-Khan"
     given-names: "Irfan"
     affiliation: "Independent Researcher"
+    orcid: "https://orcid.org/0009-0008-9685-8197"
 version: "1.0"
 date-released: "YYYY-MM-DD"
 license: "CC-BY-4.0"

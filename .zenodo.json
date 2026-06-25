@@ -1,7 +1,7 @@
 {
-  "title": "Accelerating Quantum Computing",
-  "creators": [{"name": "Irfan Ali-Khan", "affiliation": "Independent Researcher"}],
-  "description": "Accelerating Quantum Computing (working draft). An Open Dossier publication: executable claims under CI, published adversarial review, auto-DOI and auto-timestamped releases.",
+  "title": "Accelerating Quantum Computing with AI and Robotics: A Self-Verifying Dossier",
+  "creators": [{"name": "Ali-Khan, Irfan", "affiliation": "Independent Researcher", "orcid": "0009-0008-9685-8197"}],
+  "description": "How AI and robotics might accelerate fault-tolerant quantum computing, argued by descending from surface-level engineering wins to engineered dissipation at the floor. Includes a reproducible cat-qubit simulation, a Knill-Laflamme proof that the four-component cat makes single-photon loss a correctable Z4 syndrome, and an honest claim ledger. No novel physics is claimed; the contribution is a reproducible, self-verifying synthesis. An Open Dossier publication with executable claims under CI and published adversarial review.",
   "upload_type": "publication",
   "publication_type": "preprint",
   "access_right": "open",
