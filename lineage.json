@@ -9,6 +9,16 @@
       "version_doi": "10.5281/zenodo.20838233",
       "concept_doi": "10.5281/zenodo.20838232",
       "path": "chapters/v1.0/"
+    },
+    {
+      "n": 2,
+      "tag": "v2.0",
+      "title": "Chapter 2 — AI Today, and Scoping Tomorrow’s Frontier",
+      "summary": "AI has quietly become a co-author of quantum-computing research. This chapter puts that to the test on one hard problem — and shows AI doing something past re-deriving and discovering: scoping a frontier, and saying honestly where to stop.",
+      "released": "2026-06-25",
+      "version_doi": "10.5281/zenodo.20856502",
+      "concept_doi": "10.5281/zenodo.20838232",
+      "path": "chapters/v2.0/"
     }
   ]
 }

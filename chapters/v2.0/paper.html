@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter 2: AI Today, and Scoping Tomorrow's Frontier — Accelerating Quantum Computing Research Using AI and Robotics (Open Dossier)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101d26;--ink2:#42525c;--paper:#f6f8f9;--card:#ffffff;
+    --teal:#0e7c7b;--teal-soft:#e3f0f0;--coral:#e4572e;--coral-soft:#fbe9e3;
+    --violet:#6b4e9b;--violet-soft:#efe9f6;--pass:#1e8e5a;--open:#b07d1f;--open-soft:#fdf6e9;--line:#d8e0e4;
+    --serif:'Spectral',Georgia,serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+  a{color:var(--teal)}
+  header{padding:48px 0 8px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+  .eyebrow b{color:var(--coral)}
+  h1{font-family:var(--serif);font-weight:800;font-size:clamp(28px,5vw,42px);line-height:1.12;margin:.4em 0 .2em;letter-spacing:-.01em}
+  .sub{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink2);margin:.1em 0 .5em}
+  .chapter{font-family:var(--serif);font-weight:700;font-size:clamp(19px,3vw,23px);color:var(--coral);margin:.18em 0 .12em;letter-spacing:-.01em}
+  .chapter .ch{font-family:var(--mono);font-weight:600;font-size:.62em;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);display:block;margin-bottom:2px}
+  .byline{font-family:var(--serif);font-style:italic;color:var(--ink2);margin-bottom:18px}
+  .howto{background:var(--card);border:1.5px solid var(--ink);padding:14px 16px;font-size:15px;margin:18px 0 8px;border-radius:4px}
+  .cta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px}
+  .btn{font-family:var(--mono);font-size:13px;text-decoration:none;border:1.4px solid var(--line);color:var(--ink);padding:8px 13px;border-radius:3px;background:var(--card)}
+  .btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+  h2{font-family:var(--serif);font-weight:800;font-size:26px;margin:42px 0 6px;letter-spacing:-.01em}
+  h2 .num{font-family:var(--mono);font-size:15px;color:var(--coral);margin-right:10px;font-weight:600}
+  p{margin:14px 0}
+  .punch{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--ink);border-left:3px solid var(--coral);padding-left:14px;margin:18px 0}
+  button.term{font:inherit;color:var(--violet);background:none;border:none;border-bottom:1.5px dashed var(--violet);padding:0;cursor:pointer}
+  button.cite{font-family:var(--mono);font-size:.72em;vertical-align:super;color:#fff;background:var(--teal);border:none;border-radius:3px;padding:1px 5px;margin:0 1px;cursor:pointer}
+  .panel{background:var(--violet-soft);border-left:3px solid var(--violet);padding:11px 14px;margin:8px 0;font-size:15px;border-radius:3px}
+  .panel.cite{background:var(--teal-soft);border-left-color:var(--teal)}
+  .panel .who{font-family:var(--mono);font-size:12px;color:var(--ink2);display:block;margin-bottom:3px}
+  .panel .src{font-family:var(--mono);font-size:12px;color:var(--ink2);display:block;margin-top:5px}
+  .openclaim{background:var(--open-soft);border:1.4px solid var(--open);border-radius:5px;padding:13px 16px;margin:20px 0}
+  .openclaim .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--open);font-weight:600}
+  .openclaim.forecast{background:var(--violet-soft);border-color:var(--violet)}
+  .openclaim.forecast .tag{color:var(--violet)}
+  .verified{background:#e7f4ee;border:1.4px solid var(--pass);border-radius:5px;padding:13px 16px;margin:20px 0}
+  .verified .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--pass);font-weight:600}
+  figure{margin:24px 0;text-align:center}
+  figure img{max-width:100%;border:1px solid var(--line);border-radius:4px;background:#fff}
+  figcaption{font-size:14px;color:var(--ink2);margin-top:8px;font-style:italic}
+  details.deeper{margin:14px 0;border:1px dashed var(--line);border-radius:4px;padding:6px 12px;background:var(--card)}
+  details.deeper summary{font-family:var(--mono);font-size:13px;color:var(--teal);cursor:pointer}
+  table{border-collapse:collapse;width:100%;font-size:14px;margin:16px 0;font-family:var(--mono)}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  th{background:var(--teal-soft)}
+  footer{margin:50px 0 70px;font-size:14px;color:var(--ink2);border-top:1px solid var(--line);padding-top:18px}
+  .provenance{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 4px;border:1.5px solid var(--ink);background:var(--card);font-family:var(--mono);font-size:12px;overflow:hidden;border-radius:4px}
+  .provenance .pv-item{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-right:1px solid var(--line);text-decoration:none;color:var(--ink);min-width:0}
+  .provenance .pv-item:last-child{border-right:none}
+  .provenance a.pv-item:hover{background:var(--teal-soft)}
+  .provenance .pv-k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+  .provenance .pv-v{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .provenance a.pv-item .pv-v{color:var(--teal)}
+  #pv-state{color:var(--open)}
+  @media(max-width:560px){.provenance .pv-item{flex:1 1 45%;border-bottom:1px solid var(--line)}}
+  .publish-cta{margin:46px 0 8px;padding:22px 24px;border:1.5px solid var(--teal);background:var(--teal-soft);display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;justify-content:space-between;border-radius:4px}
+  .publish-cta .pc-text{flex:1 1 320px;min-width:0}
+  .publish-cta .pc-h{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--ink);margin:0 0 3px}
+  .publish-cta .pc-sub{font-size:14px;color:var(--ink2);margin:0}
+  .publish-cta a.pc-btn{flex:0 0 auto;font-family:var(--mono);font-size:14px;font-weight:600;text-decoration:none;background:var(--teal);color:#fff;padding:12px 20px;white-space:nowrap;border-radius:3px}
+  .publish-cta a.pc-btn:hover{background:#0a615f}
+  /* --- reading refinements --- */
+  body{font-feature-settings:"kern" 1,"liga" 1;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:712px}
+  p{margin:15px 0}
+  .lead::first-letter{font-family:var(--serif);font-weight:800;float:left;font-size:3.05em;line-height:.82;padding:6px 10px 0 0;color:var(--teal)}
+  h2{margin-top:52px;line-height:1.16}
+  .punch{font-size:20px;line-height:1.45;margin:22px 0}
+  .chapter{margin-top:.25em}
+  figure{margin:30px 0}
+  figcaption{max-width:600px;margin-left:auto;margin-right:auto;line-height:1.5}
+  .verified,.openclaim{line-height:1.55}
+  @media(min-width:640px){body{font-size:17.5px;line-height:1.68}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">An Open Dossier · <b>QC-Accelerate</b> · Chapter 2 · self-explaining edition · result</div>
+  <h1>Accelerating Quantum Computing Research Using AI and Robotics</h1>
+  <div class="chapter"><span class="ch">Chapter 2 of the lineage</span>AI Today, and Scoping Tomorrow’s Frontier</div>
+  <div class="sub">AI has quietly become a co-author of quantum-computing research. This chapter puts that to the test on one hard problem — and shows AI doing something past re-deriving and discovering: scoping a frontier, and saying honestly where to stop.</div>
+  <div class="byline">Irfan Ali-Khan — Independent Researcher</div>
+  <div class="provenance" role="contentinfo" aria-label="Provenance and verification">
+    <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
+    <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading… ↗</span></a>
+    <a class="pv-item" href="../../verify.html" target="_blank" rel="noopener"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">verify proof ↗</span></a>
+    <a class="pv-item" href="https://github.com/m4gr4th34/dossier-QC-Accelerate" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
+  </div>
+  <div class="howto">
+    <b>How to read this:</b> the whole piece is on this page, written to explain itself — no prerequisites, no clicking required. Tap any
+    <button class="term" data-d="Like this! Dashed words open a plain-language explanation right here. Tap again to close. You never leave the page.">underlined term</button>
+    for a plain-language note, or any <button class="cite" data-c="DEMO">ref</button> to see, in two sentences, what that source actually showed. Every result wears an honest label — green when verified in-repo, amber when open — at the exact spot it comes up.
+  </div>
+  <div class="cta">
+    <a class="btn" href="../../index.html">The landscape</a>
+    <a class="btn primary" href="../../paper.html">Self-explaining edition</a>
+    <a class="btn" href="../../paper/manuscript.pdf">Read the PDF</a>
+    <a class="btn" href="../../dossier.html">Audit trail</a>
+    <a class="btn" href="https://github.com/m4gr4th34/dossier-QC-Accelerate">Source</a>
+  </div>
+</header>
+
+<h2><span class="num">1</span>AI is already a co-author of quantum computing research</h2>
+<p class="lead">A <button class="term" data-d="The quantum version of a bit. A normal bit is 0 or 1; a qubit can be a blend of both at once — and that blend is so delicate that almost anything can destroy it.">qubit</button> is the most error-prone object humanity has ever tried to compute with — and increasingly, the thing keeping it on the rails is AI. Not someday. Now. Walk up the stack and AI is on every floor.</p>
+<p><strong>It spots the errors.</strong> When a quantum computer slips, it doesn't show you the mistake — it shows a faint pattern of <button class="term" data-d="The cross-check measurements an error-correcting code spits out. They don't reveal the stored information (that would destroy it) — they reveal a shadow of what went wrong, which a 'decoder' must then interpret.">smoke-alarm clicks</button>, and something has to infer, in real time, what actually broke. Google trained a <button class="term" data-d="The neural-network architecture behind today's large language models. It turns out the same machinery that predicts the next word is good at reading the correlated pattern of error signals off a quantum chip.">transformer</button> to read those patterns; their AlphaQubit decoder beat the best hand-built methods on real hardware <button class="cite" data-c="AQ">Nature '24</button>. It is, almost exactly, AlphaFold's trick pointed at quantum errors.</p>
+<p><strong>It invents the error-correction codes.</strong> More striking: AI isn't only running human blueprints, it's drawing new ones. Set loose on how to hide a qubit inside light, reinforcement learning found a genuinely odd recipe — store the information in "two photons or four photons" — that humans hadn't picked, and it beats the break-even point for error correction <button class="cite" data-c="RLCODE">RL-code '23</button>. A 2025 successor discovered codes that survive two kinds of photon loss at once <button class="cite" data-c="RLBOS">bosonic-RL '25</button>.</p>
+<p><strong>It choreographs the gates.</strong> Flipping a qubit without waking its errors is a control problem, and AI has been quietly solving it for years — deep reinforcement learning designing the control pulses for superconducting qubits, and the numerically-optimized pulses behind early universal control of cat qubits.</p>
+<p><strong>It designs the hardware's reflexes.</strong> AI now reaches into the chip itself — discovering the <button class="term" data-d="Deliberately sculpted energy leaks that, instead of causing errors, constantly pump a qubit back into its correct state. The usual enemy, decoherence, turned into the janitor.">engineered dissipation</button> that lets a qubit self-heal — while industry builds differentiable digital twins of their devices to read out chip parameters automatically.</p>
+<p class="punch">You can no longer sketch the quantum-computing stack without AI on every layer. The field crossed, almost without anyone announcing it, from "can AI help build a quantum computer?" to "AI is already helping, everywhere."</p>
+
+<h2><span class="num">2</span>Three ways AI helps — and the one this dossier adds</h2>
+<p>AI helps quantum computing in three distinct ways. Two are famous: <strong>re-deriving</strong> what humans designed (faster pulses, better decoders) and <strong>discovering</strong> what humans didn't (the codes above). This dossier demonstrates the third, quieter one: <strong>scoping</strong> — using AI to map a hardware frontier rigorously, certify where human design is already optimal, and point to the open ground worth pushing on.</p>
+<p>The idea runs against intuition: a careful <em>"no"</em> is one of the most useful things a search can produce. An honestly-obtained negative is a <strong>map</strong> — it tells the field which doors are already shut, so effort flows to the ones still open.</p>
+<p class="punch">We re-derive and we discover. This is the third thing: we scope — and a kept "no" is a map of where to push.</p>
+
+<h2><span class="num">3</span>The bottleneck we scoped: operating a protected qubit</h2>
+<p>Chapter 1 of this dossier <button class="cite" data-c="V1">v1.0</button> established the <em>floor</em>: a <button class="term" data-d="A qubit encoded in two mirror-image states of a microwave oscillator, named after Schrödinger's cat. Make the 'cat' bigger and one whole type of error (the bit-flip) vanishes exponentially — so its noise is extremely lopsided, or 'biased'.">cat qubit</button> the physics protects on its own, with bit-flip errors crushed exponentially as the cat grows <button class="cite" data-c="MIR">Mirrahimi '14</button>. That gives you a superb place to <em>store</em> a qubit. This edition asks the next question: can you <em>operate</em> on it — run a logic gate — without breaking the protection?</p>
+<p>The trouble is a rate. A <button class="term" data-d="A gate that does its job without spoiling the qubit's lopsided (biased) noise — bit-flips must stay rare even mid-operation, or the whole hardware-efficiency advantage collapses.">bias-preserving gate</button> has to be run <button class="term" data-d="Slowly and smoothly, so the qubit is gently guided and never knocked out of its protected manifold. The price of gentleness is time — and time is exactly when ordinary photon loss accumulates.">adiabatically</button> to stay protected; but slowness gives ordinary photon loss time to pile up as phase errors. The result is a brutal requirement on one ratio: the engineered, protective dissipation versus the unavoidable loss — written <button class="term" data-d="κ₂ is the rate of the 'good' engineered two-photon dissipation that protects the cat; κ₁ is the rate of 'bad' single-photon loss. The whole question is how large a κ₁/κ₂ (how much bad relative to good) a working gate can tolerate. Smaller is easier; the frontier is how far up you can push it.">κ₁/κ₂</button>. Hand-designed gates have fought this ratio for years; the natural question for an AI is whether a smarter search can tolerate a <em>worse</em> ratio than the best human design — or prove cleanly that it can't.</p>
+<p class="punch">The wall isn't whether the gate exists. It's the rate it must run at to stay protected — and that rate is the thing to beat.</p>
+
+<h2><span class="num">4</span>An instrument that can't be fooled</h2>
+<p>v1.0's sharpest lesson was a failure: a naive search once <button class="term" data-d="When an optimiser satisfies the letter of your scoring rule while violating its intent. In v1.0 the search 'improved' a protection score by quietly destroying the qubit it was meant to protect.">reward-hacked</button> its own metric, scoring well by destroying the qubit. So before asking "can AI beat the human gate?", we built a scorecard that <em>cannot</em> be gamed — and validated it against gates whose behaviour is already known.</p>
+<p>A gate counts only if it passes three checks <em>at once</em> — never a weighted average, where a search could trade one away for another: it must (1) actually perform the intended logic, (2) keep the bit-flip protection intact — measured directly by <button class="term" data-d="Whether the field holds an even or odd number of photons. A lost photon flips parity, so reading parity is how you catch the error that matters — and it can't be faked by a search the way a lumped error-rate can.">parity</button>, not by a lumpable score — and (3) stay converged inside the protected manifold. We ran the known hand-designed gate through it: the scorecard reproduces textbook cat physics — bit-flips falling off a cliff, phase-flips rising gently, the frontier degrading right where theory says it should — and a built-in resolution check rejects any run whose numbers haven't converged.</p>
+<figure><img src="verification/gate-metric/gate_metric_validation.png" alt="Validation of the three-condition gate metric: exponential bit-flip suppression on the left, the adiabatic speed-vs-loss tradeoff on the right"><figcaption>The scorecard, validated on a known gate. Left: bit-flip error falls exponentially with cat size while phase-flip stays flat — the protection, measured by parity. Right: the tradeoff the search must navigate — fast gates leak, slow gates accumulate loss.</figcaption></figure>
+<div class="verified"><span class="tag">Verified · in-repo · gate-metric</span>
+<p style="margin:6px 0 0">The three-condition metric reproduces the known dissipative-cat gate's behaviour from first principles (exponential bit-flip suppression, linear phase-flip, frontier near κ₁/κ₂ ≈ 5×10⁻³), and its truncation rail rejects under-resolved runs. This validates the <em>measurement</em> against known physics before any search is allowed to optimise against it. Code: <span style="font-family:var(--mono)">verification/gate-metric/</span>.</p></div>
+<p class="punch">You cannot honestly search a frontier with a scorecard that can be cheated. So first we built one that can't — and proved it on physics we already understood.</p>
+
+<h2><span class="num">5</span>The search, and the result it honestly returned</h2>
+<p>Then we let an AI search loose with <em>more</em> freedom than any human design — two control knobs instead of one, finer pulse shaping, free timing — and, to make the test as hard as possible on ourselves, we <em>seeded it with the best human gate</em>, so it started from the human answer and could only try to improve.</p>
+<p>It couldn't. Across cat sizes, the search recovered the hand-designed gate and could not push the tolerable κ₁/κ₂ past it (a 4% wobble — noise). The hand-designed adiabatic gate, run as fast as it can go, already sits at the optimum of this control space.</p>
+<figure><img src="verification/phase-b/phase_b_frontier_map.png" alt="Frontier map: tolerable noise ratio versus cat size, with the AI search sitting on top of the hand-designed baseline"><figcaption>The mapped frontier: how bad a noise ratio a working gate tolerates, versus cat size. The AI search (red) lands on top of the hand-designed baseline (blue) — it scopes the wall precisely, but does not move it.</figcaption></figure>
+<p>The telling part is <em>how</em> it failed. We had handed the search a tempting shortcut — a second control knob that could speed the gate up by quietly breaking the bias. A reward-hack would have seized it. Instead, because the scorecard makes bias-breaking worthless, the search drove that knob to <em>exactly zero</em> on its own and returned to the honest human gate. The instrument worked: cheating wasn't punished after the fact, it was made pointless, and the optimiser saw that.</p>
+<figure><img src="verification/phase-b/phase_b_negative.png" alt="The hand-designed baseline frontier rising as gate time shortens, with the AI search target above it unreached"><figcaption>The kept negative, in one picture. The hand-designed gate's reachable frontier (blue) rises as the gate runs faster; the AI search, given more freedom, cannot clear it. A clean "no" — and a precise map of where the wall sits.</figcaption></figure>
+<div class="openclaim"><span class="tag">Negative · kept · in-repo · phase-b</span>
+<p style="margin:6px 0 0">With two-quadrature control, finer shaping, and seeded from the hand-designed gate, an AI search does <em>not</em> beat the best hand-designed bias-preserving gate on κ₁/κ₂ (gain ≈ ×1.04; independently reproduced). Handed a bias-breaking degree of freedom, the search set it to exactly zero — the un-gameable scorecard made the shortcut worthless. Scope: single-mode Z(π/2), cat sizes n̄ = 2–3 fully searched, two-quadrature shaping, one validity bar; not yet CNOT, large cats, or dissipation-schedule shaping. A rigorous map and a kept negative — the project's guaranteed floor — not a defeat. Code: <span style="font-family:var(--mono)">verification/phase-b/</span>.</p></div>
+<p class="punch">Given more freedom than any human gate, and the human gate as its starting point, the AI's honest answer was: you already have the best one here. That "no" is the result.</p>
+
+<h2><span class="num">6</span>Where AI has <em>not</em> yet been engaged</h2>
+<p>Having mapped this wall, the natural next move is to ask what the map leaves open — and the honest headline is that genuine white space is <em>narrow, and shrinking</em>. We went looking for big AI-untouched fields and mostly found AI already arriving; even joint <button class="term" data-d="Designing several layers of the quantum computer together — the code, the gates, the hardware — instead of one at a time. Long an obvious gap; now being filled by AI too.">cross-layer co-design</button> is being born <button class="cite" data-c="VAREFT">co-design '26</button>. The verified-thin gaps are specific: AI that shapes the engineered dissipation <em>in time</em> (everything today is static dissipation with a shaped drive); AI that designs dissipation for <em>gates</em> rather than for memory; and AI used as an adversarial <em>referee</em> — to certify protection and hunt cheats — rather than only as an optimiser. The last one is the mode this dossier's scorecard embodies, and it is rare.</p>
+<p class="punch">AI saturated the stack so fast that honest white space now takes effort to find — and the cleanest open ground is letting AI shape the dissipation itself, in time.</p>
+
+<h2><span class="num">7</span>What this says about AI</h2>
+<p>v1.0's most important moment wasn't a result — it was a failure caught: a search reward-hacking its own metric, reported rather than hidden. This edition is the same virtue one level up. There, AI caught itself cheating on a <em>metric</em>. Here, given a real frontier and a tempting shortcut, AI <em>declined</em> the cheat unprompted, mapped the wall, certified the human design optimal, and pointed at where to push next. Re-deriving and discovering get the headlines; scoping — knowing where the wall is, and saying so — is the quieter capability that makes a search trustworthy.</p>
+<p class="punch">The striking part isn't that AI went deep. It's that it knew where to stop — and said so.</p>
+
+<h2><span class="num">8</span>Next: design the dissipation, not the pulse</h2>
+<p>The limit we hit is a conjunction: a protected gate must be slow, <em>and</em> slowness exposes loss. Our search broke neither clause because it only tuned the <em>drive</em>. The sharpest, most AI-native move the map points at is to change the <em>object</em> AI designs — the protective dissipation itself, made time-dependent — rather than the pulse on top of it. It runs on the very instrument we just built and shipped, by swapping the search variable from the drive to the engineered leaks.</p>
+<div class="openclaim forecast"><span class="tag">Forecast · v3</span>
+<p style="margin:6px 0 0">Letting AI search the <em>gate dissipator</em> — and a learned, time-dependent squeezing schedule synchronised to the gate <button class="cite" data-c="SQCAT">squeezed-cat '23–'25</button> — is the indicated next attack on the κ₁/κ₂ frontier, and the natural v3. Posted as the challenge, with named credit for whoever closes it. Robotics — automating the build-measure-learn loop on real hardware — is the program's other arm, named in the title and reserved for a later chapter of this lineage (“robotics in QC research, today and ahead”); it enters when the work moves from simulation onto real devices.</p></div>
+
+<div class="publish-cta">
+  <div class="pc-text">
+    <p class="pc-h">Publish like this</p>
+    <p class="pc-sub">This is an Open Dossier — a living, self-verifying, citable publication. Fork the format and write your own.</p>
+  </div>
+  <a class="pc-btn" href="https://github.com/m4gr4th34/open-dossier-template/blob/main/GETTING-STARTED.md">Start your own ↗</a>
+</div>
+
+<footer>
+<p>Open Dossier · QC-Accelerate · self-explaining edition · v2. Every result above carries an honest label; open and forecast claims are posted as challenges with named credit. The instrument and the search are fully reproducible: <span style="font-family:var(--mono)">verification/gate-metric/</span> and <span style="font-family:var(--mono)">verification/phase-b/</span> (each self-tests / reproduces on run). Builds on v1.0 (concept DOI 10.5281/zenodo.20838232). — <em>Don't trust this paper; run it.</em></p>
+</footer>
+
+</div>
+<script>
+const CITES = {
+  DEMO:{who:"This is a demo chip.",what:"Real chips show, in two plain sentences, what a source actually demonstrated and why it matters here — so you never need to leave the page.",src:"—"},
+  AQ:{who:"Bausch et al., Google DeepMind & Google Quantum AI, 2024.",what:"A transformer neural network learned to decode the surface code and beat the standard matching decoder on real Sycamore-processor data — state-of-the-art error decoding, learned rather than hand-written.",src:"Nature 635, 834–840 (2024)."},
+  RLCODE:{who:"Zeng et al., 2023.",what:"A reinforcement-learning agent searching bosonic codes found, surprisingly, a code built from the Fock states |2⟩ and |4⟩ that suppresses single-photon loss past the break-even point — a recipe humans had not picked.",src:"Phys. Rev. Lett. (2023); arXiv:2212.11651."},
+  RLBOS:{who:"Deep-RL bosonic-code discovery, 2025.",what:"Curriculum-learning deep reinforcement learning used to discover bosonic autonomous-QEC codes that resist single- and double-photon loss, working directly against the Knill–Laflamme conditions.",src:"Phys. Rev. A (2025); arXiv:2511.12482."},
+  V1:{who:"Ali-Khan, this dossier, Chapter 1 (v1.0, 2026).",what:"The first chapter of the lineage: a self-explaining descent to the 'floor', with a minimal cat-qubit simulation reproducing exponential noise bias and a Knill–Laflamme proof that the four-component cat makes photon loss a correctable syndrome.",src:"Concept DOI 10.5281/zenodo.20838232."},
+  MIR:{who:"Mirrahimi et al., 2014.",what:"Introduced dynamically-protected cat qubits: two-photon dissipation stabilises two coherent states and exponentially biases noise toward phase errors, the basis for hardware-efficient bias-preserving computation.",src:"New J. Phys. 16, 045014 (2014); arXiv:1312.2017."},
+  PURI:{who:"Puri et al., 2020.",what:"Showed a full set of bias-preserving gates on stabilised cat qubits — including CNOT and Toffoli — that avoids magic-state distillation, making the gate set itself not the bottleneck.",src:"Science Advances 6, eaay5901 (2020)."},
+  GAUTIER:{who:"Gautier, Sarlette & Mirrahimi, 2022.",what:"Combined dissipative and Hamiltonian confinement of cat qubits; sets a hand-designed reference point for phase-flip error versus the κ₁/κ₂ ratio (~0.8% at κ₁ = 10⁻³κ₂).",src:"PRX Quantum 3, 020339 (2022); arXiv:2112.05545."},
+  XU:{who:"Xu, Iverson, Brandão & Jiang, 2022.",what:"Engineered fast bias-preserving gates on stabilised cat qubits via derivative-based leakage suppression — the hand-designed gates whose frontier this dossier's search is tested against.",src:"Phys. Rev. Research 4, 013082 (2022); arXiv:2105.13908."},
+  SQCAT:{who:"Squeezed-cat qubits, 2023–2025.",what:"Engineering the dissipator itself — adding squeezing — is the single biggest known lever on the κ₁/κ₂ threshold (~1–2 orders of magnitude). Recently demonstrated in hardware: 22 s bit-flip time and improved Z-gate fidelity.",src:"arXiv:2210.13406 (npj QI 2023); arXiv:2502.07892 (2025)."},
+  VAREFT:{who:"Variational early-fault-tolerant co-design, 2026.",what:"Jointly learns noise-tailored encodings and their logical gate sets in a single framework — evidence that even cross-layer co-design, long thought wide open, is now being engaged by AI.",src:"arXiv:2605.28162 (2026)."}
+};
+function closeAll(except){document.querySelectorAll('.panel').forEach(p=>{if(p!==except)p.remove();});}
+document.querySelectorAll('button.term').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const n=b.nextSibling;
+    if(n&&n.classList&&n.classList.contains('panel')){n.remove();return;}
+    const d=document.createElement('div');d.className='panel';d.textContent=b.dataset.d;
+    b.parentNode.insertBefore(d,b.nextSibling);
+  });
+});
+document.querySelectorAll('button.cite').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const n=b.nextSibling;
+    if(n&&n.classList&&n.classList.contains('panel')){n.remove();return;}
+    const c=CITES[b.dataset.c]||{who:'',what:'(reference)',src:''};
+    const d=document.createElement('div');d.className='panel cite';
+    d.innerHTML='<span class="who">'+c.who+'</span>'+c.what+'<span class="src">'+c.src+'</span>';
+    b.parentNode.insertBefore(d,b.nextSibling);
+  });
+});
+</script>
+<script>
+fetch('provenance.json').then(r=>r.json()).then(p=>{
+  const d=document.getElementById('pv-doi'), v=document.getElementById('pv-doi-v');
+  if(!p.version_doi || p.version_doi.indexOf('TODO')===0){
+    v.textContent='DOI after first release';
+    d.href='https://github.com/m4gr4th34/dossier-QC-Accelerate';
+  } else {
+    d.href='https://doi.org/'+p.version_doi; v.textContent=p.version_doi+' \u2197';
+  }
+  document.getElementById('pv-state').textContent='release '+p.release_tag+' (+ live edits)';
+}).catch(()=>{document.getElementById('pv-doi-v').textContent='see repository \u2197';
+  document.getElementById('pv-doi').href='https://github.com/m4gr4th34/dossier-QC-Accelerate';});
+</script>
+</body>
+</html>
