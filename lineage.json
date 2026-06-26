@@ -1,3 +1,14 @@
 {
-  "chapters": []
+  "chapters": [
+    {
+      "n": 1,
+      "tag": "v1.0",
+      "title": "Chapter 1 — Accelerating Quantum Computing: a descent to the floor",
+      "summary": "How AI and robotics might shorten the road to a real quantum computer — a descent from surface tricks to the floor of the problem, with a simulation at the bottom.",
+      "released": "2026-06-25",
+      "version_doi": "10.5281/zenodo.20838233",
+      "concept_doi": "10.5281/zenodo.20838232",
+      "path": "chapters/v1.0/"
+    }
+  ]
 }
