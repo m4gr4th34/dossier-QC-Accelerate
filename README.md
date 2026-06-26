@@ -75,6 +75,8 @@ the citation audit and a published adversarial (red-team) review live in the
 > Ali-Khan, I. (2026). *Accelerating Quantum Computing Research Using AI and Robotics — Chapter 2:
 > AI Today, and Scoping Tomorrow's Frontier* (v2.0). Zenodo. https://doi.org/10.5281/zenodo.20856502
 
+Builds on Chapter 1 — v1.0 (DOI 10.5281/zenodo.20838233).
+
 See [`CITATION.cff`](CITATION.cff) for machine-readable metadata, or use the repository's
 "Cite this repository" button.
 

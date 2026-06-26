@@ -3,87 +3,168 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chapter 2: AI Today, and Scoping Tomorrow's Frontier — Accelerating Quantum Computing Research Using AI and Robotics (Open Dossier)</title>
+<title>Chapter 2: AI Today, and Scoping Tomorrow’s Frontier — Accelerating Quantum Computing Research Using AI and Robotics (Open Dossier)</title>
+<meta name="description" content="Chapter 2 of the QC-Accelerate open dossier: AI is already a co-author of quantum-computing research, demonstrated by scoping a hardware frontier — a kept negative, an un-gameable instrument, and a map of where AI goes next.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#101d26;--ink2:#42525c;--paper:#f6f8f9;--card:#ffffff;
-    --teal:#0e7c7b;--teal-soft:#e3f0f0;--coral:#e4572e;--coral-soft:#fbe9e3;
-    --violet:#6b4e9b;--violet-soft:#efe9f6;--pass:#1e8e5a;--open:#b07d1f;--open-soft:#fdf6e9;--line:#d8e0e4;
-    --serif:'Spectral',Georgia,serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+    --ink:#17262c;--ink2:#586a6f;--paper:#f3f6f5;--card:#ffffff;
+    --teal:#0c8f86;--teal-soft:#e2efed;--coral:#cf5d36;--coral-soft:#fbe9e3;--violet:#6b4e9b;--violet-soft:#efe9f6;
+    --pass:#1d9b62;--open:#bd861d;--open-soft:#fdf6e9;--line:rgba(23,38,44,.085);
+    --serif:'Spectral',Georgia,serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --r-lg:16px; --r-sm:10px; --r-pill:999px;
+    --shadow-soft:0 2px 12px rgba(23,38,44,.05);
+    --shadow-lift:0 16px 44px rgba(23,38,44,.09);
+    --teal-glow:rgba(12,143,134,.30);
   }
+  @supports (color: oklch(0 0 0)){
+    @media (color-gamut: p3){
+      :root{
+        --teal: oklch(0.585 0.15 187);
+        --pass: oklch(0.665 0.19 156);
+        --open: oklch(0.725 0.175 73);
+        --fail: oklch(0.625 0.245 27);
+        --coral: oklch(0.685 0.205 41);
+        --teal-glow: oklch(0.59 0.15 187 / .5);
+      }
+    }
+  }
+  ::selection{background:var(--teal-soft);color:var(--ink)}
+  a,button{-webkit-tap-highlight-color:transparent}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
+    opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65}
   .wrap{max-width:720px;margin:0 auto;padding:0 20px}
   a{color:var(--teal)}
-  header{padding:48px 0 8px}
+  header{padding:54px 0 10px}
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
   .eyebrow b{color:var(--coral)}
   h1{font-family:var(--serif);font-weight:800;font-size:clamp(28px,5vw,42px);line-height:1.12;margin:.4em 0 .2em;letter-spacing:-.01em}
-  .sub{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink2);margin:.1em 0 .5em}
-  .chapter{font-family:var(--serif);font-weight:700;font-size:clamp(19px,3vw,23px);color:var(--coral);margin:.18em 0 .12em;letter-spacing:-.01em}
-  .chapter .ch{font-family:var(--mono);font-weight:600;font-size:.62em;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);display:block;margin-bottom:2px}
   .byline{font-family:var(--serif);font-style:italic;color:var(--ink2);margin-bottom:18px}
-  .howto{background:var(--card);border:1.5px solid var(--ink);padding:14px 16px;font-size:15px;margin:18px 0 8px;border-radius:4px}
-  .cta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px}
-  .btn{font-family:var(--mono);font-size:13px;text-decoration:none;border:1.4px solid var(--line);color:var(--ink);padding:8px 13px;border-radius:3px;background:var(--card)}
-  .btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
-  h2{font-family:var(--serif);font-weight:800;font-size:26px;margin:42px 0 6px;letter-spacing:-.01em}
-  h2 .num{font-family:var(--mono);font-size:15px;color:var(--coral);margin-right:10px;font-weight:600}
-  p{margin:14px 0}
-  .punch{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--ink);border-left:3px solid var(--coral);padding-left:14px;margin:18px 0}
-  button.term{font:inherit;color:var(--violet);background:none;border:none;border-bottom:1.5px dashed var(--violet);padding:0;cursor:pointer}
-  button.cite{font-family:var(--mono);font-size:.72em;vertical-align:super;color:#fff;background:var(--teal);border:none;border-radius:3px;padding:1px 5px;margin:0 1px;cursor:pointer}
-  .panel{background:var(--violet-soft);border-left:3px solid var(--violet);padding:11px 14px;margin:8px 0;font-size:15px;border-radius:3px}
-  .panel.cite{background:var(--teal-soft);border-left-color:var(--teal)}
-  .panel .who{font-family:var(--mono);font-size:12px;color:var(--ink2);display:block;margin-bottom:3px}
-  .panel .src{font-family:var(--mono);font-size:12px;color:var(--ink2);display:block;margin-top:5px}
-  .openclaim{background:var(--open-soft);border:1.4px solid var(--open);border-radius:5px;padding:13px 16px;margin:20px 0}
-  .openclaim .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--open);font-weight:600}
-  .openclaim.forecast{background:var(--violet-soft);border-color:var(--violet)}
-  .openclaim.forecast .tag{color:var(--violet)}
-  .verified{background:#e7f4ee;border:1.4px solid var(--pass);border-radius:5px;padding:13px 16px;margin:20px 0}
-  .verified .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--pass);font-weight:600}
-  figure{margin:24px 0;text-align:center}
-  figure img{max-width:100%;border:1px solid var(--line);border-radius:4px;background:#fff}
-  figcaption{font-size:14px;color:var(--ink2);margin-top:8px;font-style:italic}
-  details.deeper{margin:14px 0;border:1px dashed var(--line);border-radius:4px;padding:6px 12px;background:var(--card)}
-  details.deeper summary{font-family:var(--mono);font-size:13px;color:var(--teal);cursor:pointer}
-  table{border-collapse:collapse;width:100%;font-size:14px;margin:16px 0;font-family:var(--mono)}
-  th,td{border:1px solid var(--line);padding:7px 10px;text-align:right}
-  th:first-child,td:first-child{text-align:left}
-  th{background:var(--teal-soft)}
-  footer{margin:50px 0 70px;font-size:14px;color:var(--ink2);border-top:1px solid var(--line);padding-top:18px}
-  .provenance{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 4px;border:1.5px solid var(--ink);background:var(--card);font-family:var(--mono);font-size:12px;overflow:hidden;border-radius:4px}
-  .provenance .pv-item{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-right:1px solid var(--line);text-decoration:none;color:var(--ink);min-width:0}
-  .provenance .pv-item:last-child{border-right:none}
-  .provenance a.pv-item:hover{background:var(--teal-soft)}
-  .provenance .pv-k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
-  .provenance .pv-v{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .provenance a.pv-item .pv-v{color:var(--teal)}
-  #pv-state{color:var(--open)}
-  @media(max-width:560px){.provenance .pv-item{flex:1 1 45%;border-bottom:1px solid var(--line)}}
-  .publish-cta{margin:46px 0 8px;padding:22px 24px;border:1.5px solid var(--teal);background:var(--teal-soft);display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;justify-content:space-between;border-radius:4px}
-  .publish-cta .pc-text{flex:1 1 320px;min-width:0}
-  .publish-cta .pc-h{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--ink);margin:0 0 3px}
-  .publish-cta .pc-sub{font-size:14px;color:var(--ink2);margin:0}
-  .publish-cta a.pc-btn{flex:0 0 auto;font-family:var(--mono);font-size:14px;font-weight:600;text-decoration:none;background:var(--teal);color:#fff;padding:12px 20px;white-space:nowrap;border-radius:3px}
-  .publish-cta a.pc-btn:hover{background:#0a615f}
-  /* --- reading refinements --- */
-  body{font-feature-settings:"kern" 1,"liga" 1;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  .wrap{max-width:712px}
-  p{margin:15px 0}
-  .lead::first-letter{font-family:var(--serif);font-weight:800;float:left;font-size:3.05em;line-height:.82;padding:6px 10px 0 0;color:var(--teal)}
-  h2{margin-top:52px;line-height:1.16}
-  .punch{font-size:20px;line-height:1.45;margin:22px 0}
-  .chapter{margin-top:.25em}
-  figure{margin:30px 0}
-  figcaption{max-width:600px;margin-left:auto;margin-right:auto;line-height:1.5}
-  .verified,.openclaim{line-height:1.55}
-  @media(min-width:640px){body{font-size:17.5px;line-height:1.68}}
+  .howto{background:var(--card);border:1.5px solid var(--ink);padding:14px 16px;font-size:15px;margin:18px 0 8px}
+  .howto .mono{font-family:var(--mono);font-size:13px}
+  h2{font-family:var(--serif);font-weight:600;font-size:27px;margin:48px 0 6px;line-height:1.2}
+  h2 .num{color:var(--coral);font-family:var(--mono);font-size:15px;font-weight:600;vertical-align:middle;margin-right:10px}
+  h3{font-family:var(--serif);font-weight:600;font-size:20px;margin:26px 0 2px}
+  p{margin:14px 0;max-width:68ch}
+
+  /* tappable terms */
+  .term{background:linear-gradient(transparent 70%, var(--teal-soft) 70%);border:none;border-bottom:1.5px dashed var(--teal);
+        padding:0 1px;font:inherit;color:inherit;cursor:pointer;text-align:left}
+  .term:focus-visible{outline:2.5px solid var(--coral);outline-offset:2px}
+  /* citation chips */
+  .cite{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--violet);background:var(--violet-soft);
+        border:1px solid var(--violet);border-radius:10px;padding:1px 8px;cursor:pointer;vertical-align:2px}
+  .cite:focus-visible{outline:2.5px solid var(--coral);outline-offset:2px}
+  /* the expansion card both produce */
+  .popcard{display:block;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--teal);
+           padding:12px 14px;margin:10px 0;font-size:15px;color:var(--ink2);max-width:68ch;animation:open .18s ease-out}
+  .popcard.citecard{border-left-color:var(--violet)}
+  .popcard b{color:var(--ink)}
+  .popcard .src{font-family:var(--mono);font-size:11.5px;color:var(--ink2);display:block;margin-top:6px}
+  @keyframes open{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.popcard{animation:none}}
+
+  /* go-deeper layers */
+  details.deeper{background:var(--card);border:1px solid var(--line);margin:16px 0}
+  details.deeper summary{cursor:pointer;padding:12px 15px;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--violet);list-style:none}
+  details.deeper summary::-webkit-details-marker{display:none}
+  details.deeper summary::before{content:'\25B8 ';color:var(--violet)}
+  details.deeper[open] summary::before{content:'\25BE '}
+  details.deeper .body{padding:0 15px 14px;font-size:15px;color:var(--ink2)}
+  details.deeper .eq{font-family:var(--mono);font-size:14px;background:var(--paper);padding:10px 12px;margin:8px 0;overflow-x:auto}
+
+  /* ===== honest-label callouts at the claim site =====
+     One per survey status that needs a visible home in prose:
+       .openclaim  amber   OPEN-UNVERIFIED  (the author's own open claim)
+       .forecast   violet  FORECAST         (labeled estimate + dated signpost)
+       .reported   coral   REPORTED         (interested-party / not independently reproduced)
+     ESTABLISHED needs no box — it is asserted plainly, with citations. */
+  .openclaim,.forecast,.reported{padding:14px 16px;margin:18px 0;font-size:15.5px;border:1px solid;border-left-width:5px}
+  .openclaim{background:var(--open-soft);border-color:var(--open)}
+  .forecast{background:var(--violet-soft);border-color:var(--violet)}
+  .reported{background:var(--coral-soft);border-color:var(--coral)}
+  .openclaim .tag,.forecast .tag,.reported .tag{font-family:var(--mono);font-size:11px;padding:2px 7px;margin-right:8px;border:1px solid}
+  .openclaim .tag{color:var(--open);border-color:var(--open)}
+  .forecast .tag{color:var(--violet);border-color:var(--violet)}
+  .reported .tag{color:var(--coral);border-color:var(--coral)}
+
+  .punch{font-family:var(--serif);font-style:italic;font-size:20px;border-left:4px solid var(--coral);padding:6px 0 6px 16px;margin:26px 0;max-width:60ch}
+  footer{margin-top:56px;padding:22px 0 60px;border-top:3px solid var(--ink);font-size:14px;color:var(--ink2)}
+  .mono{font-family:var(--mono)}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+  .btn{font-family:var(--mono);font-size:13.5px;font-weight:600;text-decoration:none;padding:11px 16px;border:1.5px solid var(--ink);color:var(--ink);background:var(--card)}
+  .btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 4px}
+  .btn:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.provenance{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 4px;border:1.5px solid var(--ink);background:var(--card);font-family:var(--mono);font-size:12px;overflow:hidden}
+.provenance .pv-item{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-right:1px solid var(--line);text-decoration:none;color:var(--ink);min-width:0}
+.provenance .pv-item:last-child{border-right:none}
+.provenance a.pv-item:hover{background:var(--teal-soft,#e3f0f0)}
+.provenance .pv-k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.provenance .pv-v{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.provenance a.pv-item .pv-v{color:var(--teal)}
+#pv-state{color:var(--open,#b07d1f)}
+@media(max-width:560px){.provenance .pv-item{flex:1 1 45%;border-bottom:1px solid var(--line)}}
+.publish-cta{margin:46px 0 8px;padding:22px 24px;border:1.5px solid var(--teal);background:var(--teal-soft,#e3f0f0);
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;justify-content:space-between}
+.publish-cta .pc-text{flex:1 1 320px;min-width:0}
+.publish-cta .pc-h{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--ink);margin:0 0 3px}
+.publish-cta .pc-sub{font-size:14px;color:var(--ink2);margin:0}
+.publish-cta a.pc-btn{flex:0 0 auto;font-family:var(--mono);font-size:14px;font-weight:600;text-decoration:none;
+  background:var(--teal);color:#fff;padding:12px 20px;white-space:nowrap;
+  border-radius:var(--r-sm);
+  background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
+  box-shadow:0 4px 14px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.32);
+  transition:filter .2s ease, box-shadow .2s ease, transform .12s ease}
+.publish-cta a.pc-btn:hover{
+  background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
+  box-shadow:0 8px 22px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.36);
+  transform:translateY(-1px);
+  filter:brightness(1.04);
+}
+
+  /* ===== elevated-light "instrument" surface treatment ===== */
+  .howto,.popcard,details.deeper,.provenance{
+    border-radius:var(--r-lg); overflow:hidden;
+    background:linear-gradient(180deg,#ffffff,#f4f8f7);
+    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.85);
+  }
+  /* status callouts keep their honest-label colour; only round + lift */
+  .openclaim,.forecast,.reported{
+    border-radius:var(--r-lg);
+    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.5);
+  }
+  .openclaim .tag,.forecast .tag,.reported .tag{border-radius:var(--r-pill)}
+  .btn{border-radius:var(--r-sm); transition:box-shadow .2s ease, transform .2s ease}
+  .btn:not(.primary):hover{ box-shadow:var(--shadow-soft); transform:translateY(-2px); }
+  .btn.primary{
+    background:var(--teal);
+    background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
+    box-shadow:0 4px 14px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.32);
+  }
+  .btn.primary:hover{
+    background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
+    box-shadow:0 8px 22px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.36);
+  }
+  .publish-cta{border-radius:var(--r-lg)}
+  h1{font-weight:500; letter-spacing:-.014em}
+
+  /* ===== Chapter-2 result-shaped components (survey shell lacks these; built from template tokens) ===== */
+  .sub{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink2);margin:.1em 0 .5em;max-width:64ch}
+  .chapter{font-family:var(--serif);font-weight:600;font-size:clamp(19px,3vw,23px);color:var(--coral);margin:.16em 0 .12em;letter-spacing:-.01em}
+  .chapter .ch{font-family:var(--mono);font-weight:600;font-size:.6em;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);display:block;margin-bottom:3px}
+  .verified{padding:14px 16px;margin:20px 0;font-size:15.5px;border:1px solid var(--pass);border-left-width:5px;background:#e8f5ee;border-radius:var(--r-lg);box-shadow:var(--shadow-soft),inset 0 1px 0 rgba(255,255,255,.5)}
+  .verified .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;margin-right:8px;border:1px solid var(--pass);color:var(--pass);font-weight:600;border-radius:var(--r-pill)}
+  figure{margin:28px 0;text-align:center}
+  figure img{max-width:100%;border:1px solid var(--line);border-radius:var(--r-lg);background:#fff;box-shadow:var(--shadow-soft);padding:6px}
+  figcaption{font-size:14px;color:var(--ink2);margin:10px auto 0;font-style:italic;max-width:600px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -99,6 +180,7 @@
     <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
     <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading… ↗</span></a>
     <a class="pv-item" href="verify.html" target="_blank" rel="noopener"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">verify proof ↗</span></a>
+    <a class="pv-item" href="paper/manuscript.pdf" target="_blank" rel="noopener"><span class="pv-k">Archived PDF</span><span class="pv-v">legacy snapshot ↗</span></a>
     <a class="pv-item" href="https://github.com/m4gr4th34/dossier-QC-Accelerate" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
   </div>
   <div class="howto">
@@ -109,14 +191,13 @@
   <div class="cta">
     <a class="btn" href="index.html">The landscape</a>
     <a class="btn primary" href="paper.html">Self-explaining edition</a>
-    <a class="btn" href="paper/manuscript.pdf">Read the PDF</a>
     <a class="btn" href="dossier.html">Audit trail</a>
     <a class="btn" href="https://github.com/m4gr4th34/dossier-QC-Accelerate">Source</a>
   </div>
 </header>
 
 <h2><span class="num">1</span>AI is already a co-author of quantum computing research</h2>
-<p class="lead">A <button class="term" data-d="The quantum version of a bit. A normal bit is 0 or 1; a qubit can be a blend of both at once — and that blend is so delicate that almost anything can destroy it.">qubit</button> is the most error-prone object humanity has ever tried to compute with — and increasingly, the thing keeping it on the rails is AI. Not someday. Now. Walk up the stack and AI is on every floor.</p>
+<p>A <button class="term" data-d="The quantum version of a bit. A normal bit is 0 or 1; a qubit can be a blend of both at once — and that blend is so delicate that almost anything can destroy it.">qubit</button> is the most error-prone object humanity has ever tried to compute with — and increasingly, the thing keeping it on the rails is AI. Not someday. Now. Walk up the stack and AI is on every floor.</p>
 <p><strong>It spots the errors.</strong> When a quantum computer slips, it doesn't show you the mistake — it shows a faint pattern of <button class="term" data-d="The cross-check measurements an error-correcting code spits out. They don't reveal the stored information (that would destroy it) — they reveal a shadow of what went wrong, which a 'decoder' must then interpret.">smoke-alarm clicks</button>, and something has to infer, in real time, what actually broke. Google trained a <button class="term" data-d="The neural-network architecture behind today's large language models. It turns out the same machinery that predicts the next word is good at reading the correlated pattern of error signals off a quantum chip.">transformer</button> to read those patterns; their AlphaQubit decoder beat the best hand-built methods on real hardware <button class="cite" data-c="AQ">Nature '24</button>. It is, almost exactly, AlphaFold's trick pointed at quantum errors.</p>
 <p><strong>It invents the error-correction codes.</strong> More striking: AI isn't only running human blueprints, it's drawing new ones. Set loose on how to hide a qubit inside light, reinforcement learning found a genuinely odd recipe — store the information in "two photons or four photons" — that humans hadn't picked, and it beats the break-even point for error correction <button class="cite" data-c="RLCODE">RL-code '23</button>. A 2025 successor discovered codes that survive two kinds of photon loss at once <button class="cite" data-c="RLBOS">bosonic-RL '25</button>.</p>
 <p><strong>It choreographs the gates.</strong> Flipping a qubit without waking its errors is a control problem, and AI has been quietly solving it for years — deep reinforcement learning designing the control pulses for superconducting qubits, and the numerically-optimized pulses behind early universal control of cat qubits.</p>
@@ -138,7 +219,7 @@
 <p>A gate counts only if it passes three checks <em>at once</em> — never a weighted average, where a search could trade one away for another: it must (1) actually perform the intended logic, (2) keep the bit-flip protection intact — measured directly by <button class="term" data-d="Whether the field holds an even or odd number of photons. A lost photon flips parity, so reading parity is how you catch the error that matters — and it can't be faked by a search the way a lumped error-rate can.">parity</button>, not by a lumpable score — and (3) stay converged inside the protected manifold. We ran the known hand-designed gate through it: the scorecard reproduces textbook cat physics — bit-flips falling off a cliff, phase-flips rising gently, the frontier degrading right where theory says it should — and a built-in resolution check rejects any run whose numbers haven't converged.</p>
 <figure><img src="verification/gate-metric/gate_metric_validation.png" alt="Validation of the three-condition gate metric: exponential bit-flip suppression on the left, the adiabatic speed-vs-loss tradeoff on the right"><figcaption>The scorecard, validated on a known gate. Left: bit-flip error falls exponentially with cat size while phase-flip stays flat — the protection, measured by parity. Right: the tradeoff the search must navigate — fast gates leak, slow gates accumulate loss.</figcaption></figure>
 <div class="verified"><span class="tag">Verified · in-repo · gate-metric</span>
-<p style="margin:6px 0 0">The three-condition metric reproduces the known dissipative-cat gate's behaviour from first principles (exponential bit-flip suppression, linear phase-flip, frontier near κ₁/κ₂ ≈ 5×10⁻³), and its truncation rail rejects under-resolved runs. This validates the <em>measurement</em> against known physics before any search is allowed to optimise against it. Code: <span style="font-family:var(--mono)">verification/gate-metric/</span>.</p></div>
+<p style="margin:6px 0 0;max-width:none">The three-condition metric reproduces the known dissipative-cat gate's behaviour from first principles (exponential bit-flip suppression, linear phase-flip, frontier near κ₁/κ₂ ≈ 5×10⁻³), and its truncation rail rejects under-resolved runs. This validates the <em>measurement</em> against known physics before any search is allowed to optimise against it. Code: <span class="mono">verification/gate-metric/</span>.</p></div>
 <p class="punch">You cannot honestly search a frontier with a scorecard that can be cheated. So first we built one that can't — and proved it on physics we already understood.</p>
 
 <h2><span class="num">5</span>The search, and the result it honestly returned</h2>
@@ -148,7 +229,7 @@
 <p>The telling part is <em>how</em> it failed. We had handed the search a tempting shortcut — a second control knob that could speed the gate up by quietly breaking the bias. A reward-hack would have seized it. Instead, because the scorecard makes bias-breaking worthless, the search drove that knob to <em>exactly zero</em> on its own and returned to the honest human gate. The instrument worked: cheating wasn't punished after the fact, it was made pointless, and the optimiser saw that.</p>
 <figure><img src="verification/phase-b/phase_b_negative.png" alt="The hand-designed baseline frontier rising as gate time shortens, with the AI search target above it unreached"><figcaption>The kept negative, in one picture. The hand-designed gate's reachable frontier (blue) rises as the gate runs faster; the AI search, given more freedom, cannot clear it. A clean "no" — and a precise map of where the wall sits.</figcaption></figure>
 <div class="openclaim"><span class="tag">Negative · kept · in-repo · phase-b</span>
-<p style="margin:6px 0 0">With two-quadrature control, finer shaping, and seeded from the hand-designed gate, an AI search does <em>not</em> beat the best hand-designed bias-preserving gate on κ₁/κ₂ (gain ≈ ×1.04; independently reproduced). Handed a bias-breaking degree of freedom, the search set it to exactly zero — the un-gameable scorecard made the shortcut worthless. Scope: single-mode Z(π/2), cat sizes n̄ = 2–3 fully searched, two-quadrature shaping, one validity bar; not yet CNOT, large cats, or dissipation-schedule shaping. A rigorous map and a kept negative — the project's guaranteed floor — not a defeat. Code: <span style="font-family:var(--mono)">verification/phase-b/</span>.</p></div>
+<p style="margin:6px 0 0;max-width:none">With two-quadrature control, finer shaping, and seeded from the hand-designed gate, an AI search does <em>not</em> beat the best hand-designed bias-preserving gate on κ₁/κ₂ (gain ≈ ×1.04; independently reproduced). Handed a bias-breaking degree of freedom, the search set it to exactly zero — the un-gameable scorecard made the shortcut worthless. Scope: single-mode Z(π/2), cat sizes n̄ = 2–3 fully searched, two-quadrature shaping, one validity bar; not yet CNOT, large cats, or dissipation-schedule shaping. A rigorous map and a kept negative — the project's guaranteed floor — not a defeat. Code: <span class="mono">verification/phase-b/</span>.</p></div>
 <p class="punch">Given more freedom than any human gate, and the human gate as its starting point, the AI's honest answer was: you already have the best one here. That "no" is the result.</p>
 
 <h2><span class="num">6</span>Where AI has <em>not</em> yet been engaged</h2>
@@ -161,29 +242,32 @@
 
 <h2><span class="num">8</span>Next: design the dissipation, not the pulse</h2>
 <p>The limit we hit is a conjunction: a protected gate must be slow, <em>and</em> slowness exposes loss. Our search broke neither clause because it only tuned the <em>drive</em>. The sharpest, most AI-native move the map points at is to change the <em>object</em> AI designs — the protective dissipation itself, made time-dependent — rather than the pulse on top of it. It runs on the very instrument we just built and shipped, by swapping the search variable from the drive to the engineered leaks.</p>
-<div class="openclaim forecast"><span class="tag">Forecast · v3</span>
-<p style="margin:6px 0 0">Letting AI search the <em>gate dissipator</em> — and a learned, time-dependent squeezing schedule synchronised to the gate <button class="cite" data-c="SQCAT">squeezed-cat '23–'25</button> — is the indicated next attack on the κ₁/κ₂ frontier, and the natural v3. Posted as the challenge, with named credit for whoever closes it. Robotics — automating the build-measure-learn loop on real hardware — is the program's other arm, named in the title and reserved for a later chapter of this lineage (“robotics in QC research, today and ahead”); it enters when the work moves from simulation onto real devices.</p></div>
+<div class="forecast"><span class="tag">Forecast · v3</span>
+<p style="margin:6px 0 0;max-width:none">Letting AI search the <em>gate dissipator</em> — and a learned, time-dependent squeezing schedule synchronised to the gate <button class="cite" data-c="SQCAT">squeezed-cat '23–'25</button> — is the indicated next attack on the κ₁/κ₂ frontier, and the natural v3. Posted as the challenge, with named credit for whoever closes it. Robotics — automating the build-measure-learn loop on real hardware — is the program's other arm, named in the title and reserved for a later chapter of this lineage (“robotics in QC research, today and ahead”); it enters when the work moves from simulation onto real devices.</p></div>
 
 <div class="publish-cta">
   <div class="pc-text">
     <p class="pc-h">Publish like this</p>
     <p class="pc-sub">This is an Open Dossier — a living, self-verifying, citable publication. Fork the format and write your own.</p>
   </div>
-  <a class="pc-btn" href="https://github.com/m4gr4th34/open-dossier-template/blob/main/GETTING-STARTED.md">Start your own ↗</a>
+  <a class="pc-btn" href="https://github.com/m4gr4th34/open-dossier-template/blob/main/GETTING-STARTED.md">Start your own →</a>
 </div>
 
 <footer>
-<p>Open Dossier · QC-Accelerate · self-explaining edition · v2. Every result above carries an honest label; open and forecast claims are posted as challenges with named credit. The instrument and the search are fully reproducible: <span style="font-family:var(--mono)">verification/gate-metric/</span> and <span style="font-family:var(--mono)">verification/phase-b/</span> (each self-tests / reproduces on run). Builds on v1.0 (concept DOI 10.5281/zenodo.20838232). — <em>Don't trust this paper; run it.</em></p>
+  <b>About this edition:</b> this page is the complete chapter in self-explaining form. This live edition <em>is</em> the paper; the <a href="paper/manuscript.pdf">formal PDF</a> is generated only as a legacy snapshot — a fixed citation record for archives that still require one, not a second version to read. The instrument and the search are fully reproducible: <span class="mono">verification/gate-metric/</span> and <span class="mono">verification/phase-b/</span> (each self-tests / reproduces on run). Builds on Chapter 1 — v1.0 (DOI <a href="https://doi.org/10.5281/zenodo.20838233">10.5281/zenodo.20838233</a>).
+  <br><br><span class="mono">An Open Dossier · QC-Accelerate · CC BY 4.0 (paper) / MIT (code) · AI-assistance: derivations, simulation code, figures, and prose were AI-generated (Claude) under the author's direction; every numerical claim is reproduced by the in-repo scripts under verification/, and the author takes final responsibility · every verification label is true</span> — <em>Don't trust this paper; run it.</em>
 </footer>
 
 </div>
+
 <script>
+// citation database — KEY: {who, what, src}
 const CITES = {
   DEMO:{who:"This is a demo chip.",what:"Real chips show, in two plain sentences, what a source actually demonstrated and why it matters here — so you never need to leave the page.",src:"—"},
   AQ:{who:"Bausch et al., Google DeepMind & Google Quantum AI, 2024.",what:"A transformer neural network learned to decode the surface code and beat the standard matching decoder on real Sycamore-processor data — state-of-the-art error decoding, learned rather than hand-written.",src:"Nature 635, 834–840 (2024)."},
   RLCODE:{who:"Zeng et al., 2023.",what:"A reinforcement-learning agent searching bosonic codes found, surprisingly, a code built from the Fock states |2⟩ and |4⟩ that suppresses single-photon loss past the break-even point — a recipe humans had not picked.",src:"Phys. Rev. Lett. (2023); arXiv:2212.11651."},
   RLBOS:{who:"Deep-RL bosonic-code discovery, 2025.",what:"Curriculum-learning deep reinforcement learning used to discover bosonic autonomous-QEC codes that resist single- and double-photon loss, working directly against the Knill–Laflamme conditions.",src:"Phys. Rev. A (2025); arXiv:2511.12482."},
-  V1:{who:"Ali-Khan, this dossier, Chapter 1 (v1.0, 2026).",what:"The first chapter of the lineage: a self-explaining descent to the 'floor', with a minimal cat-qubit simulation reproducing exponential noise bias and a Knill–Laflamme proof that the four-component cat makes photon loss a correctable syndrome.",src:"Concept DOI 10.5281/zenodo.20838232."},
+  V1:{who:"Ali-Khan, this dossier, Chapter 1 (v1.0, 2026).",what:"The first chapter of the lineage: a self-explaining descent to the 'floor', with a minimal cat-qubit simulation reproducing exponential noise bias and a Knill–Laflamme proof that the four-component cat makes photon loss a correctable syndrome.",src:"DOI 10.5281/zenodo.20838233."},
   MIR:{who:"Mirrahimi et al., 2014.",what:"Introduced dynamically-protected cat qubits: two-photon dissipation stabilises two coherent states and exponentially biases noise toward phase errors, the basis for hardware-efficient bias-preserving computation.",src:"New J. Phys. 16, 045014 (2014); arXiv:1312.2017."},
   PURI:{who:"Puri et al., 2020.",what:"Showed a full set of bias-preserving gates on stabilised cat qubits — including CNOT and Toffoli — that avoids magic-state distillation, making the gate set itself not the bottleneck.",src:"Science Advances 6, eaay5901 (2020)."},
   GAUTIER:{who:"Gautier, Sarlette & Mirrahimi, 2022.",what:"Combined dissipative and Hamiltonian confinement of cat qubits; sets a hand-designed reference point for phase-flip error versus the κ₁/κ₂ ratio (~0.8% at κ₁ = 10⁻³κ₂).",src:"PRX Quantum 3, 020339 (2022); arXiv:2112.05545."},
@@ -191,23 +275,27 @@ const CITES = {
   SQCAT:{who:"Squeezed-cat qubits, 2023–2025.",what:"Engineering the dissipator itself — adding squeezing — is the single biggest known lever on the κ₁/κ₂ threshold (~1–2 orders of magnitude). Recently demonstrated in hardware: 22 s bit-flip time and improved Z-gate fidelity.",src:"arXiv:2210.13406 (npj QI 2023); arXiv:2502.07892 (2025)."},
   VAREFT:{who:"Variational early-fault-tolerant co-design, 2026.",what:"Jointly learns noise-tailored encodings and their logical gate sets in a single framework — evidence that even cross-layer co-design, long thought wide open, is now being engaged by AI.",src:"arXiv:2605.28162 (2026)."}
 };
-function closeAll(except){document.querySelectorAll('.panel').forEach(p=>{if(p!==except)p.remove();});}
-document.querySelectorAll('button.term').forEach(b=>{
-  b.addEventListener('click',()=>{
-    const n=b.nextSibling;
-    if(n&&n.classList&&n.classList.contains('panel')){n.remove();return;}
-    const d=document.createElement('div');d.className='panel';d.textContent=b.dataset.d;
-    b.parentNode.insertBefore(d,b.nextSibling);
-  });
+// one shared toggle behavior for terms and citations
+function closeCard(btn){ const c = btn._card; if(c){ c.remove(); btn._card = null; btn.setAttribute('aria-expanded','false'); } }
+function toggle(btn, html, extraClass){
+  if(btn._card){ closeCard(btn); return; }
+  const card = document.createElement('span');
+  card.className = 'popcard' + (extraClass ? ' ' + extraClass : '');
+  card.innerHTML = html;
+  const block = btn.closest('p, .howto, .body, .openclaim, .forecast, .reported, .verified') || btn.parentNode;
+  block.insertAdjacentElement('afterend', card);
+  btn._card = card; btn.setAttribute('aria-expanded','true');
+}
+document.querySelectorAll('.term').forEach(btn=>{
+  btn.setAttribute('aria-expanded','false');
+  btn.addEventListener('click', ()=> toggle(btn, btn.dataset.d));
 });
-document.querySelectorAll('button.cite').forEach(b=>{
-  b.addEventListener('click',()=>{
-    const n=b.nextSibling;
-    if(n&&n.classList&&n.classList.contains('panel')){n.remove();return;}
-    const c=CITES[b.dataset.c]||{who:'',what:'(reference)',src:''};
-    const d=document.createElement('div');d.className='panel cite';
-    d.innerHTML='<span class="who">'+c.who+'</span>'+c.what+'<span class="src">'+c.src+'</span>';
-    b.parentNode.insertBefore(d,b.nextSibling);
+document.querySelectorAll('.cite').forEach(btn=>{
+  btn.setAttribute('aria-expanded','false');
+  btn.addEventListener('click', ()=>{
+    const c = CITES[btn.dataset.c];
+    if(!c) return;
+    toggle(btn, '<b>'+c.who+':</b> '+c.what+'<span class="src">'+c.src+'</span>', 'citecard');
   });
 });
 </script>
