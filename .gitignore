@@ -1,0 +1,6 @@
+# macOS Finder metadata
+.DS_Store
+**/.DS_Store
+
+# Author-local figure demo output (regenerated on demand)
+verification/figure_style_demo.png
