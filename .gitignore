@@ -4,3 +4,5 @@
 
 # Author-local figure demo output (regenerated on demand)
 verification/figure_style_demo.png
+
+node_modules/
