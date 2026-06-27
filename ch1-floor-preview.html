@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapter 1 · §4 — the floor, as a living read</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#17262c;--ink2:#586a6f;--paper:#f3f6f5;--card:#ffffff;
+    --teal:#0c8f86;--teal-soft:#e2efed;--coral:#cf5d36;--coral-soft:#fbe9e3;--violet:#6b4e9b;--violet-soft:#efe9f6;
+    --pass:#1d9b62;--fail:#cf3a2c;--open:#bd861d;--open-soft:#fdf6e9;--line:rgba(23,38,44,.085);
+    --serif:'Spectral',Georgia,serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --r-lg:16px;--r-sm:10px;--r-pill:999px;--shadow-soft:0 2px 12px rgba(23,38,44,.05);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.66}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+  a{color:var(--teal)}
+  header{padding:46px 0 24px;border-bottom:3px solid var(--ink)}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+  .eyebrow b{color:var(--coral)}
+  h1{font-weight:500;font-size:clamp(26px,4.4vw,38px);line-height:1.14;margin:.32em 0 .12em;letter-spacing:-.014em}
+  h1 .num{font-family:var(--mono);font-weight:500;color:var(--coral);font-size:.6em;margin-right:.5em;vertical-align:.08em}
+  .dek{font-style:italic;color:var(--ink2);margin:.1em 0 0}
+  main{padding:8px 0 60px}
+  p{margin:1.15em 0}
+  h3{font-family:var(--serif);font-weight:600;font-size:19px;margin:1.9em 0 .2em;letter-spacing:-.01em}
+  h3 .r{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--violet);display:block;margin-bottom:2px}
+  .punch{font-style:italic;color:var(--ink);border-left:3px solid var(--coral);padding-left:16px;margin:1.5em 0;font-size:18px}
+  strong{font-weight:600}
+  .proto-note{display:flex;gap:11px;align-items:flex-start;margin:22px 0 6px;padding:12px 15px;border:1.5px dashed var(--open);
+    border-radius:var(--r-sm);background:var(--open-soft);font-family:var(--mono);font-size:12px;line-height:1.55;color:#7a5a12}
+  .proto-note .dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:var(--open);margin-top:5px}
+  .proto-note b{color:var(--open)}
+  .ledger{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.04em;display:inline-block;
+    padding:3px 10px;border-radius:var(--r-pill);margin:.4em 0}
+  .ledger.open{color:var(--open);background:var(--open-soft);border:1px solid var(--open)}
+  .ledger.ver{color:var(--pass);background:#e7f4ec;border:1px solid var(--pass)}
+
+  figure.lf{margin:28px 0;background:linear-gradient(180deg,#ffffff,#f4f8f7);border:1px solid var(--line);
+    border-radius:var(--r-lg);box-shadow:var(--shadow-soft);padding:20px 20px 16px}
+  .lf .ftag{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--violet);margin-bottom:6px}
+  .lf .ftag .chip{border-radius:var(--r-pill);font-size:10px;font-weight:600;padding:2px 8px;margin-left:8px;font-family:var(--mono)}
+  .lf .ftag .chip.neg{color:var(--coral);background:var(--coral-soft);border:1px solid var(--coral)}
+  .lf .ftag .chip.ver{color:var(--pass);background:#e7f4ec;border:1px solid var(--pass)}
+  .lf svg{display:block;width:100%;height:auto;overflow:visible;font-family:var(--mono)}
+  .lf .legend{display:flex;flex-wrap:wrap;gap:13px;font-family:var(--mono);font-size:11.5px;color:var(--ink2);margin:2px 0 6px}
+  .lf .legend i{width:13px;border-top:3px solid;display:inline-block}
+  .lf .legend .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .controls{display:flex;flex-wrap:wrap;gap:16px 22px;align-items:center;margin:8px 0 2px}
+  .ctl{display:flex;flex-direction:column;gap:5px;min-width:230px;flex:1 1 230px}
+  .ctl label{font-family:var(--mono);font-size:11.5px;color:var(--ink2);display:flex;justify-content:space-between;gap:10px}
+  .ctl label .val{color:var(--ink);font-weight:600}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;
+    background:linear-gradient(90deg,var(--ac,var(--violet)) 0%,var(--ac,var(--violet)) var(--p,0%),var(--line) var(--p,0%),var(--line) 100%);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--card);
+    border:2.5px solid var(--ac,var(--violet));cursor:pointer;box-shadow:var(--shadow-soft)}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--card);border:2.5px solid var(--ac,var(--violet));cursor:pointer}
+  .ctl.teal{--ac:var(--teal)}
+  .toggle{display:inline-flex;border:1.5px solid var(--ink);border-radius:var(--r-pill);overflow:hidden;font-family:var(--mono);font-size:12px}
+  .toggle button{appearance:none;border:0;background:var(--card);color:var(--ink2);padding:7px 13px;cursor:pointer;font-family:inherit;font-size:inherit;font-weight:600}
+  .toggle button[aria-pressed=true]{background:var(--ink);color:#fff}
+  .toggle button:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+  .headline{font-family:var(--serif);font-weight:600;line-height:1}
+  .headline .big{font-size:30px}
+  .headline .unit{font-family:var(--mono);font-size:11.5px;color:var(--ink2);font-weight:400}
+  .lf figcaption{font-family:var(--mono);font-size:12px;color:var(--ink2);line-height:1.55;margin:13px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+  footer{margin-top:42px;padding:22px 0 50px;border-top:3px solid var(--ink);font-family:var(--mono);font-size:12px;color:var(--ink2);line-height:1.7}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">An Open Dossier · <b>QC-Accelerate</b> · Chapter 1 · §4 — living-read preview</div>
+    <h1><span class="num">4</span>We didn't just say it — we ran it</h1>
+    <div class="dek">The whole floor, rewritten so the reader operates the evidence instead of being shown a picture of it.</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="proto-note">
+    <span class="dot"></span>
+    <div><b>Illustrative living-read preview.</b> Real §4 prose, threaded with five figures made live. Every number is a placeholder with the right <i>behaviour</i> (shapes read from the verified scripts); exact values are sealed from the simulation at build, regenerated from the checked source so the triple-lockstep holds. Nothing here is asserted.</div>
+  </div>
+
+  <p>Ideas are cheap. So at the floor, the AI built and ran the smallest honest version of the thing — one oscillator, about sixty lines, no quantum libraries — and reported what came out, <strong>including the part of the story it had to delete.</strong> The setup is a single microwave oscillator with one sculpted leak (two-photon dissipation, the recipe behind “cat qubits”) and one unavoidable real-world noise (ordinary one-photon loss). We read off its equation of motion and ask what it does.</p>
+
+  <p>A cat qubit stores its 0-and-1 blend as a blend of two mirror-image swings of the field — ◐ and ◑ — two nearly-classical states held in superposition. The twist Schrödinger never intended: the very distinctness he called absurd is the protection. To flip ◐ into ◑, noise would have to leap the whole gulf between them in one jump — and it can't.</p>
+
+  <h3><span class="r">Result 1</span>Does a qubit even exist down here?</h3>
+  <p>First question, before protection: is there a qubit at the bottom of the bowl at all? That depends entirely on the <em>form</em> of the leak — and you can switch it and watch.</p>
+
+  <figure class="lf" id="fig-man">
+    <div class="ftag">living figure · the steady manifold <span class="chip ver">Verified · in-repo</span></div>
+    <svg id="svg-man" viewBox="0 0 720 300" role="img" aria-label="Steady-state spectrum: zero-modes and the dissipative gap"></svg>
+    <div class="controls">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-family:var(--mono);font-size:11.5px;color:var(--ink2)">the engineered leak</span>
+        <div class="toggle" id="man-toggle" role="group" aria-label="leak type">
+          <button data-k="two" aria-pressed="true">two-photon (cat)</button>
+          <button data-k="one" aria-pressed="false">one-photon (ordinary)</button>
+        </div>
+      </div>
+      <div id="man-verdict" style="font-family:var(--mono);font-size:12.5px;font-weight:600;align-self:flex-end"></div>
+    </div>
+    <figcaption>Modes plotted by how fast they decay; the ones at rest (bottom) are the protected logical states. Two-photon dissipation leaves <b>four</b> at-rest modes below a clean gap — one logical qubit's worth. Switch to an ordinary one-photon leak and the bowl collapses to a single point: no qubit at all. The form of the leak decides whether a qubit even exists. <em>Illustrative — mode counts and the gap are schematic until sealed from the verified sim.</em></figcaption>
+  </figure>
+
+  <p>We didn't put a qubit there by hand; it's what the dynamics settle into — four states at rest, cleanly walled off by a gap. Swap in the ordinary leak and there's nothing left to hold information. That is the whole bet of the floor: choose the dynamics so a qubit is the resting state, not a thing you build and babysit.</p>
+
+  <h3><span class="r">Result 2</span>It protects itself — and you can feel why</h3>
+  <p>Now switch on the real-world noise and make the cat bigger. Two things move together, and the figure ties them to one knob.</p>
+
+  <figure class="lf" id="fig-prot">
+    <div class="ftag">living figure · phase space + noise bias <span class="chip ver">Verified · in-repo</span></div>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--teal)"></span> the two cat lobes in phase space</span>
+      <span><i style="border-color:var(--coral)"></i> noise bias (protection)</span>
+    </div>
+    <svg id="svg-prot" viewBox="0 0 720 300" role="img" aria-label="Cat lobes separating and the noise bias climbing with cat size"></svg>
+    <div class="controls">
+      <div class="ctl teal">
+        <label for="nbar"><span>cat size &nbsp;n̄&nbsp; (mean photons) — crank it up</span><span class="val" id="nbar-val">1.0</span></label>
+        <input type="range" id="nbar" min="1" max="6" step="0.25" value="1">
+      </div>
+      <div class="headline">
+        <div class="big" id="bias-val">44×</div>
+        <div class="unit">noise bias  Γ<sub>phase</sub>/Γ<sub>bit</sub></div>
+      </div>
+    </div>
+    <figcaption>Drag n̄: on the left, the two lobes ◐ and ◑ push apart — a bit-flip has to cross the whole widening gap, so it gets exponentially rarer. On the right, that shows up as the bias blowing up from ~44 to tens of millions. No code, no decoder — the protection <i>is</i> the steady state, and you can watch it open up. <em>Illustrative — the bias curve and lobe spacing are placeholders until sealed from the verified sim.</em></figcaption>
+  </figure>
+
+  <p>Bit-flips fall off a cliff while phase-flips creep up only gently: a two-front war traded for a one-front war, winnable with a small cheap code instead of the thousand-to-one surface code. That exponential lopsidedness is the whole point — and here it falls straight out of the physics, with no code in sight.</p>
+
+  <h3><span class="r">The crime</span>Where this first failed — and what it taught us</h3>
+  <p>The plan was to let a blank search discover the protecting recipe. It failed, and the failure is the most useful thing in this chapter. Asked to make the bit-flip rate small, the search found a shortcut: it tilted the leak so that photon loss quietly drained one logical state into the other. The score got better and better — <em>because there was nothing left to flip into.</em> Run the crime yourself.</p>
+
+  <figure class="lf" id="fig-rh">
+    <div class="ftag">living figure · reward-hacking <span class="chip neg">Negative · kept</span></div>
+    <div class="legend">
+      <span><i style="border-color:var(--violet)"></i> reality — is this still a qubit?</span>
+      <span><i style="border-color:var(--coral)"></i> the score the search chased</span>
+    </div>
+    <svg id="svg-rh" viewBox="0 0 720 300" role="img" aria-label="Reward-hacking divergence"></svg>
+    <div class="controls">
+      <div class="ctl">
+        <label for="t-rh"><span>tilt &nbsp;t&nbsp; — the knob the search turned</span><span class="val" id="t-rh-val">0.00</span></label>
+        <input type="range" id="t-rh" min="0" max="2" step="0.01" value="0">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-family:var(--mono);font-size:11.5px;color:var(--ink2)">the metric</span>
+        <div class="toggle" id="rh-toggle" role="group" aria-label="metric">
+          <button data-m="naive" aria-pressed="true">naive (gameable)</button>
+          <button data-m="anchored" aria-pressed="false">parity-anchored (the fix)</button>
+        </div>
+      </div>
+    </div>
+    <figcaption>Drag t right: the coral score climbs toward “perfect” while the violet line — is this still a qubit? — falls off a cliff (the inset shows the high-photon well draining). The metric improves precisely as the qubit dies. Flip to parity-anchored and the score refuses to be gamed: flat and honest. <em>Illustrative shapes from figures2.py; exact trajectories sealed from the verified sim at build.</em></figcaption>
+  </figure>
+
+  <p>The repair isn't a better number — it's a metric that can't be lied to, demanding three things at once: a clean gap, convergence across cutoffs, and the check that actually catches this failure, <em>balance</em> — both logical states comparably alive. Under the honest metric, one point in the family survives as real: the symmetric cat. The known code, recovered as the only balanced answer.</p>
+  <span class="ledger open">Open · unverified · ledger C10</span>
+  <p>A validation of our instrument, not a discovery by it — and we say so. The sharper open question: can a search <em>discover</em> a loss-correcting code rather than rediscover the cat? The indicated direction is to climb the symmetry ladder.</p>
+
+  <h3><span class="r">The payoff</span>Climb the ladder — don't break it</h3>
+  <p>Two-photon dissipation gives a biased qubit. Go to four-photon and something changes in kind: loss stops being damage and becomes a <em>detectable syndrome</em>. Climb it rung by rung.</p>
+
+  <figure class="lf" id="fig-lad">
+    <div class="ftag">living figure · the symmetry ladder <span class="chip ver">Verified · in-repo</span></div>
+    <svg id="svg-lad" viewBox="0 0 720 300" role="img" aria-label="Protected-manifold dimension across the symmetry ladder"></svg>
+    <div class="controls">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-family:var(--mono);font-size:11.5px;color:var(--ink2)">climb the ladder</span>
+        <div class="toggle" id="lad-step" role="group" aria-label="rung">
+          <button data-k="2" aria-pressed="true">k = 2</button>
+          <button data-k="3" aria-pressed="false">k = 3</button>
+          <button data-k="4" aria-pressed="false">k = 4</button>
+        </div>
+      </div>
+    </div>
+    <figcaption>Each rung is a more symmetric cat; the bar is the dimension of its protected manifold. At k=2 a lost photon leaves a merely biased qubit; at k=4 the same loss is forced into a detectable Z₄ syndrome the dynamics can correct. k=4 is the minimal loss-correcting cat. (This figure is described in the current §4 but never drawn — it's pure new intuition.) <em>Illustrative — manifold dimensions sealed from the verified sim at build.</em></figcaption>
+  </figure>
+
+  <h3><span class="r">The proof</span>And here's the receipt</h3>
+  <p>Back at the crime we said the four-photon cat should turn loss into a correctable error — but hadn't shown it. Now we have, using the textbook test for whether a code truly corrects an error (the Knill–Laflamme conditions). It's a discrete fact, so we show it as one — three codes, three verdicts, no curve between them.</p>
+
+  <figure class="lf" id="fig-kl">
+    <div class="ftag">living figure · KL correctability <span class="chip ver">Verified · KL proof</span></div>
+    <svg id="svg-kl" viewBox="0 0 720 210" role="img" aria-label="Knill-Laflamme correctability across three codes"></svg>
+    <figcaption>The 2-cat can't correct single-photon loss (it hides inside the code — 0%); the 4-cat lands it entirely outside, in a distinct Z₄ sector (100% — a real syndrome you can catch and undo). Four is the smallest cat that manages it. A proof is a discrete fact; animating it into a smooth trend would oversell it, so this figure earns stillness. <em>Illustrative — the 0/50/100% verdicts are placeholders until sealed from the KL check.</em></figcaption>
+  </figure>
+
+  <span class="ledger ver">Verified · ledger C13</span>
+  <p><strong>Two honest boundaries.</strong> The physics isn't new — that four-component cats correct single-photon loss is Mirrahimi et al. 2014; we reproduce it from first principles so the dossier stands on runnable numbers, not citation alone. And demonstrating correction is not a machine <em>discovering</em> it — that harder problem is an active frontier, and our toy search doesn't yet contribute to it.</p>
+
+  <p class="punch">No code, no decoder, no measurement — and the qubit still protects itself, exponentially. The floor isn't a metaphor here. It's sixty lines you can run.</p>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>This is the full §4, as a living read.</b> Five figures, threaded through the real narrative: the manifold (does a qubit exist), phase-space + bias (why it protects), the reward-hack (the kept failure), the ladder (the payoff), the KL proof (the receipt). Each would be a sealed living figure — the verified Python bakes the data, qc-charts renders the brand + interaction over it, and a JS-off reader still gets a static poster. The two new figures (manifold toggle, ladder) add intuition that isn't on the page today at all.<br><br>
+    QC-Accelerate · Ch1 §4 living-read · prose rewritten for intuition · values illustrative until sealed from source · <b>don't trust this paper — run it.</b>
+  </div>
+</footer>
+
+<script>
+"use strict";
+const SVGNS="http://www.w3.org/2000/svg";
+const C={ink:"#17262c",ink2:"#586a6f",teal:"#0c8f86",coral:"#cf5d36",violet:"#6b4e9b",pass:"#1d9b62",open:"#bd861d",line:"rgba(23,38,44,.14)",grid:"rgba(23,38,44,.07)"};
+const el=(t,a)=>{const n=document.createElementNS(SVGNS,t);if(a)for(const k in a)n.setAttribute(k,a[k]);return n;};
+const lerp=(a,b,t)=>a+(b-a)*t;
+function linScale(d0,d1,r0,r1){return v=>r0+(r1-r0)*((v-d0)/(d1-d0));}
+function logScale(d0,d1,r0,r1){const l0=Math.log10(d0),l1=Math.log10(d1);return v=>r0+(r1-r0)*((Math.log10(v)-l0)/(l1-l0));}
+function rng(seed){let a=seed|0;return()=>{a=(a+0x6d2b79f5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
+function text(x,y,s,o){o=o||{};const t=el("text",{x,y,fill:o.fill||C.ink,"font-size":(o.size||12),"font-family":"'IBM Plex Mono',monospace","text-anchor":o.anchor||"start"});if(o.weight)t.setAttribute("font-weight",o.weight);if(o.rot)t.setAttribute("transform",`rotate(${o.rot} ${x} ${y})`);t.textContent=s;return t;}
+function path(pts){return pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");}
+function clear(svg){while(svg.firstChild)svg.removeChild(svg.firstChild);}
+function axes(svg,x,y,M,W,H,opt){
+  svg.appendChild(el("line",{x1:M.l,y1:H-M.b,x2:W-M.r,y2:H-M.b,stroke:C.ink,"stroke-width":1.4}));
+  svg.appendChild(el("line",{x1:M.l,y1:M.t,x2:M.l,y2:H-M.b,stroke:C.ink,"stroke-width":1.4}));
+  (opt.xticks||[]).forEach(t=>{const px=x(t.v);svg.appendChild(el("line",{x1:px,y1:H-M.b,x2:px,y2:H-M.b+5,stroke:C.ink,"stroke-width":1.2}));svg.appendChild(text(px,H-M.b+18,t.l,{fill:C.ink2,size:11,anchor:"middle"}));});
+  (opt.yticks||[]).forEach(t=>{const py=y(t.v);svg.appendChild(el("line",{x1:M.l-5,y1:py,x2:W-M.r,y2:py,stroke:t.grid?C.grid:C.ink,"stroke-width":t.grid?1:1.2}));svg.appendChild(text(M.l-9,py+4,t.l,{fill:C.ink2,size:11,anchor:"end"}));});
+  if(opt.xlabel)svg.appendChild(text((M.l+W-M.r)/2,H-4,opt.xlabel,{fill:C.ink,size:12,anchor:"middle",weight:600}));
+  if(opt.ylabel)svg.appendChild(text(15,(M.t+H-M.b)/2,opt.ylabel,{fill:opt.ylabelCol||C.ink,size:12,anchor:"middle",weight:600,rot:-90}));
+}
+
+/* ===== Result 1: the manifold ===== */
+(function(){
+  const svg=document.getElementById("svg-man"),W=720,H=300,M={l:128,r:30,t:20,b:34};
+  let leak="two";
+  const verdict=document.getElementById("man-verdict");
+  const y=linScale(0,1,H-M.b,M.t);            // decay rate: 0 (rest) at bottom
+  function draw(){
+    clear(svg);
+    svg.appendChild(el("line",{x1:M.l,y1:M.t,x2:M.l,y2:H-M.b,stroke:C.ink,"stroke-width":1.4}));
+    svg.appendChild(text(20,(M.t+H-M.b)/2,"decay rate  (how fast it dies)",{fill:C.ink,size:12,anchor:"middle",weight:600,rot:-90}));
+    svg.appendChild(text(M.l-9,y(0)+4,"at rest",{fill:C.teal,size:11,anchor:"end",weight:600}));
+    svg.appendChild(text(M.l-9,y(1)+4,"fast",{fill:C.ink2,size:11,anchor:"end"}));
+    const zeros=leak==="two"?4:1, gap=leak==="two"?0.40:0.10;
+    // gap band
+    if(leak==="two"){
+      svg.appendChild(el("rect",{x:M.l,y:y(gap),width:W-M.r-M.l,height:y(0)-y(gap),fill:C.teal,opacity:.06}));
+      svg.appendChild(text(W-M.r-6,y(gap/2)+4,"dissipative gap — protection",{fill:C.teal,size:11,anchor:"end"}));
+    }
+    // zero-modes (at rest)
+    for(let i=0;i<zeros;i++){
+      const px=zeros===1?(M.l+W-M.r)/2:lerp(M.l+60,W-M.r-60,i/(zeros-1));
+      svg.appendChild(el("circle",{cx:px,cy:y(0.02),r:14,fill:"none",stroke:C.teal,"stroke-width":1.5,"stroke-dasharray":"3 2"}));
+      svg.appendChild(el("circle",{cx:px,cy:y(0.02),r:7,fill:C.teal}));
+    }
+    // decaying continuum
+    const r=rng(leak==="two"?7:3);
+    for(let i=0;i<14;i++){
+      const px=lerp(M.l+40,W-M.r-40,r());
+      const py=y(gap+ (1-gap)*r());
+      svg.appendChild(el("circle",{cx:px,cy:py,r:4.5,fill:C.ink2,opacity:.5}));
+    }
+    svg.appendChild(text((M.l+W-M.r)/2,y(0)+26,leak==="two"?"four states at rest = one logical qubit":"one state — nothing to hold a qubit",
+      {fill:leak==="two"?C.teal:C.coral,size:12.5,anchor:"middle",weight:600}));
+    verdict.textContent = leak==="two" ? "a qubit exists ✓" : "no qubit ✗";
+    verdict.style.color = leak==="two"?C.pass:C.coral;
+  }
+  document.getElementById("man-toggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;leak=b.dataset.k;[...e.currentTarget.children].forEach(x=>x.setAttribute("aria-pressed",x===b));draw();});
+  draw();
+})();
+
+/* ===== Result 2: phase space + bias (n̄) ===== */
+(function(){
+  const svg=document.getElementById("svg-prot"),W=720,H=300;
+  const nEl=document.getElementById("nbar"),nVal=document.getElementById("nbar-val"),biasEl=document.getElementById("bias-val");
+  // left phase-space panel, right bias panel
+  const PL={x0:40,x1:330,y0:30,y1:H-40,cx:185,cy:(30+H-40)/2};
+  const reS=linScale(-3,3,PL.x0,PL.x1), imS=linScale(2.4,-2.4,PL.y0,PL.y1);
+  const RM={l:430,r:24,t:30,b:40};
+  const bx=linScale(1,6,RM.l,W-RM.r), by=logScale(40,4e7,H-RM.b,RM.t);
+  const bitflip=n=>Math.exp(-6.08-2.34*(n-1)), phase=n=>0.099+0.0996*(n-1), biasOf=n=>phase(n)/bitflip(n);
+  function fmt(b){return b>=1e4?(b/1e6>=1?(b/1e6).toFixed(1)+"M":(b/1e3).toFixed(0)+"k")+"×":b.toFixed(0)+"×";}
+  function draw(){
+    clear(svg);
+    const n=+nEl.value, alpha=Math.sqrt(n);
+    // ---- left: phase space ----
+    svg.appendChild(el("rect",{x:PL.x0,y:PL.y0,width:PL.x1-PL.x0,height:PL.y1-PL.y0,rx:8,fill:"#fff",stroke:C.line}));
+    svg.appendChild(el("line",{x1:PL.x0,y1:PL.cy,x2:PL.x1,y2:PL.cy,stroke:C.grid,"stroke-width":1}));
+    svg.appendChild(el("line",{x1:PL.cx,y1:PL.y0,x2:PL.cx,y2:PL.y1,stroke:C.grid,"stroke-width":1}));
+    svg.appendChild(text((PL.x0+PL.x1)/2,PL.y0-6,"phase space — the field's swings",{fill:C.ink2,size:10.5,anchor:"middle"}));
+    const xpos=reS(alpha), xneg=reS(-alpha), yb=imS(0);
+    // gap line between lobes
+    svg.appendChild(el("line",{x1:xneg+20,y1:yb,x2:xpos-20,y2:yb,stroke:C.coral,"stroke-width":1.4,"stroke-dasharray":"5 4"}));
+    svg.appendChild(text(PL.cx,yb-10,"a bit-flip must cross this",{fill:C.coral,size:10,anchor:"middle"}));
+    [[xpos,"◑","|+α⟩"],[xneg,"◐","|−α⟩"]].forEach(([cx,sym,lab])=>{
+      svg.appendChild(el("circle",{cx,cy:yb,r:20,fill:C.teal,opacity:.18}));
+      svg.appendChild(el("circle",{cx,cy:yb,r:11,fill:C.teal,opacity:.9}));
+      svg.appendChild(text(cx,yb+4,sym,{fill:"#fff",size:13,anchor:"middle",weight:600}));
+      svg.appendChild(text(cx,PL.y1-8,lab,{fill:C.ink2,size:10,anchor:"middle"}));
+    });
+    // ---- right: bias curve ----
+    axes(svg,bx,by,RM,W,H,{xlabel:"cat size  n̄",ylabel:"noise bias",ylabelCol:C.coral,
+      xticks:[1,2,3,4,5,6].map(v=>({v,l:String(v)})),
+      yticks:[1e2,1e4,1e6].map(v=>({v,l:"10"+sup(Math.round(Math.log10(v))),grid:true}))});
+    const N=100,pts=[];for(let i=0;i<=N;i++){const nn=lerp(1,6,i/N);pts.push([bx(nn),by(biasOf(nn))]);}
+    svg.appendChild(el("path",{d:path(pts),fill:"none",stroke:C.coral,"stroke-width":2.6}));
+    svg.appendChild(el("circle",{cx:bx(n),cy:by(biasOf(n)),r:6,fill:C.coral,stroke:"#fff","stroke-width":1.7}));
+  }
+  function sup(n){const m={"-":"⁻",0:"⁰",1:"¹",2:"²",3:"³",4:"⁴",5:"⁵",6:"⁶",7:"⁷"};return String(n).split("").map(c=>m[c]||c).join("");}
+  function sync(){const n=+nEl.value;nVal.textContent=n.toFixed(2);nEl.style.setProperty("--p",((n-1)/5*100)+"%");biasEl.textContent=fmt(biasOf(n));draw();}
+  nEl.addEventListener("input",sync);sync();
+})();
+
+/* ===== the crime: reward-hacking (t) ===== */
+(function(){
+  const svg=document.getElementById("svg-rh"),W=720,H=300,M={l:54,r:58,t:16,b:44};
+  const tEl=document.getElementById("t-rh"),tVal=document.getElementById("t-rh-val");
+  let metric="naive";
+  const balance=t=>1/(1+Math.pow(t/0.55,2.2)), naiveScore=t=>1-1/(1+Math.pow(t/0.5,2.4)), anchoredScore=t=>0.62-0.02*t, wellHi=t=>0.5*balance(t);
+  const x=linScale(0,2,M.l,W-M.r), y=linScale(0,1.05,H-M.b,M.t);
+  function draw(){
+    clear(svg);
+    axes(svg,x,y,M,W,H,{xlabel:"tilt  t",ylabel:"code balance",ylabelCol:C.violet,
+      xticks:[0,0.5,1,1.5,2].map(v=>({v,l:v.toFixed(1)})),
+      yticks:[0,0.5,1].map((v,i)=>({v,l:v.toFixed(1),grid:i>0}))});
+    svg.appendChild(text(W-13,(M.t+H-M.b)/2,"optimizer score",{fill:C.coral,size:12,anchor:"middle",weight:600,rot:90}));
+    const N=80,real=[],met=[];
+    for(let i=0;i<=N;i++){const t=i/N*2;real.push([x(t),y(balance(t))]);met.push([x(t),y(metric==="naive"?naiveScore(t):anchoredScore(t))]);}
+    if(metric==="naive"){
+      const band=[];for(let i=0;i<=N;i++){const t=i/N*2;if(naiveScore(t)>=balance(t))band.push([x(t),y(naiveScore(t))]);}
+      const back=[];for(let i=N;i>=0;i--){const t=i/N*2;if(naiveScore(t)>=balance(t))back.push([x(t),y(balance(t))]);}
+      if(band.length)svg.appendChild(el("path",{d:path(band.concat(back))+" Z",fill:C.coral,opacity:.08}));
+    }
+    svg.appendChild(el("path",{d:path(real),fill:"none",stroke:C.violet,"stroke-width":2.6}));
+    svg.appendChild(el("path",{d:path(met),fill:"none",stroke:C.coral,"stroke-width":2.6,"stroke-dasharray":metric==="anchored"?"1 0":"6 4"}));
+    const t=+tEl.value,px=x(t),br=balance(t),ms=metric==="naive"?naiveScore(t):anchoredScore(t);
+    svg.appendChild(el("line",{x1:px,y1:M.t,x2:px,y2:H-M.b,stroke:C.ink,"stroke-width":1,"stroke-dasharray":"3 3",opacity:.5}));
+    svg.appendChild(el("circle",{cx:px,cy:y(br),r:5,fill:C.violet,stroke:"#fff","stroke-width":1.5}));
+    svg.appendChild(el("circle",{cx:px,cy:y(ms),r:5,fill:C.coral,stroke:"#fff","stroke-width":1.5}));
+    const ix=M.l+14,iy=M.t+4,iw=84,ih=66,base=iy+ih;
+    svg.appendChild(el("rect",{x:ix-8,y:iy-2,width:iw+16,height:ih+24,rx:8,fill:"#fff",stroke:C.line}));
+    svg.appendChild(text(ix+iw/2-4,iy+9,"logical wells",{fill:C.ink2,size:9,anchor:"middle"}));
+    [["lo",1,C.teal,ix+8],["hi",wellHi(t)/0.5,C.coral,ix+iw-34]].forEach(([lbl,h,col,bxx])=>{
+      const bh=Math.max(2,h*46);
+      svg.appendChild(el("rect",{x:bxx,y:base-bh,width:26,height:bh,fill:col,rx:2,opacity:lbl==="hi"?.95:.85}));
+      svg.appendChild(text(bxx+13,base+11,lbl==="hi"?"hi↓":"lo",{fill:C.ink2,size:9,anchor:"middle"}));
+    });
+    const lie=metric==="naive"&&ms>br+0.05;
+    svg.appendChild(text(W-M.r-4,M.t+12,metric==="anchored"?"stays honest ✓":(lie?"says ‘better’ ✗":"…"),{fill:metric==="anchored"?C.pass:C.coral,size:12,anchor:"end",weight:600}));
+  }
+  function sync(){tVal.textContent=(+tEl.value).toFixed(2);tEl.style.setProperty("--p",(tEl.value/2*100)+"%");draw();}
+  tEl.addEventListener("input",sync);
+  document.getElementById("rh-toggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;metric=b.dataset.m;[...e.currentTarget.children].forEach(x=>x.setAttribute("aria-pressed",x===b));draw();});
+  sync();
+})();
+
+/* ===== the payoff: symmetry ladder ===== */
+(function(){
+  const svg=document.getElementById("svg-lad"),W=720,H=300,M={l:66,r:24,t:28,b:60};
+  let k=2;const ks=[2,3,4],dims=[4,9,16],cols=[C.coral,C.open,C.teal];
+  const verdict={2:"loss → a biased qubit (better, not safe)",3:"loss → partial structure emerges",4:"loss → a detectable Z₄ syndrome → correctable"};
+  const sub=n=>({2:"₂",3:"₃",4:"₄"}[n]||n);
+  const x=linScale(1.4,4.6,M.l,W-M.r),y=linScale(0,18,H-M.b,M.t);
+  function draw(){
+    clear(svg);
+    svg.appendChild(el("line",{x1:M.l,y1:y(0),x2:W-M.r,y2:y(0),stroke:C.ink,"stroke-width":1.4}));
+    svg.appendChild(text(18,(M.t+y(0))/2,"protected manifold dim",{fill:C.ink,size:12,anchor:"middle",weight:600,rot:-90}));
+    [4,9,16].forEach(g=>svg.appendChild(el("line",{x1:M.l,y1:y(g),x2:W-M.r,y2:y(g),stroke:C.grid,"stroke-width":1})));
+    ks.forEach((kk,i)=>{
+      const cx=x(kk),bw=72,climbed=kk<=k,bh=y(0)-y(dims[i]);
+      svg.appendChild(el("rect",{x:cx-bw/2,y:y(dims[i]),width:bw,height:bh,rx:4,fill:climbed?cols[i]:"none",opacity:climbed?(kk===k?1:.5):1,stroke:cols[i],"stroke-width":climbed?0:1.5,"stroke-dasharray":climbed?"":"4 4"}));
+      svg.appendChild(text(cx,y(0)+22,"k="+kk+"  (Z"+sub(kk)+")",{fill:climbed?C.ink:C.ink2,size:12.5,anchor:"middle",weight:kk===k?600:400}));
+      if(climbed)svg.appendChild(text(cx,y(dims[i])-9,"dim "+dims[i]+" = "+Math.round(Math.sqrt(dims[i]))+"\u00B2",{fill:cols[i],size:11.5,anchor:"middle",weight:600}));
+    });
+    svg.appendChild(text((M.l+W-M.r)/2,H-14,verdict[k],{fill:cols[k-2],size:13.5,anchor:"middle",weight:600}));
+  }
+  document.getElementById("lad-step").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;k=+b.dataset.k;[...e.currentTarget.children].forEach(x=>x.setAttribute("aria-pressed",x===b));draw();});
+  draw();
+})();
+
+/* ===== the proof: KL ===== */
+(function(){
+  const svg=document.getElementById("svg-kl"),W=720,H=210,M={l:24,r:24,t:24,b:22};
+  const cases=[{pct:0,col:C.coral,label:"2-cat",verdict:"loss is invisible"},{pct:50,col:C.open,label:"3-cat",verdict:"partly detectable"},{pct:100,col:C.teal,label:"4-cat",verdict:"loss → Z\u2084 syndrome",min:true}];
+  const n=cases.length,gap=26,cw=(W-M.l-M.r-gap*(n-1))/n,top=M.t,ch=H-M.t-M.b;
+  cases.forEach((c,i)=>{
+    const cx=M.l+i*(cw+gap);
+    svg.appendChild(el("rect",{x:cx,y:top,width:cw,height:ch,rx:10,fill:"#fff",stroke:c.min?c.col:C.line,"stroke-width":c.min?2:1}));
+    const fh=ch*c.pct/100;
+    if(fh>0)svg.appendChild(el("rect",{x:cx,y:top+ch-fh,width:cw,height:fh,rx:10,fill:c.col,opacity:.14}));
+    if(c.min)svg.appendChild(text(cx+cw/2,top-7,"minimal correctable code",{fill:c.col,size:10,anchor:"middle",weight:600}));
+    svg.appendChild(text(cx+cw/2,top+50,c.pct+"%",{fill:c.col,size:32,anchor:"middle",weight:600}));
+    svg.appendChild(text(cx+cw/2,top+68,"of single-photon loss correctable",{fill:C.ink2,size:9,anchor:"middle"}));
+    svg.appendChild(text(cx+cw/2,top+ch-26,c.label,{fill:C.ink,size:14,anchor:"middle",weight:600}));
+    svg.appendChild(text(cx+cw/2,top+ch-10,c.verdict,{fill:c.col,size:11,anchor:"middle"}));
+  });
+})();
+</script>
+</body>
+</html>
