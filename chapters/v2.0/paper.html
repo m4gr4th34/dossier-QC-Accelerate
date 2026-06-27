@@ -3,117 +3,259 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chapter 2: AI Today, and Scoping Tomorrow's Frontier — Accelerating Quantum Computing Research Using AI and Robotics (Open Dossier)</title>
+<title>Self-Explaining Edition — DOSSIER NNN (Open Dossier)</title>
+<meta name="description" content="YOUR ONE-LINE DESCRIPTION. A survey that explains itself.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="katex/katex.min.css">
 <style>
   :root{
-    --ink:#101d26;--ink2:#42525c;--paper:#f6f8f9;--card:#ffffff;
-    --teal:#0e7c7b;--teal-soft:#e3f0f0;--coral:#e4572e;--coral-soft:#fbe9e3;
-    --violet:#6b4e9b;--violet-soft:#efe9f6;--pass:#1e8e5a;--open:#b07d1f;--open-soft:#fdf6e9;--line:#d8e0e4;
-    --serif:'Spectral',Georgia,serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+    --ink:#17262c;--ink2:#586a6f;--paper:#f3f6f5;--card:#ffffff;
+    --teal:#0c8f86;--teal-soft:#e2efed;--coral:#cf5d36;--coral-soft:#fbe9e3;--violet:#6b4e9b;--violet-soft:#efe9f6;
+    --pass:#1d9b62;--open:#bd861d;--open-soft:#fdf6e9;--line:rgba(23,38,44,.085);
+    --serif:'Spectral',Georgia,serif;
+    --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --r-lg:16px; --r-sm:10px; --r-pill:999px;
+    --shadow-soft:0 2px 12px rgba(23,38,44,.05);
+    --shadow-lift:0 16px 44px rgba(23,38,44,.09);
+    --teal-glow:rgba(12,143,134,.30);
   }
+  @supports (color: oklch(0 0 0)){
+    @media (color-gamut: p3){
+      :root{
+        --teal: oklch(0.585 0.15 187);
+        --pass: oklch(0.665 0.19 156);
+        --open: oklch(0.725 0.175 73);
+        --fail: oklch(0.625 0.245 27);
+        --coral: oklch(0.685 0.205 41);
+        --teal-glow: oklch(0.59 0.15 187 / .5);
+      }
+    }
+  }
+  ::selection{background:var(--teal-soft);color:var(--ink)}
+  a,button{-webkit-tap-highlight-color:transparent}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
+    opacity:.05;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65}
   .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+  /* paper's reading column is 720; its chrome is the narrowest width that keeps
+     the 5-button nav AND the 4-item provenance bar single-row (measured: nav
+     needs >=818, bar >=769) so the title stays aligned with the other editions
+     (no wrap-bounce) while trimming the chrome overhang over the 720 column. */
+  .chrome{max-width:820px;margin:0 auto;padding:0 20px}
   a{color:var(--teal)}
-  header{padding:48px 0 8px}
+  header{padding:54px 0 26px;border-bottom:3px solid var(--ink)}
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
   .eyebrow b{color:var(--coral)}
-  h1{font-family:var(--serif);font-weight:800;font-size:clamp(28px,5vw,42px);line-height:1.12;margin:.4em 0 .2em;letter-spacing:-.01em}
-  .sub{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink2);margin:.1em 0 .5em}
-  .chapter{font-family:var(--serif);font-weight:700;font-size:clamp(19px,3vw,23px);color:var(--coral);margin:.18em 0 .12em;letter-spacing:-.01em}
-  .chapter .ch{font-family:var(--mono);font-weight:600;font-size:.62em;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);display:block;margin-bottom:2px}
-  .byline{font-family:var(--serif);font-style:italic;color:var(--ink2);margin-bottom:18px}
-  .howto{background:var(--card);border:1.5px solid var(--ink);padding:14px 16px;font-size:15px;margin:18px 0 8px;border-radius:4px}
-  .cta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px}
-  .btn{font-family:var(--mono);font-size:13px;text-decoration:none;border:1.4px solid var(--line);color:var(--ink);padding:8px 13px;border-radius:3px;background:var(--card)}
-  .btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
-  h2{font-family:var(--serif);font-weight:800;font-size:26px;margin:42px 0 6px;letter-spacing:-.01em}
-  h2 .num{font-family:var(--mono);font-size:15px;color:var(--coral);margin-right:10px;font-weight:600}
-  p{margin:14px 0}
-  .punch{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--ink);border-left:3px solid var(--coral);padding-left:14px;margin:18px 0}
-  button.term{font:inherit;color:var(--violet);background:none;border:none;border-bottom:1.5px dashed var(--violet);padding:0;cursor:pointer}
-  button.cite{font-family:var(--mono);font-size:.72em;vertical-align:super;color:#fff;background:var(--teal);border:none;border-radius:3px;padding:1px 5px;margin:0 1px;cursor:pointer}
-  .panel{background:var(--violet-soft);border-left:3px solid var(--violet);padding:11px 14px;margin:8px 0;font-size:15px;border-radius:3px}
-  .panel.cite{background:var(--teal-soft);border-left-color:var(--teal)}
-  .panel .who{font-family:var(--mono);font-size:12px;color:var(--ink2);display:block;margin-bottom:3px}
-  .panel .src{font-family:var(--mono);font-size:12px;color:var(--ink2);display:block;margin-top:5px}
-  .openclaim{background:var(--open-soft);border:1.4px solid var(--open);border-radius:5px;padding:13px 16px;margin:20px 0}
-  .openclaim .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--open);font-weight:600}
-  .openclaim.forecast{background:var(--violet-soft);border-color:var(--violet)}
-  .openclaim.forecast .tag{color:var(--violet)}
-  .verified{background:#e7f4ee;border:1.4px solid var(--pass);border-radius:5px;padding:13px 16px;margin:20px 0}
-  .verified .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--pass);font-weight:600}
-  figure{margin:24px 0;text-align:center}
-  figure img{max-width:100%;border:1px solid var(--line);border-radius:4px;background:#fff}
-  figcaption{font-size:14px;color:var(--ink2);margin-top:8px;font-style:italic}
-  details.deeper{margin:14px 0;border:1px dashed var(--line);border-radius:4px;padding:6px 12px;background:var(--card)}
-  details.deeper summary{font-family:var(--mono);font-size:13px;color:var(--teal);cursor:pointer}
-  table{border-collapse:collapse;width:100%;font-size:14px;margin:16px 0;font-family:var(--mono)}
-  th,td{border:1px solid var(--line);padding:7px 10px;text-align:right}
-  th:first-child,td:first-child{text-align:left}
-  th{background:var(--teal-soft)}
-  footer{margin:50px 0 70px;font-size:14px;color:var(--ink2);border-top:1px solid var(--line);padding-top:18px}
-  .provenance{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 4px;border:1.5px solid var(--ink);background:var(--card);font-family:var(--mono);font-size:12px;overflow:hidden;border-radius:4px}
-  .provenance .pv-item{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-right:1px solid var(--line);text-decoration:none;color:var(--ink);min-width:0}
-  .provenance .pv-item:last-child{border-right:none}
-  .provenance a.pv-item:hover{background:var(--teal-soft)}
-  .provenance .pv-k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
-  .provenance .pv-v{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .provenance a.pv-item .pv-v{color:var(--teal)}
-  #pv-state{color:var(--open)}
-  @media(max-width:560px){.provenance .pv-item{flex:1 1 45%;border-bottom:1px solid var(--line)}}
-  .publish-cta{margin:46px 0 8px;padding:22px 24px;border:1.5px solid var(--teal);background:var(--teal-soft);display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;justify-content:space-between;border-radius:4px}
-  .publish-cta .pc-text{flex:1 1 320px;min-width:0}
-  .publish-cta .pc-h{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--ink);margin:0 0 3px}
-  .publish-cta .pc-sub{font-size:14px;color:var(--ink2);margin:0}
-  .publish-cta a.pc-btn{flex:0 0 auto;font-family:var(--mono);font-size:14px;font-weight:600;text-decoration:none;background:var(--teal);color:#fff;padding:12px 20px;white-space:nowrap;border-radius:3px}
-  .publish-cta a.pc-btn:hover{background:#0a615f}
-  /* --- reading refinements --- */
-  body{font-feature-settings:"kern" 1,"liga" 1;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  .wrap{max-width:712px}
-  p{margin:15px 0}
-  .lead::first-letter{font-family:var(--serif);font-weight:800;float:left;font-size:3.05em;line-height:.82;padding:6px 10px 0 0;color:var(--teal)}
-  h2{margin-top:52px;line-height:1.16}
-  .punch{font-size:20px;line-height:1.45;margin:22px 0}
-  .chapter{margin-top:.25em}
-  figure{margin:30px 0}
-  figcaption{max-width:600px;margin-left:auto;margin-right:auto;line-height:1.5}
-  .verified,.openclaim{line-height:1.55}
-  @media(min-width:640px){body{font-size:17.5px;line-height:1.68}}
+  h1{font-family:var(--serif);font-weight:800;font-size:clamp(27px,4.6vw,44px);line-height:1.12;margin:.4em 0 .25em;letter-spacing:-.014em}
+  .byline{font-family:var(--serif);font-style:italic;color:var(--ink2)}
+  .howto{background:var(--card);border:1.5px solid var(--ink);padding:14px 16px;font-size:15px;margin:18px 0 8px}
+  .howto .mono{font-family:var(--mono);font-size:13px}
+  h2{font-family:var(--serif);font-weight:600;font-size:27px;margin:48px 0 6px;line-height:1.2}
+  h2 .num{color:var(--coral);font-family:var(--mono);font-size:15px;font-weight:600;vertical-align:middle;margin-right:10px}
+  h3{font-family:var(--serif);font-weight:600;font-size:20px;margin:26px 0 2px}
+  p{margin:14px 0;max-width:68ch}
+
+  /* tappable terms */
+  .term{background:linear-gradient(transparent 70%, var(--teal-soft) 70%);border:none;border-bottom:1.5px dashed var(--teal);
+        padding:0 1px;font:inherit;color:inherit;cursor:pointer;text-align:left}
+  .term:focus-visible{outline:2.5px solid var(--coral);outline-offset:2px}
+  /* citation chips */
+  .cite{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--violet);background:var(--violet-soft);
+        border:1px solid var(--violet);border-radius:10px;padding:1px 8px;cursor:pointer;vertical-align:2px}
+  .cite:focus-visible{outline:2.5px solid var(--coral);outline-offset:2px}
+  /* the expansion card both produce */
+  .popcard{display:block;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--teal);
+           padding:12px 14px;margin:10px 0;font-size:15px;color:var(--ink2);max-width:68ch;animation:open .18s ease-out}
+  .popcard.citecard{border-left-color:var(--violet)}
+  .popcard b{color:var(--ink)}
+  .popcard .src{font-family:var(--mono);font-size:11.5px;color:var(--ink2);display:block;margin-top:6px}
+  @keyframes open{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.popcard{animation:none}}
+
+  /* go-deeper layers */
+  details.deeper{background:var(--card);border:1px solid var(--line);margin:16px 0}
+  details.deeper summary{cursor:pointer;padding:12px 15px;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--violet);list-style:none}
+  details.deeper summary::-webkit-details-marker{display:none}
+  details.deeper summary::before{content:'\25B8 ';color:var(--violet)}
+  details.deeper[open] summary::before{content:'\25BE '}
+  details.deeper .body{padding:0 15px 14px;font-size:15px;color:var(--ink2)}
+  .eq{
+    font-size:15px; margin:14px 0; padding:16px 18px;
+    background:var(--card); border:1px solid var(--line);
+    border-radius:var(--r-lg); box-shadow:var(--shadow-soft);
+    overflow-x:auto; overflow-y:hidden;
+  }
+  .eq .katex{color:var(--ink); font-size:1.05em}
+  .eq .katex-display{margin:0}              /* container already provides spacing */
+  span.math .katex{color:var(--ink)}        /* inline math inherits ink */
+
+  /* ===== honest-label callouts at the claim site =====
+     One per survey status that needs a visible home in prose:
+       .openclaim  amber   OPEN-UNVERIFIED  (the author's own open claim)
+       .forecast   violet  FORECAST         (labeled estimate + dated signpost)
+       .reported   coral   REPORTED         (interested-party / not independently reproduced)
+     ESTABLISHED needs no box — it is asserted plainly, with citations. */
+  .openclaim,.forecast,.reported{padding:14px 16px;margin:18px 0;font-size:15.5px;border:1px solid;border-left-width:5px}
+  .openclaim{background:var(--open-soft);border-color:var(--open)}
+  .forecast{background:var(--violet-soft);border-color:var(--violet)}
+  .reported{background:var(--coral-soft);border-color:var(--coral)}
+  .openclaim .tag,.forecast .tag,.reported .tag{font-family:var(--mono);font-size:11px;padding:2px 7px;margin-right:8px;border:1px solid}
+  .openclaim .tag{color:var(--open);border-color:var(--open)}
+  .forecast .tag{color:var(--violet);border-color:var(--violet)}
+  .reported .tag{color:var(--coral);border-color:var(--coral)}
+
+  .punch{font-family:var(--serif);font-style:italic;font-size:20px;border-left:4px solid var(--coral);padding:6px 0 6px 16px;margin:26px 0;max-width:60ch}
+  footer{margin-top:56px;padding:22px 0 60px;border-top:3px solid var(--ink);font-size:14px;color:var(--ink2)}
+  .mono{font-family:var(--mono)}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+  .btn{font-family:var(--mono);font-size:13.5px;font-weight:600;text-decoration:none;padding:11px 16px;border:1.5px solid var(--ink);color:var(--ink);background:var(--card)}
+  .btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 4px}
+  .btn:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.provenance{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 4px;border:1.5px solid var(--ink);background:var(--card);font-family:var(--mono);font-size:12px;overflow:hidden}
+.provenance .pv-item{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-right:1px solid var(--line);text-decoration:none;color:var(--ink);min-width:0}
+.provenance .pv-item:last-child{border-right:none}
+.provenance a.pv-item:hover{background:var(--teal-soft,#e3f0f0)}
+.provenance .pv-k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.provenance .pv-v{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.provenance a.pv-item .pv-v{color:var(--teal)}
+#pv-state{color:var(--open,#b07d1f)}
+@media(max-width:560px){.provenance .pv-item{flex:1 1 45%;border-bottom:1px solid var(--line)}}
+.publish-cta{margin:46px 0 8px;padding:22px 24px;border:1.5px solid var(--teal);background:var(--teal-soft,#e3f0f0);
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;justify-content:space-between}
+.publish-cta .pc-text{flex:1 1 320px;min-width:0}
+.publish-cta .pc-h{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--ink);margin:0 0 3px}
+.publish-cta .pc-sub{font-size:14px;color:var(--ink2);margin:0}
+.publish-cta a.pc-btn{flex:0 0 auto;font-family:var(--mono);font-size:14px;font-weight:600;text-decoration:none;
+  background:var(--teal);color:#fff;padding:12px 20px;white-space:nowrap;
+  border-radius:var(--r-sm);
+  background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
+  box-shadow:0 4px 14px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.32);
+  transition:filter .2s ease, box-shadow .2s ease, transform .12s ease}
+.publish-cta a.pc-btn:hover{
+  background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
+  box-shadow:0 8px 22px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.36);
+  transform:translateY(-1px);
+  filter:brightness(1.04);
+}
+
+  /* ===== elevated-light "instrument" surface treatment ===== */
+  .howto,.popcard,details.deeper,.provenance{
+    border-radius:var(--r-lg); overflow:hidden;
+    background:linear-gradient(180deg,#ffffff,#f4f8f7);
+    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.85);
+  }
+  /* status callouts keep their honest-label colour; only round + lift */
+  .openclaim,.forecast,.reported{
+    border-radius:var(--r-lg);
+    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.5);
+  }
+  .openclaim .tag,.forecast .tag,.reported .tag{border-radius:var(--r-pill)}
+  .btn{border-radius:var(--r-sm); transition:box-shadow .2s ease, transform .2s ease}
+  .btn:not(.primary):hover{ box-shadow:var(--shadow-soft); transform:translateY(-2px); }
+  .btn.primary{
+    background:var(--teal);
+    background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
+    box-shadow:0 4px 14px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.32);
+  }
+  .btn.primary:hover{
+    background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
+    box-shadow:0 8px 22px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.36);
+  }
+  .publish-cta{border-radius:var(--r-lg)}
+  h1{font-weight:500; letter-spacing:-.014em}
+
+  /* ===== figures + dependency-free lightbox (inert with no figures) ===== */
+  figure{
+    margin:28px 0; padding:0;
+    background:var(--card); border:1px solid var(--line);
+    border-radius:var(--r-lg); overflow:hidden;
+    box-shadow:var(--shadow-soft);
+  }
+  figure img{
+    display:block; width:100%; height:auto; cursor:zoom-in;
+  }
+  figcaption{
+    font-family:var(--mono); font-size:12.5px; line-height:1.5;
+    color:var(--ink2); text-align:center;
+    padding:11px 16px 13px; border-top:1px solid var(--line);
+  }
+  /* lightbox — overlay must clear the grain overlay at z-index:9999 */
+  .lbx{
+    position:fixed; inset:0; z-index:10000;
+    display:none; align-items:center; justify-content:center;
+    background:rgba(23,38,44,.78); padding:24px; cursor:zoom-out;
+    -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+  }
+  .lbx.open{display:flex}
+  .lbx img{
+    max-width:min(1100px,94vw); max-height:92vh; width:auto; height:auto;
+    border-radius:var(--r-lg); box-shadow:var(--shadow-lift);
+    background:var(--card);
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .lbx img{transition:transform .2s ease}
+  }
+
+  /* ===== lineage strip (hidden until lineage.json has chapters) ===== */
+  .lineage-strip{
+    display:none;                      /* revealed by script when chapters>0 */
+    align-items:center; flex-wrap:wrap; gap:8px 16px;
+    margin:14px 0 0; padding:11px 16px;
+    background:linear-gradient(180deg,#ffffff,#f4f8f7);
+    border:1px solid var(--line); border-radius:var(--r-lg);
+    box-shadow:var(--shadow-soft);
+    font-family:var(--mono); font-size:12.5px; color:var(--ink2);
+  }
+  .lineage-strip.show{display:flex}
+  .lineage-strip b{color:var(--ink); font-weight:600}
+  .lineage-strip a{color:var(--teal)}
+  .lineage-strip .sep{color:var(--line); }
+  .lineage-strip .ls-all{margin-left:auto; font-weight:500}
+  /* --- chapter additions: subtitle/chapter-label/lead/verified --- */
+  .sub{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink2);margin:.1em 0 .5em;max-width:60ch}
+  .chapter{font-family:var(--serif);font-size:18px;color:var(--ink);margin:.25em 0 .35em}
+  .chapter .ch{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);display:block;margin-bottom:3px}
+  p.lead{font-size:18.5px;color:var(--ink)}
+  .verified{padding:14px 16px;margin:18px 0;font-size:15.5px;border:1px solid var(--pass);border-left-width:5px;background:#e7f4ec;border-radius:var(--r-lg);box-shadow:var(--shadow-soft),inset 0 1px 0 rgba(255,255,255,.5)}
+  .verified .tag{font-family:var(--mono);font-size:11px;padding:2px 7px;margin-right:8px;border:1px solid var(--pass);color:var(--pass);border-radius:var(--r-pill)}
 </style>
 </head>
 <body>
-<div class="wrap">
-
 <header>
-  <div class="eyebrow">An Open Dossier · <b>QC-Accelerate</b> · Chapter 2 · self-explaining edition · result</div>
-  <h1>Accelerating Quantum Computing Research Using AI and Robotics</h1>
-  <div class="chapter"><span class="ch">Chapter 2 of the lineage</span>AI Today, and Scoping Tomorrow’s Frontier</div>
-  <div class="sub">AI has quietly become a co-author of quantum-computing research. This chapter puts that to the test on one hard problem — and shows AI doing something past re-deriving and discovering: scoping a frontier, and saying honestly where to stop.</div>
-  <div class="byline">Irfan Ali-Khan — Independent Researcher</div>
-  <div class="provenance" role="contentinfo" aria-label="Provenance and verification">
-    <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
-    <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading… ↗</span></a>
-    <a class="pv-item" href="../../verify.html" target="_blank" rel="noopener"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">verify proof ↗</span></a>
-    <a class="pv-item" href="https://github.com/m4gr4th34/dossier-QC-Accelerate" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
+  <div class="chrome">
+    <div class="eyebrow">An Open Dossier · <b>QC-Accelerate</b> · self-explaining edition · Chapter 2 · v2.0</div>
+    <div class="cta">
+      <a class="btn" href="../../index.html">The landscape</a>
+      <a class="btn" href="../../paper.html">Self-explaining edition</a>
+      <a class="btn" href="../../dossier.html">Audit trail</a>
+      <a class="btn primary" href="../../lineage.html">Chapters</a>
+      <a class="btn" href="https://github.com/m4gr4th34/dossier-QC-Accelerate">Source &amp; issues</a>
+    </div>
+    <div class="provenance" role="contentinfo" aria-label="Provenance and verification">
+      <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
+      <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading… ↗</span></a>
+      <a class="pv-item" href="../../verify.html" target="_blank" rel="noopener"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">verify proof ↗</span></a>
+      <a class="pv-item" href="https://github.com/m4gr4th34/dossier-QC-Accelerate" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
+    </div>
+    <div class="lineage-strip" id="lineageStrip" aria-label="Lineage"></div>
+    <h1>Accelerating Quantum Computing Research Using AI and Robotics</h1>
+    <div class="chapter"><span class="ch">Chapter 2 of the lineage</span>AI Today, and Scoping Tomorrow’s Frontier</div>
+    <div class="sub">AI has quietly become a co-author of quantum-computing research. This chapter puts that to the test on one hard problem — and shows AI doing something past re-deriving and discovering: scoping a frontier, and saying honestly where to stop.</div>
+    <div class="byline">Irfan Ali-Khan — Independent Researcher</div>
   </div>
+</header>
+<div class="wrap">
   <div class="howto">
     <b>How to read this:</b> the whole piece is on this page, written to explain itself — no prerequisites, no clicking required. Tap any
     <button class="term" data-d="Like this! Dashed words open a plain-language explanation right here. Tap again to close. You never leave the page.">underlined term</button>
     for a plain-language note, or any <button class="cite" data-c="DEMO">ref</button> to see, in two sentences, what that source actually showed. Every result wears an honest label — green when verified in-repo, amber when open — at the exact spot it comes up.
   </div>
-  <div class="cta">
-    <a class="btn" href="../../index.html">The landscape</a>
-    <a class="btn primary" href="../../paper.html">Self-explaining edition</a>
-    <a class="btn" href="../../paper/manuscript.pdf">Read the PDF</a>
-    <a class="btn" href="../../dossier.html">Audit trail</a>
-    <a class="btn" href="https://github.com/m4gr4th34/dossier-QC-Accelerate">Source</a>
-  </div>
-</header>
 
 <h2><span class="num">1</span>AI is already a co-author of quantum computing research</h2>
 <p class="lead">A <button class="term" data-d="The quantum version of a bit. A normal bit is 0 or 1; a qubit can be a blend of both at once — and that blend is so delicate that almost anything can destroy it.">qubit</button> is the most error-prone object humanity has ever tried to compute with — and increasingly, the thing keeping it on the rails is AI. Not someday. Now. Walk up the stack and AI is on every floor.</p>
@@ -136,7 +278,7 @@
 <h2><span class="num">4</span>An instrument that can't be fooled</h2>
 <p>v1.0's sharpest lesson was a failure: a naive search once <button class="term" data-d="When an optimiser satisfies the letter of your scoring rule while violating its intent. In v1.0 the search 'improved' a protection score by quietly destroying the qubit it was meant to protect.">reward-hacked</button> its own metric, scoring well by destroying the qubit. So before asking "can AI beat the human gate?", we built a scorecard that <em>cannot</em> be gamed — and validated it against gates whose behaviour is already known.</p>
 <p>A gate counts only if it passes three checks <em>at once</em> — never a weighted average, where a search could trade one away for another: it must (1) actually perform the intended logic, (2) keep the bit-flip protection intact — measured directly by <button class="term" data-d="Whether the field holds an even or odd number of photons. A lost photon flips parity, so reading parity is how you catch the error that matters — and it can't be faked by a search the way a lumped error-rate can.">parity</button>, not by a lumpable score — and (3) stay converged inside the protected manifold. We ran the known hand-designed gate through it: the scorecard reproduces textbook cat physics — bit-flips falling off a cliff, phase-flips rising gently, the frontier degrading right where theory says it should — and a built-in resolution check rejects any run whose numbers haven't converged.</p>
-<figure><img src="verification/gate-metric/gate_metric_validation.png" alt="Validation of the three-condition gate metric: exponential bit-flip suppression on the left, the adiabatic speed-vs-loss tradeoff on the right"><figcaption>The scorecard, validated on a known gate. Left: bit-flip error falls exponentially with cat size while phase-flip stays flat — the protection, measured by parity. Right: the tradeoff the search must navigate — fast gates leak, slow gates accumulate loss.</figcaption></figure>
+<figure><img src="../../verification/gate-metric/gate_metric_validation.png" alt="Validation of the three-condition gate metric: exponential bit-flip suppression on the left, the adiabatic speed-vs-loss tradeoff on the right"><figcaption>The scorecard, validated on a known gate. Left: bit-flip error falls exponentially with cat size while phase-flip stays flat — the protection, measured by parity. Right: the tradeoff the search must navigate — fast gates leak, slow gates accumulate loss.</figcaption></figure>
 <div class="verified"><span class="tag">Verified · in-repo · gate-metric</span>
 <p style="margin:6px 0 0">The three-condition metric reproduces the known dissipative-cat gate's behaviour from first principles (exponential bit-flip suppression, linear phase-flip, frontier near κ₁/κ₂ ≈ 5×10⁻³), and its truncation rail rejects under-resolved runs. This validates the <em>measurement</em> against known physics before any search is allowed to optimise against it. Code: <span style="font-family:var(--mono)">verification/gate-metric/</span>.</p></div>
 <p class="punch">You cannot honestly search a frontier with a scorecard that can be cheated. So first we built one that can't — and proved it on physics we already understood.</p>
@@ -144,9 +286,9 @@
 <h2><span class="num">5</span>The search, and the result it honestly returned</h2>
 <p>Then we let an AI search loose with <em>more</em> freedom than any human design — two control knobs instead of one, finer pulse shaping, free timing — and, to make the test as hard as possible on ourselves, we <em>seeded it with the best human gate</em>, so it started from the human answer and could only try to improve.</p>
 <p>It couldn't. Across cat sizes, the search recovered the hand-designed gate and could not push the tolerable κ₁/κ₂ past it (a 4% wobble — noise). The hand-designed adiabatic gate, run as fast as it can go, already sits at the optimum of this control space.</p>
-<figure><img src="verification/phase-b/phase_b_frontier_map.png" alt="Frontier map: tolerable noise ratio versus cat size, with the AI search sitting on top of the hand-designed baseline"><figcaption>The mapped frontier: how bad a noise ratio a working gate tolerates, versus cat size. The AI search (red) lands on top of the hand-designed baseline (blue) — it scopes the wall precisely, but does not move it.</figcaption></figure>
+<figure><img src="../../verification/phase-b/phase_b_frontier_map.png" alt="Frontier map: tolerable noise ratio versus cat size, with the AI search sitting on top of the hand-designed baseline"><figcaption>The mapped frontier: how bad a noise ratio a working gate tolerates, versus cat size. The AI search lands on top of the hand-designed baseline — it scopes the wall precisely, but does not move it.</figcaption></figure>
 <p>The telling part is <em>how</em> it failed. We had handed the search a tempting shortcut — a second control knob that could speed the gate up by quietly breaking the bias. A reward-hack would have seized it. Instead, because the scorecard makes bias-breaking worthless, the search drove that knob to <em>exactly zero</em> on its own and returned to the honest human gate. The instrument worked: cheating wasn't punished after the fact, it was made pointless, and the optimiser saw that.</p>
-<figure><img src="verification/phase-b/phase_b_negative.png" alt="The hand-designed baseline frontier rising as gate time shortens, with the AI search target above it unreached"><figcaption>The kept negative, in one picture. The hand-designed gate's reachable frontier (blue) rises as the gate runs faster; the AI search, given more freedom, cannot clear it. A clean "no" — and a precise map of where the wall sits.</figcaption></figure>
+<figure><img src="../../verification/phase-b/phase_b_negative.png" alt="The hand-designed baseline frontier rising as gate time shortens, with the AI search target above it unreached"><figcaption>The kept negative, in one picture. The hand-designed gate's reachable frontier rises as the gate runs faster; the AI search, given more freedom, cannot clear it. A clean "no" — and a precise map of where the wall sits.</figcaption></figure>
 <div class="openclaim"><span class="tag">Negative · kept · in-repo · phase-b</span>
 <p style="margin:6px 0 0">With two-quadrature control, finer shaping, and seeded from the hand-designed gate, an AI search does <em>not</em> beat the best hand-designed bias-preserving gate on κ₁/κ₂ (gain ≈ ×1.04; independently reproduced). Handed a bias-breaking degree of freedom, the search set it to exactly zero — the un-gameable scorecard made the shortcut worthless. Scope: single-mode Z(π/2), cat sizes n̄ = 2–3 fully searched, two-quadrature shaping, one validity bar; not yet CNOT, large cats, or dissipation-schedule shaping. A rigorous map and a kept negative — the project's guaranteed floor — not a defeat. Code: <span style="font-family:var(--mono)">verification/phase-b/</span>.</p></div>
 <p class="punch">Given more freedom than any human gate, and the human gate as its starting point, the AI's honest answer was: you already have the best one here. That "no" is the result.</p>
@@ -177,7 +319,10 @@
 </footer>
 
 </div>
+
 <script>
+// citation database — add an entry per chip:
+// KEY: {who:"Author(s) (Year)", what:"What they showed, 2 sentences, plain language.", src:"Journal Vol, Page"}
 const CITES = {
   DEMO:{who:"This is a demo chip.",what:"Real chips show, in two plain sentences, what a source actually demonstrated and why it matters here — so you never need to leave the page.",src:"—"},
   AQ:{who:"Bausch et al., Google DeepMind & Google Quantum AI, 2024.",what:"A transformer neural network learned to decode the surface code and beat the standard matching decoder on real Sycamore-processor data — state-of-the-art error decoding, learned rather than hand-written.",src:"Nature 635, 834–840 (2024)."},
@@ -191,23 +336,27 @@ const CITES = {
   SQCAT:{who:"Squeezed-cat qubits, 2023–2025.",what:"Engineering the dissipator itself — adding squeezing — is the single biggest known lever on the κ₁/κ₂ threshold (~1–2 orders of magnitude). Recently demonstrated in hardware: 22 s bit-flip time and improved Z-gate fidelity.",src:"arXiv:2210.13406 (npj QI 2023); arXiv:2502.07892 (2025)."},
   VAREFT:{who:"Variational early-fault-tolerant co-design, 2026.",what:"Jointly learns noise-tailored encodings and their logical gate sets in a single framework — evidence that even cross-layer co-design, long thought wide open, is now being engaged by AI.",src:"arXiv:2605.28162 (2026)."}
 };
-function closeAll(except){document.querySelectorAll('.panel').forEach(p=>{if(p!==except)p.remove();});}
-document.querySelectorAll('button.term').forEach(b=>{
-  b.addEventListener('click',()=>{
-    const n=b.nextSibling;
-    if(n&&n.classList&&n.classList.contains('panel')){n.remove();return;}
-    const d=document.createElement('div');d.className='panel';d.textContent=b.dataset.d;
-    b.parentNode.insertBefore(d,b.nextSibling);
-  });
+// one shared toggle behavior for terms and citations
+function closeCard(btn){ const c = btn._card; if(c){ c.remove(); btn._card = null; btn.setAttribute('aria-expanded','false'); } }
+function toggle(btn, html, extraClass){
+  if(btn._card){ closeCard(btn); return; }
+  const card = document.createElement('span');
+  card.className = 'popcard' + (extraClass ? ' ' + extraClass : '');
+  card.innerHTML = html;
+  const block = btn.closest('p, .howto, .body, .openclaim, .forecast, .reported') || btn.parentNode;
+  block.insertAdjacentElement('afterend', card);
+  btn._card = card; btn.setAttribute('aria-expanded','true');
+}
+document.querySelectorAll('.term').forEach(btn=>{
+  btn.setAttribute('aria-expanded','false');
+  btn.addEventListener('click', ()=> toggle(btn, btn.dataset.d));
 });
-document.querySelectorAll('button.cite').forEach(b=>{
-  b.addEventListener('click',()=>{
-    const n=b.nextSibling;
-    if(n&&n.classList&&n.classList.contains('panel')){n.remove();return;}
-    const c=CITES[b.dataset.c]||{who:'',what:'(reference)',src:''};
-    const d=document.createElement('div');d.className='panel cite';
-    d.innerHTML='<span class="who">'+c.who+'</span>'+c.what+'<span class="src">'+c.src+'</span>';
-    b.parentNode.insertBefore(d,b.nextSibling);
+document.querySelectorAll('.cite').forEach(btn=>{
+  btn.setAttribute('aria-expanded','false');
+  btn.addEventListener('click', ()=>{
+    const c = CITES[btn.dataset.c];
+    if(!c) return;
+    toggle(btn, '<b>'+c.who+':</b> '+c.what+'<span class="src">'+c.src+'</span>', 'citecard');
   });
 });
 </script>
@@ -223,6 +372,82 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
   document.getElementById('pv-state').textContent='release '+p.release_tag+' (+ live edits)';
 }).catch(()=>{document.getElementById('pv-doi-v').textContent='see repository \u2197';
   document.getElementById('pv-doi').href='https://github.com/m4gr4th34/dossier-QC-Accelerate';});
+</script>
+<div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Figure, full size" aria-hidden="true">
+  <img id="lbx-img" alt="">
+</div>
+<script>
+(function(){
+  var lbx = document.getElementById('lbx');
+  var lbxImg = document.getElementById('lbx-img');
+  if(!lbx || !lbxImg) return;
+  var imgs = document.querySelectorAll('figure img');
+  if(!imgs.length) return;            // INERT when there are no figures
+  var lastFocus = null;
+  function open(src, alt){
+    lastFocus = document.activeElement;
+    lbxImg.src = src; lbxImg.alt = alt || '';
+    lbx.classList.add('open'); lbx.setAttribute('aria-hidden','false');
+    lbx.tabIndex = -1; lbx.focus();
+  }
+  function close(){
+    lbx.classList.remove('open'); lbx.setAttribute('aria-hidden','true');
+    lbxImg.src = '';
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  imgs.forEach(function(img){
+    img.setAttribute('role','button');
+    img.setAttribute('tabindex','0');
+    if(!img.getAttribute('aria-label'))
+      img.setAttribute('aria-label','View figure full size');
+    img.addEventListener('click', function(){ open(img.currentSrc||img.src, img.alt); });
+    img.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(img.currentSrc||img.src, img.alt); }
+    });
+  });
+  lbx.addEventListener('click', close);   // backdrop OR image click closes (cursor:zoom-out)
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape' && lbx.classList.contains('open')) close();
+  });
+})();
+</script>
+<script>
+// Lineage strip — mirrors the provenance fetch shape against lineage.json.
+// ANCESTORS-ONLY / OUTWARD: links the latest SEALED chapter + "view all", never a
+// forward/next chapter (a sealed chapter cannot know its successors). Hidden
+// unless chapters exist; built via createElement/textContent (no innerHTML).
+fetch('lineage.json').then(function(r){return r.json();}).then(function(d){
+  var chs = (d.chapters||[]).slice().sort(function(a,b){return a.n-b.n;});
+  if(chs.length < 1) return;                 // solo dossier (no releases) -> strip stays hidden
+  var strip = document.getElementById('lineageStrip');
+  if(!strip) return;
+  var currentN = Math.max.apply(null, chs.map(function(c){return c.n;}));
+  var latest = chs.filter(function(c){return c.n===currentN;})[0];
+
+  function sep(){ var s=document.createElement('span'); s.className='sep'; s.textContent='·'; return s; }
+
+  // The reader is on the WORKING DRAFT (the live, unreleased tip) — NOT on a
+  // sealed chapter. Label it as such; never call the latest seal "current".
+  var lead=document.createElement('span');
+  var b=document.createElement('b'); b.textContent='Working draft';
+  lead.appendChild(b);
+  strip.appendChild(lead);
+
+  // ANCESTOR back-link only: the latest SEALED release (Chapter currentN) is the
+  // working draft's immediate ancestor — never a forward/next claim.
+  strip.appendChild(sep());
+  var rel=document.createElement('a');
+  rel.href=(latest.path||'')+'paper.html';
+  rel.textContent='latest release Chapter '+latest.n;
+  strip.appendChild(rel);
+
+  var all=document.createElement('a');
+  all.className='ls-all'; all.href='lineage.html';
+  all.textContent='View all chapters →';
+  strip.appendChild(all);
+
+  strip.classList.add('show');
+}).catch(function(){ /* hide: strip stays display:none (standalone or load failure) */ });
 </script>
 </body>
 </html>
