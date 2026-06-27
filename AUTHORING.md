@@ -2,8 +2,8 @@
 ## A production playbook for AI agents (and the humans directing them)
 
 **Who this file is for:** any capable AI agent handed a research idea and
-this repository. Follow it and the output is a complete dossier: formal
-PDF, interactive edition, self-explaining edition, audit trail, verified
+this repository. Follow it and the output is a complete dossier: interactive
+edition, self-explaining edition, audit trail, lineage index, verified
 claims, honest labels. **The human's job is the ideas, the intuition, the
 reality checks, and the sign-offs. Everything else is yours.**
 
@@ -222,10 +222,11 @@ true after each release:
   carries the real version DOI and release tag, both update automatically.
   The `auto-timestamp` workflow rewrites `provenance.json` on each release
   (release tag + date); you set the DOI fields once.
-- **The manuscript DOI footer** (`paper/manuscript.tex`, via `fancyhdr`) is
-  baked into the PDF at compile time and is NOT auto-updated — replace its
-  `TODO-AFTER-FIRST-RELEASE` placeholder with your version DOI after the
-  first release, then let `build-pdf.yml` rebuild the PDF.
+- **The manuscript source footer** (`paper/manuscript.tex`, via `fancyhdr`)
+  carries a `TODO-AFTER-FIRST-RELEASE` DOI placeholder. The LaTeX manuscript is
+  an optional, on-demand artifact — the web editions are the paper, so it is not
+  shipped or auto-built. If a legacy venue ever needs a typeset document,
+  regenerate it from source and set its footer DOI to your version DOI by hand.
 
 After each release, confirm the real version DOI is in `provenance.json`
 (or was written there by the workflow) and in the manuscript footer.
@@ -269,9 +270,9 @@ second copy to keep in lockstep: revise your working rules in `CLAUDE.md` alone.
 ## Design identity (do not reinvent)
 
 The palette and type ARE the format's brand across all dossiers:
-ink #101d26, paper #f6f8f9, teal #0e7c7b (verification/key), coral
-#e4572e (accents/security), violet #6b4e9b (sources/learning), pass
-#1e8e5a, open #b07d1f. Display: Spectral. Data/labels: IBM Plex Mono.
+ink #17262c, paper #f3f6f5, teal #0c8f86 (verification/key), coral
+#cf5d36 (accents/security), violet #6b4e9b (sources/learning), pass
+#1d9b62, open #bd861d. Display: Spectral. Data/labels: IBM Plex Mono.
 Body: system sans. Keep the machinery CSS from the scaffolds; spend your
 creativity on the content, not the chrome.
 
