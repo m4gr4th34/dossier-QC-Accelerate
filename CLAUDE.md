@@ -169,6 +169,7 @@ verification script, and its claim ledger all live here.
   - verification/     — verify script, audits, red-team report, format spec
   - figures/          — vendored living-figures runtime (interactive SVG via data-figure)
   - claim_ledger.csv  — every claim, typed, with honest status
+  - RESYNC.md         — template-resync status log (migrations landed/deferred + why); read before any template sync
 - Living figures (interactive SVG): authored as a `data-figure` JSON spec that
   declares a top-level `"type"`, rendered by the vendored `figures/` runtime, sealed
   into a static JS-off poster by `render-figures` (mirrors `render-math`). The core
