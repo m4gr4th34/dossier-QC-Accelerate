@@ -40,6 +40,20 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
 - ⏭️ **#8** — EST→FORECAST ledger relabel
 - ⏭️ **`AUTHORING.md`** — hand-merge (236-line three-way; its own focused pass)
 
+## Known follow-ups (non-blocking)
+- **Standalone editions drift on skin changes.** `dossier.html` and `verify.html` are NOT
+  skin-rendered (no render script touches them), so their chrome (nav, footer) does not update
+  when `skin/edition.html` changes. This caused a nav-version drift after migrations #1+#2 (the
+  front door moved to the 4-button nav; these two stayed on the old 5-button nav until manually
+  fixed in `debcc85`). The durable fix is bringing them into the single-source/skin model so
+  their nav is generated, not hand-maintained — candidate for a future migration. Until then,
+  any skin nav/footer change must be hand-mirrored into these two files.
+- **Literal-escape mangle hazard in standalone files.** `dossier.html`'s footer carried a literal
+  6-char `\u2190` string (rendered as visible text, not a `←` arrow) — a pre-existing escape
+  mangle, fixed in `debcc85`. Other standalone/hand-authored files may carry similar literal
+  `\uXXXX` escapes or PUA characters; worth a byte-scan when next editing them. When editing
+  literal-vs-rendered characters, express both via escapes in code, never paste the glyph.
+
 ## Final step
 - ⏭️ Stamp `template-sync.json` → `5c0e94c` **after** the pending items land.
   This stamp means "synced through `5c0e94c` **except migration #5, by permanent design**."
