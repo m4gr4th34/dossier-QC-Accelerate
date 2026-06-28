@@ -3,287 +3,100 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Self-Explaining Edition — DOSSIER NNN (Open Dossier)</title>
-<meta name="description" content="YOUR ONE-LINE DESCRIPTION. A survey that explains itself.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="katex/katex.min.css">
+<title>Self-Explaining Edition — Accelerating Quantum Computing (Open Dossier)</title>
 <style>
   :root{
-    --ink:#17262c;--ink2:#586a6f;--paper:#f3f6f5;--card:#ffffff;
-    --teal:#0c8f86;--teal-soft:#e2efed;--coral:#cf5d36;--coral-soft:#fbe9e3;--violet:#6b4e9b;--violet-soft:#efe9f6;
-    --pass:#1d9b62;--open:#bd861d;--open-soft:#fdf6e9;--line:rgba(23,38,44,.085);
-    --serif:'Spectral',Georgia,serif;
-    --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+    --ink:#101d26;--ink2:#42525c;--paper:#f6f8f9;--card:#ffffff;
+    --teal:#0e7c7b;--teal-soft:#e3f0f0;--coral:#e4572e;--coral-soft:#fbe9e3;
+    --violet:#6b4e9b;--violet-soft:#efe9f6;--pass:#1e8e5a;--open:#b07d1f;--open-soft:#fdf6e9;--line:#d8e0e4;
+    --serif:'Spectral',Georgia,serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-    --r-lg:16px; --r-sm:10px; --r-pill:999px;
-    --shadow-soft:0 2px 12px rgba(23,38,44,.05);
-    --shadow-lift:0 16px 44px rgba(23,38,44,.09);
-    --teal-glow:rgba(12,143,134,.30);
   }
-  @supports (color: oklch(0 0 0)){
-    @media (color-gamut: p3){
-      :root{
-        --teal: oklch(0.585 0.15 187);
-        --pass: oklch(0.665 0.19 156);
-        --open: oklch(0.725 0.175 73);
-        --fail: oklch(0.625 0.245 27);
-        --coral: oklch(0.685 0.205 41);
-        --teal-glow: oklch(0.59 0.15 187 / .5);
-      }
-    }
-  }
-  ::selection{background:var(--teal-soft);color:var(--ink)}
-  a,button{-webkit-tap-highlight-color:transparent}
-  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;
-    opacity:.05;mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65}
   .wrap{max-width:720px;margin:0 auto;padding:0 20px}
-  /* paper's reading column is 720; its chrome is the narrowest width that keeps
-     the 5-button nav AND the 4-item provenance bar single-row (measured: nav
-     needs >=818, bar >=769) so the title stays aligned with the other editions
-     (no wrap-bounce) while trimming the chrome overhang over the 720 column. */
-  .chrome{max-width:820px;margin:0 auto;padding:0 20px}
   a{color:var(--teal)}
-  header{padding:54px 0 26px;border-bottom:3px solid var(--ink)}
+  header{padding:48px 0 8px}
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
   .eyebrow b{color:var(--coral)}
-  h1{font-family:var(--serif);font-weight:800;font-size:clamp(27px,4.6vw,44px);line-height:1.12;margin:.4em 0 .25em;letter-spacing:-.014em}
-  .byline{font-family:var(--serif);font-style:italic;color:var(--ink2)}
-  .howto{background:var(--card);border:1.5px solid var(--ink);padding:14px 16px;font-size:15px;margin:18px 0 8px}
-  .howto .mono{font-family:var(--mono);font-size:13px}
-  h2{font-family:var(--serif);font-weight:600;font-size:27px;margin:48px 0 6px;line-height:1.2}
-  h2 .num{color:var(--coral);font-family:var(--mono);font-size:15px;font-weight:600;vertical-align:middle;margin-right:10px}
-  h3{font-family:var(--serif);font-weight:600;font-size:20px;margin:26px 0 2px}
-  p{margin:14px 0;max-width:68ch}
-
-  /* tappable terms */
-  .term{background:linear-gradient(transparent 70%, var(--teal-soft) 70%);border:none;border-bottom:1.5px dashed var(--teal);
-        padding:0 1px;font:inherit;color:inherit;cursor:pointer;text-align:left}
-  .term:focus-visible{outline:2.5px solid var(--coral);outline-offset:2px}
-  /* citation chips */
-  .cite{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--violet);background:var(--violet-soft);
-        border:1px solid var(--violet);border-radius:10px;padding:1px 8px;cursor:pointer;vertical-align:2px}
-  .cite:focus-visible{outline:2.5px solid var(--coral);outline-offset:2px}
-  /* the expansion card both produce */
-  .popcard{display:block;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--teal);
-           padding:12px 14px;margin:10px 0;font-size:15px;color:var(--ink2);max-width:68ch;animation:open .18s ease-out}
-  .popcard.citecard{border-left-color:var(--violet)}
-  .popcard b{color:var(--ink)}
-  .popcard .src{font-family:var(--mono);font-size:11.5px;color:var(--ink2);display:block;margin-top:6px}
-  @keyframes open{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion:reduce){.popcard{animation:none}}
-
-  /* go-deeper layers */
-  details.deeper{background:var(--card);border:1px solid var(--line);margin:16px 0}
-  details.deeper summary{cursor:pointer;padding:12px 15px;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--violet);list-style:none}
-  details.deeper summary::-webkit-details-marker{display:none}
-  details.deeper summary::before{content:'\25B8 ';color:var(--violet)}
-  details.deeper[open] summary::before{content:'\25BE '}
-  details.deeper .body{padding:0 15px 14px;font-size:15px;color:var(--ink2)}
-  .eq{
-    font-size:15px; margin:14px 0; padding:16px 18px;
-    background:var(--card); border:1px solid var(--line);
-    border-radius:var(--r-lg); box-shadow:var(--shadow-soft);
-    overflow-x:auto; overflow-y:hidden;
-  }
-  .eq .katex{color:var(--ink); font-size:1.05em}
-  .eq .katex-display{margin:0}              /* container already provides spacing */
-  span.math .katex{color:var(--ink)}        /* inline math inherits ink */
-
-  /* ===== honest-label callouts at the claim site =====
-     One per survey status that needs a visible home in prose:
-       .openclaim  amber   OPEN-UNVERIFIED  (the author's own open claim)
-       .forecast   violet  FORECAST         (labeled estimate + dated signpost)
-       .reported   coral   REPORTED         (interested-party / not independently reproduced)
-     ESTABLISHED needs no box — it is asserted plainly, with citations. */
-  .openclaim,.forecast,.reported{padding:14px 16px;margin:18px 0;font-size:15.5px;border:1px solid;border-left-width:5px}
-  .openclaim{background:var(--open-soft);border-color:var(--open)}
-  .forecast{background:var(--violet-soft);border-color:var(--violet)}
-  .reported{background:var(--coral-soft);border-color:var(--coral)}
-  .openclaim .tag,.forecast .tag,.reported .tag{font-family:var(--mono);font-size:11px;padding:2px 7px;margin-right:8px;border:1px solid}
-  .openclaim .tag{color:var(--open);border-color:var(--open)}
-  .forecast .tag{color:var(--violet);border-color:var(--violet)}
-  .reported .tag{color:var(--coral);border-color:var(--coral)}
-
-  .punch{font-family:var(--serif);font-style:italic;font-size:20px;border-left:4px solid var(--coral);padding:6px 0 6px 16px;margin:26px 0;max-width:60ch}
-  footer{margin-top:56px;padding:22px 0 60px;border-top:3px solid var(--ink);font-size:14px;color:var(--ink2)}
-  .mono{font-family:var(--mono)}
-  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
-  .btn{font-family:var(--mono);font-size:13.5px;font-weight:600;text-decoration:none;padding:11px 16px;border:1.5px solid var(--ink);color:var(--ink);background:var(--card)}
-  .btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
-  .cta{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 4px}
-  .btn:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
-.provenance{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 4px;border:1.5px solid var(--ink);background:var(--card);font-family:var(--mono);font-size:12px;overflow:hidden}
-.provenance .pv-item{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-right:1px solid var(--line);text-decoration:none;color:var(--ink);min-width:0}
-.provenance .pv-item:last-child{border-right:none}
-.provenance a.pv-item:hover{background:var(--teal-soft,#e3f0f0)}
-.provenance .pv-k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
-.provenance .pv-v{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.provenance a.pv-item .pv-v{color:var(--teal)}
-#pv-state{color:var(--open,#b07d1f)}
-@media(max-width:560px){.provenance .pv-item{flex:1 1 45%;border-bottom:1px solid var(--line)}}
-.publish-cta{margin:46px 0 8px;padding:22px 24px;border:1.5px solid var(--teal);background:var(--teal-soft,#e3f0f0);
-  display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;justify-content:space-between}
-.publish-cta .pc-text{flex:1 1 320px;min-width:0}
-.publish-cta .pc-h{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--ink);margin:0 0 3px}
-.publish-cta .pc-sub{font-size:14px;color:var(--ink2);margin:0}
-.publish-cta a.pc-btn{flex:0 0 auto;font-family:var(--mono);font-size:14px;font-weight:600;text-decoration:none;
-  background:var(--teal);color:#fff;padding:12px 20px;white-space:nowrap;
-  border-radius:var(--r-sm);
-  background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
-  box-shadow:0 4px 14px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.32);
-  transition:filter .2s ease, box-shadow .2s ease, transform .12s ease}
-.publish-cta a.pc-btn:hover{
-  background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
-  box-shadow:0 8px 22px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.36);
-  transform:translateY(-1px);
-  filter:brightness(1.04);
-}
-
-  /* ===== elevated-light "instrument" surface treatment ===== */
-  .howto,.popcard,details.deeper,.provenance{
-    border-radius:var(--r-lg); overflow:hidden;
-    background:linear-gradient(180deg,#ffffff,#f4f8f7);
-    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.85);
-  }
-  /* status callouts keep their honest-label colour; only round + lift */
-  .openclaim,.forecast,.reported{
-    border-radius:var(--r-lg);
-    box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.5);
-  }
-  .openclaim .tag,.forecast .tag,.reported .tag{border-radius:var(--r-pill)}
-  .btn{border-radius:var(--r-sm); transition:box-shadow .2s ease, transform .2s ease}
-  .btn:not(.primary):hover{ box-shadow:var(--shadow-soft); transform:translateY(-2px); }
-  .btn.primary{
-    background:var(--teal);
-    background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
-    box-shadow:0 4px 14px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.32);
-  }
-  .btn.primary:hover{
-    background:linear-gradient(180deg, color-mix(in oklab, white 14%, var(--teal)), var(--teal));
-    box-shadow:0 8px 22px var(--teal-glow), inset 0 1px 0 rgba(255,255,255,.36);
-  }
-  .publish-cta{border-radius:var(--r-lg)}
-  h1{font-weight:500; letter-spacing:-.014em}
-
-  /* ===== figures + dependency-free lightbox (inert with no figures) ===== */
-  figure{
-    margin:28px 0; padding:0;
-    background:var(--card); border:1px solid var(--line);
-    border-radius:var(--r-lg); overflow:hidden;
-    box-shadow:var(--shadow-soft);
-  }
-  figure img{
-    display:block; width:100%; height:auto; cursor:zoom-in;
-  }
-  figcaption{
-    font-family:var(--mono); font-size:12.5px; line-height:1.5;
-    color:var(--ink2); text-align:center;
-    padding:11px 16px 13px; border-top:1px solid var(--line);
-  }
-  /* lightbox — overlay must clear the grain overlay at z-index:9999 */
-  .lbx{
-    position:fixed; inset:0; z-index:10000;
-    display:none; align-items:center; justify-content:center;
-    background:rgba(23,38,44,.78); padding:24px; cursor:zoom-out;
-    -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
-  }
-  .lbx.open{display:flex}
-  .lbx img{
-    max-width:min(1100px,94vw); max-height:92vh; width:auto; height:auto;
-    border-radius:var(--r-lg); box-shadow:var(--shadow-lift);
-    background:var(--card);
-  }
-  @media (prefers-reduced-motion:no-preference){
-    .lbx img{transition:transform .2s ease}
-  }
-
-  /* ===== lineage strip (hidden until lineage.json has chapters) ===== */
-  .lineage-strip{
-    display:none;                      /* revealed by script when chapters>0 */
-    align-items:center; flex-wrap:wrap; gap:8px 16px;
-    margin:14px 0 0; padding:11px 16px;
-    background:linear-gradient(180deg,#ffffff,#f4f8f7);
-    border:1px solid var(--line); border-radius:var(--r-lg);
-    box-shadow:var(--shadow-soft);
-    font-family:var(--mono); font-size:12.5px; color:var(--ink2);
-  }
-  .lineage-strip.show{display:flex}
-  .lineage-strip b{color:var(--ink); font-weight:600}
-  .lineage-strip a{color:var(--teal)}
-  .lineage-strip .sep{color:var(--line); }
-  .lineage-strip .ls-all{margin-left:auto; font-weight:500}
-  /* --- chapter additions: subtitle, data table, verified (green) callout --- */
-  .sub{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink2);margin:.1em 0 .5em;max-width:60ch}
+  h1{font-family:var(--serif);font-weight:800;font-size:clamp(28px,5vw,42px);line-height:1.12;margin:.4em 0 .2em;letter-spacing:-.01em}
+  .sub{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink2);margin:.1em 0 .5em}
+  .byline{font-family:var(--serif);font-style:italic;color:var(--ink2);margin-bottom:18px}
+  .howto{background:var(--card);border:1.5px solid var(--ink);padding:14px 16px;font-size:15px;margin:18px 0 8px;border-radius:4px}
+  .cta{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 6px}
+  .btn{font-family:var(--mono);font-size:13px;text-decoration:none;border:1.4px solid var(--line);color:var(--ink);padding:8px 13px;border-radius:3px;background:var(--card)}
+  .btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+  h2{font-family:var(--serif);font-weight:800;font-size:26px;margin:42px 0 6px;letter-spacing:-.01em}
+  h2 .num{font-family:var(--mono);font-size:15px;color:var(--coral);margin-right:10px;font-weight:600}
+  p{margin:14px 0}
+  .punch{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--ink);border-left:3px solid var(--coral);padding-left:14px;margin:18px 0}
+  button.term{font:inherit;color:var(--violet);background:none;border:none;border-bottom:1.5px dashed var(--violet);padding:0;cursor:pointer}
+  button.cite{font-family:var(--mono);font-size:.72em;vertical-align:super;color:#fff;background:var(--teal);border:none;border-radius:3px;padding:1px 5px;margin:0 1px;cursor:pointer}
+  .panel{background:var(--violet-soft);border-left:3px solid var(--violet);padding:11px 14px;margin:8px 0;font-size:15px;border-radius:3px}
+  .panel.cite{background:var(--teal-soft);border-left-color:var(--teal)}
+  .panel .who{font-family:var(--mono);font-size:12px;color:var(--ink2);display:block;margin-bottom:3px}
+  .panel .src{font-family:var(--mono);font-size:12px;color:var(--ink2);display:block;margin-top:5px}
+  .openclaim{background:var(--open-soft);border:1.4px solid var(--open);border-radius:5px;padding:13px 16px;margin:20px 0}
+  .openclaim .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--open);font-weight:600}
+  .openclaim.forecast{background:var(--violet-soft);border-color:var(--violet)}
+  .openclaim.forecast .tag{color:var(--violet)}
+  .verified{background:#e7f4ee;border:1.4px solid var(--pass);border-radius:5px;padding:13px 16px;margin:20px 0}
+  .verified .tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--pass);font-weight:600}
+  figure{margin:24px 0;text-align:center}
+  figure img{max-width:100%;border:1px solid var(--line);border-radius:4px;background:#fff}
+  figcaption{font-size:14px;color:var(--ink2);margin-top:8px;font-style:italic}
+  details.deeper{margin:14px 0;border:1px dashed var(--line);border-radius:4px;padding:6px 12px;background:var(--card)}
+  details.deeper summary{font-family:var(--mono);font-size:13px;color:var(--teal);cursor:pointer}
   table{border-collapse:collapse;width:100%;font-size:14px;margin:16px 0;font-family:var(--mono)}
   th,td{border:1px solid var(--line);padding:7px 10px;text-align:right}
   th:first-child,td:first-child{text-align:left}
   th{background:var(--teal-soft)}
-  .verified{padding:14px 16px;margin:18px 0;font-size:15.5px;border:1px solid var(--pass);border-left-width:5px;background:#e7f4ec;border-radius:var(--r-lg);box-shadow:var(--shadow-soft),inset 0 1px 0 rgba(255,255,255,.5)}
-  .verified .tag{font-family:var(--mono);font-size:11px;padding:2px 7px;margin-right:8px;border:1px solid var(--pass);color:var(--pass);border-radius:var(--r-pill)}
-  /* ===== living figures ===== */
-  figure.lf{padding:20px 20px 16px;background:linear-gradient(180deg,#ffffff,#f4f8f7);text-align:left}
-  .lf .ftag{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--violet);margin-bottom:6px}
-  .lf .ftag .chip{border-radius:var(--r-pill);font-size:10px;font-weight:600;padding:2px 8px;margin-left:8px;font-family:var(--mono)}
-  .lf .ftag .chip.neg{color:var(--coral);background:var(--coral-soft);border:1px solid var(--coral)}
-  .lf .ftag .chip.ver{color:var(--pass);background:#e7f4ec;border:1px solid var(--pass)}
-  .lf svg{display:block;width:100%;height:auto;overflow:visible;font-family:var(--mono)}
-  .lf .legend{display:flex;flex-wrap:wrap;gap:13px;font-family:var(--mono);font-size:11.5px;color:var(--ink2);margin:2px 0 6px}
-  .lf .legend i{width:13px;border-top:3px solid;display:inline-block}
-  .lf .legend .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
-  .lf .controls{display:flex;flex-wrap:wrap;gap:16px 22px;align-items:center;margin:8px 0 2px}
-  .lf .ctl{display:flex;flex-direction:column;gap:5px;min-width:230px;flex:1 1 230px}
-  .lf .ctl label{font-family:var(--mono);font-size:11.5px;color:var(--ink2);display:flex;justify-content:space-between;gap:10px}
-  .lf .ctl label .val{color:var(--ink);font-weight:600}
-  .lf input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--ac,var(--violet)) 0%,var(--ac,var(--violet)) var(--p,0%),var(--line) var(--p,0%),var(--line) 100%);outline:none}
-  .lf input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--card);border:2.5px solid var(--ac,var(--violet));cursor:pointer;box-shadow:var(--shadow-soft)}
-  .lf input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--card);border:2.5px solid var(--ac,var(--violet));cursor:pointer}
-  .lf .ctl.teal{--ac:var(--teal)}
-  .lf .toggle{display:inline-flex;border:1.5px solid var(--ink);border-radius:var(--r-pill);overflow:hidden;font-family:var(--mono);font-size:12px}
-  .lf .toggle button{appearance:none;border:0;background:var(--card);color:var(--ink2);padding:7px 13px;cursor:pointer;font-family:inherit;font-size:inherit;font-weight:600}
-  .lf .toggle button[aria-pressed=true]{background:var(--ink);color:#fff}
-  .lf .toggle button:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
-  .lf .headline{font-family:var(--serif);font-weight:600;line-height:1}
-  .lf .headline .big{font-size:30px}
-  .lf .headline .unit{font-family:var(--mono);font-size:11.5px;color:var(--ink2);font-weight:400}
-  .lf figcaption{font-family:var(--mono);font-size:12px;color:var(--ink2);line-height:1.55;margin:0;padding:13px 16px 4px;border-top:1px solid var(--line);text-align:left}
-  .lf figcaption em{color:var(--open);font-style:italic}
+  footer{margin:50px 0 70px;font-size:14px;color:var(--ink2);border-top:1px solid var(--line);padding-top:18px}
+  /* provenance bar + publish-cta (template machinery) */
+  .provenance{display:flex;flex-wrap:wrap;gap:0;margin:18px 0 4px;border:1.5px solid var(--ink);background:var(--card);font-family:var(--mono);font-size:12px;overflow:hidden;border-radius:4px}
+  .provenance .pv-item{display:flex;flex-direction:column;gap:2px;padding:9px 14px;border-right:1px solid var(--line);text-decoration:none;color:var(--ink);min-width:0}
+  .provenance .pv-item:last-child{border-right:none}
+  .provenance a.pv-item:hover{background:var(--teal-soft)}
+  .provenance .pv-k{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+  .provenance .pv-v{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .provenance a.pv-item .pv-v{color:var(--teal)}
+  #pv-state{color:var(--open)}
+  @media(max-width:560px){.provenance .pv-item{flex:1 1 45%;border-bottom:1px solid var(--line)}}
+  .publish-cta{margin:46px 0 8px;padding:22px 24px;border:1.5px solid var(--teal);background:var(--teal-soft);display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;justify-content:space-between;border-radius:4px}
+  .publish-cta .pc-text{flex:1 1 320px;min-width:0}
+  .publish-cta .pc-h{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--ink);margin:0 0 3px}
+  .publish-cta .pc-sub{font-size:14px;color:var(--ink2);margin:0}
+  .publish-cta a.pc-btn{flex:0 0 auto;font-family:var(--mono);font-size:14px;font-weight:600;text-decoration:none;background:var(--teal);color:#fff;padding:12px 20px;white-space:nowrap;border-radius:3px}
+  .publish-cta a.pc-btn:hover{background:#0a615f}
 </style>
 </head>
 <body>
-<header>
-  <div class="chrome">
-    <div class="eyebrow">An Open Dossier · <b>QC-Accelerate</b> · self-explaining edition · Chapter 1 · v1.0</div>
-    <div class="cta">
-      <a class="btn" href="../../index.html">The landscape</a>
-      <a class="btn" href="../../paper.html">Self-explaining edition</a>
-      <a class="btn" href="../../dossier.html">Audit trail</a>
-      <a class="btn primary" href="../../lineage.html">Chapters</a>
-      <a class="btn" href="https://github.com/m4gr4th34/dossier-QC-Accelerate">Source &amp; issues</a>
-    </div>
-    <div class="provenance" role="contentinfo" aria-label="Provenance and verification">
-      <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
-      <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading… ↗</span></a>
-      <a class="pv-item" href="../../verify.html" target="_blank" rel="noopener"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">verify proof ↗</span></a>
-      <a class="pv-item" href="https://github.com/m4gr4th34/dossier-QC-Accelerate" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
-    </div>
-    <div class="lineage-strip" id="lineageStrip" aria-label="Lineage"></div>
-    <h1>Accelerating Quantum Computing</h1>
-    <div class="sub">How AI and robotics might shorten the road to a real quantum computer — a descent from surface tricks to the floor of the problem, with a simulation at the bottom.</div>
-    <div class="byline">Irfan Ali-Khan — Independent Researcher</div>
-    <div class="byline" style="font-size:14px;margin-top:6px">The figures on this page are interactive previews carrying illustrative placeholder data, sealed from the verified simulation (<span class="mono">verification/floor-sim/</span>) as each is finalized.</div>
-  </div>
-</header>
 <div class="wrap">
+
+<header>
+  <div class="eyebrow">An Open Dossier · <b>QC-Accelerate</b> · self-explaining edition · survey · draft</div>
+  <h1>Accelerating Quantum Computing</h1>
+  <div class="sub">How AI and robotics might shorten the road to a real quantum computer — a descent from surface tricks to the floor of the problem, with a simulation at the bottom.</div>
+  <div class="byline">Irfan Ali-Khan — Independent Researcher</div>
+  <div class="provenance" role="contentinfo" aria-label="Provenance and verification">
+    <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
+    <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading… ↗</span></a>
+    <a class="pv-item" href="verify.html" target="_blank" rel="noopener"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">verify proof ↗</span></a>
+    <a class="pv-item" href="https://github.com/m4gr4th34/dossier-QC-Accelerate" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
+  </div>
   <div class="howto">
     <b>How to read this:</b> the whole piece is on this page, written to explain itself — no prerequisites, no clicking required. Tap any
     <button class="term" data-d="Like this! Dashed words open a plain-language explanation right here. Tap again to close. You never leave the page.">underlined term</button>
     for a plain-language note, or any <button class="cite" data-c="DEMO">ref</button> to see, in two sentences, what that source actually showed. Each open question wears an honest amber label at the exact spot it comes up.
   </div>
+  <div class="cta">
+    <a class="btn" href="index.html">The landscape</a>
+    <a class="btn primary" href="paper.html">Self-explaining edition</a>
+    <a class="btn" href="paper/manuscript.pdf">Read the PDF</a>
+    <a class="btn" href="dossier.html">Audit trail</a>
+    <a class="btn" href="https://github.com/m4gr4th34/dossier-QC-Accelerate">Source</a>
+  </div>
+</header>
 
 <h2><span class="num">1</span>The thousand-to-one problem</h2>
 <p>A <button class="term" data-d="The quantum version of a bit. A normal bit is 0 or 1; a qubit can be a blend of both at once, and that blend is where a quantum computer's power comes from. The surprising part: the blend is so delicate that almost anything — a stray photon, a faint vibration, a flicker of heat — can destroy it.">qubit</button> is the most powerful and the most fragile object in computing. Its power comes from holding a blend of 0 and 1 at once; its fragility comes from exactly the same place, because that blend leaks into the surrounding world at the slightest disturbance. We call the leak <button class="term" data-d="The process where a qubit's delicate quantum blend leaks into its surroundings and decays into ordinary randomness. It is the central enemy of quantum computing, and it can happen in millionths of a second or faster.">decoherence</button>, and fighting it is the whole game.</p>
@@ -313,63 +126,31 @@
 <p><strong>What a cat qubit actually is.</strong> Picture the microwave field inside the chip as a tiny pendulum that's always swinging. It can swing in one of two mirror-image ways — ◐ and ◑ — like two metronomes in perfect opposition, one reaching the far left exactly as the other reaches the far right. The qubit stores its 0-and-1 blend as a blend of ◐ and ◑.</p>
 <p><strong>Why "cat"?</strong> In 1935 Schrödinger imagined a cat in a box, both dead <em>and</em> alive until observed — not because he believed it, but to mock how absurd quantum superposition looks scaled up to a big everyday object whose two fates are utterly distinct. The field's two swings, ◐ and ◑, are <button class="term" data-d="The most classical-like states of a quantum field — clean, steady oscillations, the kind a laser emits. A 'cat state' superposes two big opposite coherent states, making it a genuine miniature of Schrödinger's alive-and-dead cat.">coherent states</button> — the closest a quantum field comes to an ordinary classical wave — so holding both at once is a real, engineered miniature of that cat: two nearly-classical, macroscopically-different states, superposed. "A bigger cat" just means more photons, pushing the two halves further apart and making the superposition more Schrödinger-like. The twist: the very distinctness Schrödinger called absurd is what <em>protects</em> the qubit — to flip ◐ into ◑, noise would have to leap the whole gulf between "alive" and "dead" in one jump, and it can't. His bug is the cat qubit's feature.</p>
 <figure>
-<svg viewBox="0 0 560 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Phase-space picture of a cat qubit: two far-apart states separated by a gap" style="max-width:100%;background:#fff;border:1px solid #cdd8da;border-radius:4px">
-  <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#cf5d36"/></marker></defs>
-  <line x1="40" y1="120" x2="520" y2="120" stroke="#cdd8da" stroke-width="1.5"/>
-  <line x1="280" y1="34" x2="280" y2="206" stroke="#cdd8da" stroke-width="1.5"/>
-  <text x="516" y="113" font-family="sans-serif" font-size="10.5" fill="#586a6f" text-anchor="end">phase space — every way the field can swing</text>
-  <line x1="200" y1="120" x2="360" y2="120" stroke="#cf5d36" stroke-width="2.4" marker-start="url(#ah)" marker-end="url(#ah)"/>
-  <text x="280" y="104" font-family="sans-serif" font-size="13" fill="#cf5d36" text-anchor="middle" font-weight="600">a bit-flip must cross this whole gap</text>
-  <text x="280" y="147" font-family="sans-serif" font-size="12" fill="#586a6f" text-anchor="middle">→ exponentially unlikely as the cat grows</text>
-  <circle cx="150" cy="120" r="40" fill="#0c8f86" opacity="0.85"/>
-  <circle cx="410" cy="120" r="40" fill="#0c8f86" opacity="0.85"/>
+<svg viewBox="0 0 560 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Phase-space picture of a cat qubit: two far-apart states separated by a gap" style="max-width:100%;background:#fff;border:1px solid #d8e0e4;border-radius:4px">
+  <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#e4572e"/></marker></defs>
+  <line x1="40" y1="120" x2="520" y2="120" stroke="#d8e0e4" stroke-width="1.5"/>
+  <line x1="280" y1="34" x2="280" y2="206" stroke="#d8e0e4" stroke-width="1.5"/>
+  <text x="516" y="113" font-family="sans-serif" font-size="10.5" fill="#42525c" text-anchor="end">phase space — every way the field can swing</text>
+  <line x1="200" y1="120" x2="360" y2="120" stroke="#e4572e" stroke-width="2.4" marker-start="url(#ah)" marker-end="url(#ah)"/>
+  <text x="280" y="104" font-family="sans-serif" font-size="13" fill="#e4572e" text-anchor="middle" font-weight="600">a bit-flip must cross this whole gap</text>
+  <text x="280" y="147" font-family="sans-serif" font-size="12" fill="#42525c" text-anchor="middle">→ exponentially unlikely as the cat grows</text>
+  <circle cx="150" cy="120" r="40" fill="#0e7c7b" opacity="0.85"/>
+  <circle cx="410" cy="120" r="40" fill="#0e7c7b" opacity="0.85"/>
   <text x="150" y="128" font-family="sans-serif" font-size="24" fill="#fff" text-anchor="middle">◐</text>
   <text x="410" y="128" font-family="sans-serif" font-size="24" fill="#fff" text-anchor="middle">◑</text>
-  <text x="150" y="192" font-family="monospace" font-size="12.5" fill="#17262c" text-anchor="middle">|−α⟩ · swing one way</text>
-  <text x="410" y="192" font-family="monospace" font-size="12.5" fill="#17262c" text-anchor="middle">|+α⟩ · swing the other</text>
-  <path d="M122,86 q14,-11 28,0" stroke="#cf5d36" stroke-width="1.6" fill="none" opacity="0.7" marker-end="url(#ah)"/>
-  <text x="150" y="66" font-family="sans-serif" font-size="11" fill="#586a6f" text-anchor="middle" opacity="0.9">noise only nudges</text>
+  <text x="150" y="192" font-family="monospace" font-size="12.5" fill="#101d26" text-anchor="middle">|−α⟩ · swing one way</text>
+  <text x="410" y="192" font-family="monospace" font-size="12.5" fill="#101d26" text-anchor="middle">|+α⟩ · swing the other</text>
+  <path d="M122,86 q14,-11 28,0" stroke="#e4572e" stroke-width="1.6" fill="none" opacity="0.7" marker-end="url(#ah)"/>
+  <text x="150" y="66" font-family="sans-serif" font-size="11" fill="#42525c" text-anchor="middle" opacity="0.9">noise only nudges</text>
 </svg>
 <figcaption>A cat qubit lives as two far-apart spots on the map of all the ways the field can swing (its <em>phase space</em>). Ordinary noise only nudges; a bit-flip would have to cross the entire gap in one leap — which is why bit-flips vanish exponentially as the cat, and the gap, grows.</figcaption></figure>
 <p><strong>Why that helps.</strong> Because the two swings sit so far apart, a bit-flip (◐↔◑) becomes astronomically unlikely as the cat grows — it falls exponentially in the photon number n̄. The cost is that the <em>other</em> error, a phase-flip, creeps up only gently. You've traded a two-front war for a one-front war, winnable with a small cheap code instead of the thousand-to-one surface code. And what pins the pendulum to those two swings is the engineered leak from §3: two-photon dissipation siphons energy in photon <em>pairs</em>, herding the field back onto ◐/◑ whenever it strays — valley walls rolling a marble back down. The cat states are the bottom of the engineered bowl; the dissipation is the bowl's shape.</p>
 
 <p><strong>Result 1 — the steady state <em>is</em> a qubit.</strong> The engineered dynamics have exactly enough room at the "bottom of the bowl" to hold one logical qubit, walled off from everything else by a clean gap. We didn't put a qubit there by hand; it is what the dynamics settle into. (Swap in a one-photon leak instead and the bottom of the bowl shrinks to a single point — it can't hold a qubit at all. The <em>form</em> of the leak decides whether a qubit even exists.)</p>
-<figure class="lf" id="fig-man">
-    <div class="ftag">living figure · the steady manifold <span class="chip ver">Verified · in-repo</span></div>
-    <svg id="svg-man" viewBox="0 0 720 300" role="img" aria-label="Steady-state spectrum: zero-modes and the dissipative gap"></svg>
-    <div class="controls">
-      <div style="display:flex;flex-direction:column;gap:6px">
-        <span style="font-family:var(--mono);font-size:11.5px;color:var(--ink2)">the engineered leak</span>
-        <div class="toggle" id="man-toggle" role="group" aria-label="leak type">
-          <button data-k="two" aria-pressed="true">two-photon (cat)</button>
-          <button data-k="one" aria-pressed="false">one-photon (ordinary)</button>
-        </div>
-      </div>
-      <div id="man-verdict" style="font-family:var(--mono);font-size:12.5px;font-weight:600;align-self:flex-end"></div>
-    </div>
-    <figcaption>Modes plotted by how fast they decay; the ones at rest (bottom) are the protected logical states. Two-photon dissipation leaves <b>four</b> at-rest modes below a clean gap — one logical qubit's worth. Switch to an ordinary one-photon leak and the bowl collapses to a single point: no qubit at all. The form of the leak decides whether a qubit even exists. <em>Illustrative — mode counts and the gap are schematic until sealed from the verified sim.</em></figcaption>
-  </figure>
+<figure><img src="verification/floor-sim/fig1_qubit_manifold.png" alt="Spectrum showing four zero-modes forming one logical qubit, separated by a dissipative gap"><figcaption>The engineered dynamics leave exactly one logical qubit's worth of states at "rest" (the four circled points), cleanly separated by a gap. The protection is built into the physics, not bolted on.</figcaption></figure>
 
 <p><strong>Result 2 — it protects itself, lopsidedly.</strong> Switch on the real-world noise and watch the two kinds of error behave completely differently. One kind (bit-flips) is suppressed <em>exponentially</em> as you make the cat bigger; the other (phase-flips) only creeps up slowly. The gap between them — the <button class="term" data-d="When one kind of error becomes vastly rarer than another. A lopsided qubit is a gift: if you only really have to worry about one error type, you can correct it with a small, cheap code instead of the greedy surface code — which is how you escape the thousand-to-one overhead.">noise bias</button> — blows up from about 40 to about 30 million across the range.</p>
-<figure class="lf" id="fig-prot">
-    <div class="ftag">living figure · phase space + noise bias <span class="chip ver">Verified · in-repo</span></div>
-    <div class="legend">
-      <span><span class="sw" style="background:var(--teal)"></span> the two cat lobes in phase space</span>
-      <span><i style="border-color:var(--coral)"></i> noise bias (protection)</span>
-    </div>
-    <svg id="svg-prot" viewBox="0 0 720 300" role="img" aria-label="Cat lobes separating and the noise bias climbing with cat size"></svg>
-    <div class="controls">
-      <div class="ctl teal">
-        <label for="nbar"><span>cat size &nbsp;n̄&nbsp; (mean photons) — crank it up</span><span class="val" id="nbar-val">1.0</span></label>
-        <input type="range" id="nbar" min="1" max="6" step="0.25" value="1">
-      </div>
-      <div class="headline">
-        <div class="big" id="bias-val">44×</div>
-        <div class="unit">noise bias  Γ<sub>phase</sub>/Γ<sub>bit</sub></div>
-      </div>
-    </div>
-    <figcaption>Drag n̄: on the left, the two lobes ◐ and ◑ push apart — a bit-flip has to cross the whole widening gap, so it gets exponentially rarer. On the right, that shows up as the bias blowing up from ~44 to tens of millions. No code, no decoder — the protection <i>is</i> the steady state, and you can watch it open up. <em>Illustrative — the bias curve and lobe spacing are placeholders until sealed from the verified sim.</em></figcaption>
-  </figure>
+<figure><img src="verification/floor-sim/fig2_autonomous_protection.png" alt="Bit-flip error falling exponentially, phase-flip rising linearly, and the noise bias growing exponentially"><figcaption>Left: bit-flip error falls off a cliff (∝ e<sup>−2.3 n̄</sup>) while phase-flip rises gently. Right: the bias between them grows exponentially. There is no error-correcting code and no decoder anywhere in this simulation — the protection is the steady state itself.</figcaption></figure>
 
 <table>
 <tr><th>cat size n̄</th><th>bit-flip</th><th>phase-flip</th><th>bias</th></tr>
@@ -381,52 +162,12 @@
 <p class="punch">No code, no decoder, no measurement — and the qubit still protects itself, exponentially.</p>
 
 <p><strong>Where this first failed — and the fix.</strong> The plan was to let a blank search <em>discover</em> the protecting recipe. It failed, and the failure turned out to be instructive: the search was <button class="term" data-d="When an optimiser satisfies the letter of your scoring rule while violating its intent — a notorious failure mode of AI systems. Here the search 'improved' the protection score by quietly destroying the qubit it was supposed to protect.">reward-hacking</button> the metric. Asked to make the bit-flip rate small, it tilted the engineered leak so that single-photon loss drained one of the qubit's two logical states into the other. The score improved only because there was nothing left to flip into — the qubit was collapsing, not protecting.</p>
-<figure class="lf" id="fig-rh">
-    <div class="ftag">living figure · reward-hacking <span class="chip neg">Negative · kept</span></div>
-    <div class="legend">
-      <span><i style="border-color:var(--violet)"></i> reality — is this still a qubit?</span>
-      <span><i style="border-color:var(--coral)"></i> the score the search chased</span>
-    </div>
-    <svg id="svg-rh" viewBox="0 0 720 300" role="img" aria-label="Reward-hacking divergence"></svg>
-    <div class="controls">
-      <div class="ctl">
-        <label for="t-rh"><span>tilt &nbsp;t&nbsp; — the knob the search turned</span><span class="val" id="t-rh-val">0.00</span></label>
-        <input type="range" id="t-rh" min="0" max="2" step="0.01" value="0">
-      </div>
-      <div style="display:flex;flex-direction:column;gap:6px">
-        <span style="font-family:var(--mono);font-size:11.5px;color:var(--ink2)">the metric</span>
-        <div class="toggle" id="rh-toggle" role="group" aria-label="metric">
-          <button data-m="naive" aria-pressed="true">naive (gameable)</button>
-          <button data-m="anchored" aria-pressed="false">parity-anchored (the fix)</button>
-        </div>
-      </div>
-    </div>
-    <figcaption>Drag t right: the coral score climbs toward “perfect” while the violet line — is this still a qubit? — falls off a cliff (the inset shows the high-photon well draining). The metric improves precisely as the qubit dies. Flip to parity-anchored and the score refuses to be gamed: flat and honest. <em>Illustrative shapes from figures2.py; exact trajectories sealed from the verified sim at build.</em></figcaption>
-  </figure>
+<figure><img src="verification/floor-sim/fig3_reward_hacking.png" alt="Code balance collapsing to near zero as the naive bit-flip metric falsely improves"><figcaption>Reward-hacking, caught. As the dissipator is tilted, the two logical states go from balanced (50/50) to lopsided (91/9) — and the naive "bit-flip" score drops <em>because</em> the qubit is dying. A trustworthy metric has to refuse cases like this.</figcaption></figure>
 <p>The repair is a metric that can't be gamed this way, built from complementary checks: a genuine logical qubit must sit below a clean dissipative gap, stay <em>converged</em> across Hilbert-space cutoffs (not a numerical artifact), and — the check that actually catches this failure — be <em>balanced</em>, both logical states comparably populated in the steady state. The gap check alone is fooled here, calling the collapsing cases valid; it was convergence and balance that exposed the mirage. Under the repaired metric, scanning the one-parameter family the search had drifted into selects the symmetric cat as its only balanced, cutoff-robust point. That <em>validates the metric against a known code — it is not yet an autonomous discovery</em>.</p>
 <div class="openclaim"><span class="tag">Open · unverified · ledger C10</span>
 <p style="margin:6px 0 0">We now have a gauge- and cutoff-robust metric that recovers the known cat code as the balanced optimum of its family — a validation of the <em>measurement</em>, not a new discovery. The genuinely open question is sharper: can a search <em>discover a loss-correcting code</em>, rather than rediscover the cat? The indicated direction is to climb the symmetry ladder from two-photon to four-photon dissipation — the literature shows the four-component cat turns single-photon loss from an uncorrectable bias into a <em>detectable</em> Z<sub>4</sub> parity syndrome <button class="cite" data-c="MIR">Mirrahimi '14</button>. Our simulation confirms the four-photon manifold is larger (≈16-dimensional, with the honest caveat that its lobes overlap at small cat size), and we now demonstrate that syndrome structure directly below (ledger C13). What stays genuinely open is whether a search can <em>discover</em> such a code unaided rather than reproduce a known one — an active frontier <button class="cite" data-c="RLQEC">RL-QEC '24</button>. Closing it is posted as the challenge, with named credit for whoever does.</p></div>
-<figure class="lf" id="fig-lad">
-    <div class="ftag">living figure · the symmetry ladder <span class="chip ver">Verified · in-repo</span></div>
-    <svg id="svg-lad" viewBox="0 0 720 300" role="img" aria-label="Protected-manifold dimension across the symmetry ladder"></svg>
-    <div class="controls">
-      <div style="display:flex;flex-direction:column;gap:6px">
-        <span style="font-family:var(--mono);font-size:11.5px;color:var(--ink2)">climb the ladder</span>
-        <div class="toggle" id="lad-step" role="group" aria-label="rung">
-          <button data-k="2" aria-pressed="true">k = 2</button>
-          <button data-k="3" aria-pressed="false">k = 3</button>
-          <button data-k="4" aria-pressed="false">k = 4</button>
-        </div>
-      </div>
-    </div>
-    <figcaption>Each rung is a more symmetric cat; the bar is the dimension of its protected manifold. At k=2 a lost photon leaves a merely biased qubit; at k=4 the same loss is forced into a detectable Z₄ syndrome the dynamics can correct. k=4 is the minimal loss-correcting cat. (This figure is described in the current §4 but never drawn — it's pure new intuition.) <em>Illustrative — manifold dimensions sealed from the verified sim at build.</em></figcaption>
-  </figure>
 <p><strong>The strong proof — and where it stops.</strong> Back at the reward-hacking story we said the <em>four</em>-photon cat should turn loss from a bias into a genuinely <em>correctable</em> error — but we hadn't shown it. Now we have. Using the textbook test for whether a code truly <em>corrects</em> an error (the <button class="term" data-d="The standard conditions for whether a code can perfectly undo a given error, not merely suppress it. Either a code satisfies them or it doesn't — which is exactly why they cannot be 'gamed' the way an error-rate can.">Knill–Laflamme conditions</button>), the simulation shows it directly: in the two-component cat a single lost photon hides <em>inside</em> the code (0% detectable — an uncorrectable logical error, which is why it only biases); in the four-component cat the same loss lands <em>entirely outside</em> the code, in a distinct Z<sub>4</sub> parity sector (100% detectable — a real syndrome you can catch and undo, exactly correctable as the cat grows). And four is the <em>smallest</em> cat that manages it — two and three components fail.</p>
-<figure class="lf" id="fig-kl">
-    <div class="ftag">living figure · KL correctability <span class="chip ver">Verified · KL proof</span></div>
-    <svg id="svg-kl" viewBox="0 0 720 210" role="img" aria-label="Knill-Laflamme correctability across three codes"></svg>
-    <figcaption>The 2-cat can't correct single-photon loss (it hides inside the code — 0%); the 4-cat lands it entirely outside, in a distinct Z₄ sector (100% — a real syndrome you can catch and undo). Four is the smallest cat that manages it. A proof is a discrete fact; animating it into a smooth trend would oversell it, so this figure earns stillness. <em>Illustrative — the 0/50/100% verdicts are placeholders until sealed from the KL check.</em></figcaption>
-  </figure>
+<figure><img src="verification/floor-sim/fig5_kl_correctability.png" alt="Knill-Laflamme correctability: the four-component cat makes loss a detectable, correctable Z4 syndrome while two and three components fail"><figcaption>Left: the correctability error (Knill–Laflamme violation) plunges toward zero for the four-component cat as it grows — loss becomes exactly correctable — while the two- and three-component cats never reach it. Right: a single photon loss is fully detectable only from four components up. k=4 is the minimal loss-correcting cat.</figcaption></figure>
 <div class="verified"><span class="tag">Verified · ledger C13</span>
 <p style="margin:6px 0 0">Two honest boundaries. The physics is <em>not</em> new — that four-component cats correct single-photon loss is Mirrahimi et al. 2014; we reproduce it here from first principles so the dossier stands on its own runnable numbers, not on citation alone. And <em>demonstrating</em> correction is not a machine <em>discovering</em> it: that harder problem is an active frontier <button class="cite" data-c="RLQEC">RL-QEC '24</button> <button class="cite" data-c="RLBOS">bosonic-RL '25</button>, and our toy search does not yet contribute to it. What the proof does sharpen: the correctness test it uses (Knill–Laflamme) is exactly what the naive error-rate could never be — a collapsed qubit fails it outright, so <em>correctability cannot be reward-hacked the way a rate can</em>.</p></div>
 <div class="openclaim forecast"><span class="tag">Forecast · ledger C11/C12</span>
@@ -456,15 +197,11 @@
 </div>
 
 <footer>
-  <b>About this edition:</b> Open Dossier · QC-Accelerate · self-explaining edition · Chapter 1 (v1.0). Every claim carries an honest label; open and forecast claims are posted as challenges with named credit. The floor simulation is fully reproducible: <span class="mono">verification/floor-sim/</span> (run <span class="mono">figures.py</span>; it self-tests on every run).
-  <br><br><span class="mono">An Open Dossier · CC BY 4.0 · AI-assisted research and drafting under author review · every verification label is true · don't trust this paper — run it.</span>
+<p>Open Dossier · QC-Accelerate · self-explaining edition · working draft. Every claim above carries an honest label; open and forecast claims are posted as challenges with named credit. The floor simulation is fully reproducible: <span style="font-family:var(--mono)">verification/floor-sim/</span> (run <span style="font-family:var(--mono)">figures.py</span>; it self-tests on every run). — <em>Don't trust this paper; run it.</em></p>
 </footer>
 
 </div>
-
 <script>
-// citation database — add an entry per chip:
-// KEY: {who:"Author(s) (Year)", what:"What they showed, 2 sentences, plain language.", src:"Journal Vol, Page"}
 const CITES = {
   DEMO:{who:"This is a demo chip.",what:"Real chips show, in two plain sentences, what a source actually demonstrated and why it matters here — so you never need to leave the page.",src:"—"},
   AQ:{who:"Bausch et al., Google DeepMind & Google Quantum AI, 2024.",what:"A transformer neural network learned to decode the surface code and beat the standard matching decoder on real Sycamore-processor data. A 2025 successor runs in real time and handles colour codes too.",src:"Nature 634 (2024); arXiv 2025."},
@@ -481,27 +218,23 @@ const CITES = {
   RLQEC:{who:"Olle, Zen, Puviani, Marquardt, 2024.",what:"A reinforcement-learning agent that discovers quantum error-correcting codes and their encoders from scratch, using a reward built directly on the Knill-Laflamme correctability conditions.",src:"npj Quantum Information 10 (2024); arXiv 2311.04750."},
   RLBOS:{who:"Deep-RL bosonic-code discovery, 2025.",what:"Curriculum-learning deep reinforcement learning used to discover bosonic autonomous-QEC codes that resist single- and double-photon loss, working directly against the Knill-Laflamme conditions.",src:"Phys. Rev. A (2025); arXiv 2511.12482."}
 };
-// one shared toggle behavior for terms and citations
-function closeCard(btn){ const c = btn._card; if(c){ c.remove(); btn._card = null; btn.setAttribute('aria-expanded','false'); } }
-function toggle(btn, html, extraClass){
-  if(btn._card){ closeCard(btn); return; }
-  const card = document.createElement('span');
-  card.className = 'popcard' + (extraClass ? ' ' + extraClass : '');
-  card.innerHTML = html;
-  const block = btn.closest('p, .howto, .body, .openclaim, .forecast, .reported') || btn.parentNode;
-  block.insertAdjacentElement('afterend', card);
-  btn._card = card; btn.setAttribute('aria-expanded','true');
-}
-document.querySelectorAll('.term').forEach(btn=>{
-  btn.setAttribute('aria-expanded','false');
-  btn.addEventListener('click', ()=> toggle(btn, btn.dataset.d));
+function closeAll(except){document.querySelectorAll('.panel').forEach(p=>{if(p!==except)p.remove();});}
+document.querySelectorAll('button.term').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const n=b.nextSibling;
+    if(n&&n.classList&&n.classList.contains('panel')){n.remove();return;}
+    const d=document.createElement('div');d.className='panel';d.textContent=b.dataset.d;
+    b.parentNode.insertBefore(d,b.nextSibling);
+  });
 });
-document.querySelectorAll('.cite').forEach(btn=>{
-  btn.setAttribute('aria-expanded','false');
-  btn.addEventListener('click', ()=>{
-    const c = CITES[btn.dataset.c];
-    if(!c) return;
-    toggle(btn, '<b>'+c.who+':</b> '+c.what+'<span class="src">'+c.src+'</span>', 'citecard');
+document.querySelectorAll('button.cite').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const n=b.nextSibling;
+    if(n&&n.classList&&n.classList.contains('panel')){n.remove();return;}
+    const c=CITES[b.dataset.c]||{who:'',what:'(reference)',src:''};
+    const d=document.createElement('div');d.className='panel cite';
+    d.innerHTML='<span class="who">'+c.who+'</span>'+c.what+'<span class="src">'+c.src+'</span>';
+    b.parentNode.insertBefore(d,b.nextSibling);
   });
 });
 </script>
@@ -517,270 +250,6 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
   document.getElementById('pv-state').textContent='release '+p.release_tag+' (+ live edits)';
 }).catch(()=>{document.getElementById('pv-doi-v').textContent='see repository \u2197';
   document.getElementById('pv-doi').href='https://github.com/m4gr4th34/dossier-QC-Accelerate';});
-</script>
-<div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Figure, full size" aria-hidden="true">
-  <img id="lbx-img" alt="">
-</div>
-<script>
-(function(){
-  var lbx = document.getElementById('lbx');
-  var lbxImg = document.getElementById('lbx-img');
-  if(!lbx || !lbxImg) return;
-  var imgs = document.querySelectorAll('figure img');
-  if(!imgs.length) return;            // INERT when there are no figures
-  var lastFocus = null;
-  function open(src, alt){
-    lastFocus = document.activeElement;
-    lbxImg.src = src; lbxImg.alt = alt || '';
-    lbx.classList.add('open'); lbx.setAttribute('aria-hidden','false');
-    lbx.tabIndex = -1; lbx.focus();
-  }
-  function close(){
-    lbx.classList.remove('open'); lbx.setAttribute('aria-hidden','true');
-    lbxImg.src = '';
-    if(lastFocus && lastFocus.focus) lastFocus.focus();
-  }
-  imgs.forEach(function(img){
-    img.setAttribute('role','button');
-    img.setAttribute('tabindex','0');
-    if(!img.getAttribute('aria-label'))
-      img.setAttribute('aria-label','View figure full size');
-    img.addEventListener('click', function(){ open(img.currentSrc||img.src, img.alt); });
-    img.addEventListener('keydown', function(e){
-      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(img.currentSrc||img.src, img.alt); }
-    });
-  });
-  lbx.addEventListener('click', close);   // backdrop OR image click closes (cursor:zoom-out)
-  document.addEventListener('keydown', function(e){
-    if(e.key==='Escape' && lbx.classList.contains('open')) close();
-  });
-})();
-</script>
-<script>
-// Lineage strip — mirrors the provenance fetch shape against lineage.json.
-// ANCESTORS-ONLY / OUTWARD: links the latest SEALED chapter + "view all", never a
-// forward/next chapter (a sealed chapter cannot know its successors). Hidden
-// unless chapters exist; built via createElement/textContent (no innerHTML).
-fetch('lineage.json').then(function(r){return r.json();}).then(function(d){
-  var chs = (d.chapters||[]).slice().sort(function(a,b){return a.n-b.n;});
-  if(chs.length < 1) return;                 // solo dossier (no releases) -> strip stays hidden
-  var strip = document.getElementById('lineageStrip');
-  if(!strip) return;
-  var currentN = Math.max.apply(null, chs.map(function(c){return c.n;}));
-  var latest = chs.filter(function(c){return c.n===currentN;})[0];
-
-  function sep(){ var s=document.createElement('span'); s.className='sep'; s.textContent='·'; return s; }
-
-  // The reader is on the WORKING DRAFT (the live, unreleased tip) — NOT on a
-  // sealed chapter. Label it as such; never call the latest seal "current".
-  var lead=document.createElement('span');
-  var b=document.createElement('b'); b.textContent='Working draft';
-  lead.appendChild(b);
-  strip.appendChild(lead);
-
-  // ANCESTOR back-link only: the latest SEALED release (Chapter currentN) is the
-  // working draft's immediate ancestor — never a forward/next claim.
-  strip.appendChild(sep());
-  var rel=document.createElement('a');
-  rel.href=(latest.path||'')+'paper.html';
-  rel.textContent='latest release Chapter '+latest.n;
-  strip.appendChild(rel);
-
-  var all=document.createElement('a');
-  all.className='ls-all'; all.href='lineage.html';
-  all.textContent='View all chapters →';
-  strip.appendChild(all);
-
-  strip.classList.add('show');
-}).catch(function(){ /* hide: strip stays display:none (standalone or load failure) */ });
-</script>
-<script>
-"use strict";
-const SVGNS="http://www.w3.org/2000/svg";
-const C={ink:"#17262c",ink2:"#586a6f",teal:"#0c8f86",coral:"#cf5d36",violet:"#6b4e9b",pass:"#1d9b62",open:"#bd861d",line:"rgba(23,38,44,.14)",grid:"rgba(23,38,44,.07)"};
-const el=(t,a)=>{const n=document.createElementNS(SVGNS,t);if(a)for(const k in a)n.setAttribute(k,a[k]);return n;};
-const lerp=(a,b,t)=>a+(b-a)*t;
-function linScale(d0,d1,r0,r1){return v=>r0+(r1-r0)*((v-d0)/(d1-d0));}
-function logScale(d0,d1,r0,r1){const l0=Math.log10(d0),l1=Math.log10(d1);return v=>r0+(r1-r0)*((Math.log10(v)-l0)/(l1-l0));}
-function rng(seed){let a=seed|0;return()=>{a=(a+0x6d2b79f5)|0;let t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
-function text(x,y,s,o){o=o||{};const t=el("text",{x,y,fill:o.fill||C.ink,"font-size":(o.size||12),"font-family":"'IBM Plex Mono',monospace","text-anchor":o.anchor||"start"});if(o.weight)t.setAttribute("font-weight",o.weight);if(o.rot)t.setAttribute("transform",`rotate(${o.rot} ${x} ${y})`);t.textContent=s;return t;}
-function path(pts){return pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");}
-function clear(svg){while(svg.firstChild)svg.removeChild(svg.firstChild);}
-function axes(svg,x,y,M,W,H,opt){
-  svg.appendChild(el("line",{x1:M.l,y1:H-M.b,x2:W-M.r,y2:H-M.b,stroke:C.ink,"stroke-width":1.4}));
-  svg.appendChild(el("line",{x1:M.l,y1:M.t,x2:M.l,y2:H-M.b,stroke:C.ink,"stroke-width":1.4}));
-  (opt.xticks||[]).forEach(t=>{const px=x(t.v);svg.appendChild(el("line",{x1:px,y1:H-M.b,x2:px,y2:H-M.b+5,stroke:C.ink,"stroke-width":1.2}));svg.appendChild(text(px,H-M.b+18,t.l,{fill:C.ink2,size:11,anchor:"middle"}));});
-  (opt.yticks||[]).forEach(t=>{const py=y(t.v);svg.appendChild(el("line",{x1:M.l-5,y1:py,x2:W-M.r,y2:py,stroke:t.grid?C.grid:C.ink,"stroke-width":t.grid?1:1.2}));svg.appendChild(text(M.l-9,py+4,t.l,{fill:C.ink2,size:11,anchor:"end"}));});
-  if(opt.xlabel)svg.appendChild(text((M.l+W-M.r)/2,H-4,opt.xlabel,{fill:C.ink,size:12,anchor:"middle",weight:600}));
-  if(opt.ylabel)svg.appendChild(text(15,(M.t+H-M.b)/2,opt.ylabel,{fill:opt.ylabelCol||C.ink,size:12,anchor:"middle",weight:600,rot:-90}));
-}
-
-/* ===== Result 1: the manifold ===== */
-(function(){
-  const svg=document.getElementById("svg-man"),W=720,H=300,M={l:128,r:30,t:20,b:34};
-  let leak="two";
-  const verdict=document.getElementById("man-verdict");
-  const y=linScale(0,1,H-M.b,M.t);            // decay rate: 0 (rest) at bottom
-  function draw(){
-    clear(svg);
-    svg.appendChild(el("line",{x1:M.l,y1:M.t,x2:M.l,y2:H-M.b,stroke:C.ink,"stroke-width":1.4}));
-    svg.appendChild(text(20,(M.t+H-M.b)/2,"decay rate  (how fast it dies)",{fill:C.ink,size:12,anchor:"middle",weight:600,rot:-90}));
-    svg.appendChild(text(M.l-9,y(0)+4,"at rest",{fill:C.teal,size:11,anchor:"end",weight:600}));
-    svg.appendChild(text(M.l-9,y(1)+4,"fast",{fill:C.ink2,size:11,anchor:"end"}));
-    const zeros=leak==="two"?4:1, gap=leak==="two"?0.40:0.10;
-    // gap band
-    if(leak==="two"){
-      svg.appendChild(el("rect",{x:M.l,y:y(gap),width:W-M.r-M.l,height:y(0)-y(gap),fill:C.teal,opacity:.06}));
-      svg.appendChild(text(W-M.r-6,y(gap/2)+4,"dissipative gap — protection",{fill:C.teal,size:11,anchor:"end"}));
-    }
-    // zero-modes (at rest)
-    for(let i=0;i<zeros;i++){
-      const px=zeros===1?(M.l+W-M.r)/2:lerp(M.l+60,W-M.r-60,i/(zeros-1));
-      svg.appendChild(el("circle",{cx:px,cy:y(0.02),r:14,fill:"none",stroke:C.teal,"stroke-width":1.5,"stroke-dasharray":"3 2"}));
-      svg.appendChild(el("circle",{cx:px,cy:y(0.02),r:7,fill:C.teal}));
-    }
-    // decaying continuum
-    const r=rng(leak==="two"?7:3);
-    for(let i=0;i<14;i++){
-      const px=lerp(M.l+40,W-M.r-40,r());
-      const py=y(gap+ (1-gap)*r());
-      svg.appendChild(el("circle",{cx:px,cy:py,r:4.5,fill:C.ink2,opacity:.5}));
-    }
-    svg.appendChild(text((M.l+W-M.r)/2,y(0)+26,leak==="two"?"four states at rest = one logical qubit":"one state — nothing to hold a qubit",
-      {fill:leak==="two"?C.teal:C.coral,size:12.5,anchor:"middle",weight:600}));
-    verdict.textContent = leak==="two" ? "a qubit exists ✓" : "no qubit ✗";
-    verdict.style.color = leak==="two"?C.pass:C.coral;
-  }
-  document.getElementById("man-toggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;leak=b.dataset.k;[...e.currentTarget.children].forEach(x=>x.setAttribute("aria-pressed",x===b));draw();});
-  draw();
-})();
-
-/* ===== Result 2: phase space + bias (n̄) ===== */
-(function(){
-  const svg=document.getElementById("svg-prot"),W=720,H=300;
-  const nEl=document.getElementById("nbar"),nVal=document.getElementById("nbar-val"),biasEl=document.getElementById("bias-val");
-  // left phase-space panel, right bias panel
-  const PL={x0:40,x1:330,y0:30,y1:H-40,cx:185,cy:(30+H-40)/2};
-  const reS=linScale(-3,3,PL.x0,PL.x1), imS=linScale(2.4,-2.4,PL.y0,PL.y1);
-  const RM={l:430,r:24,t:30,b:40};
-  const bx=linScale(1,6,RM.l,W-RM.r), by=logScale(40,4e7,H-RM.b,RM.t);
-  const bitflip=n=>Math.exp(-6.08-2.34*(n-1)), phase=n=>0.099+0.0996*(n-1), biasOf=n=>phase(n)/bitflip(n);
-  function fmt(b){return b>=1e4?(b/1e6>=1?(b/1e6).toFixed(1)+"M":(b/1e3).toFixed(0)+"k")+"×":b.toFixed(0)+"×";}
-  function draw(){
-    clear(svg);
-    const n=+nEl.value, alpha=Math.sqrt(n);
-    // ---- left: phase space ----
-    svg.appendChild(el("rect",{x:PL.x0,y:PL.y0,width:PL.x1-PL.x0,height:PL.y1-PL.y0,rx:8,fill:"#fff",stroke:C.line}));
-    svg.appendChild(el("line",{x1:PL.x0,y1:PL.cy,x2:PL.x1,y2:PL.cy,stroke:C.grid,"stroke-width":1}));
-    svg.appendChild(el("line",{x1:PL.cx,y1:PL.y0,x2:PL.cx,y2:PL.y1,stroke:C.grid,"stroke-width":1}));
-    svg.appendChild(text((PL.x0+PL.x1)/2,PL.y0-6,"phase space — the field's swings",{fill:C.ink2,size:10.5,anchor:"middle"}));
-    const xpos=reS(alpha), xneg=reS(-alpha), yb=imS(0);
-    // gap line between lobes
-    svg.appendChild(el("line",{x1:xneg+20,y1:yb,x2:xpos-20,y2:yb,stroke:C.coral,"stroke-width":1.4,"stroke-dasharray":"5 4"}));
-    svg.appendChild(text(PL.cx,yb-10,"a bit-flip must cross this",{fill:C.coral,size:10,anchor:"middle"}));
-    [[xpos,"◑","|+α⟩"],[xneg,"◐","|−α⟩"]].forEach(([cx,sym,lab])=>{
-      svg.appendChild(el("circle",{cx,cy:yb,r:20,fill:C.teal,opacity:.18}));
-      svg.appendChild(el("circle",{cx,cy:yb,r:11,fill:C.teal,opacity:.9}));
-      svg.appendChild(text(cx,yb+4,sym,{fill:"#fff",size:13,anchor:"middle",weight:600}));
-      svg.appendChild(text(cx,PL.y1-8,lab,{fill:C.ink2,size:10,anchor:"middle"}));
-    });
-    // ---- right: bias curve ----
-    axes(svg,bx,by,RM,W,H,{xlabel:"cat size  n̄",ylabel:"noise bias",ylabelCol:C.coral,
-      xticks:[1,2,3,4,5,6].map(v=>({v,l:String(v)})),
-      yticks:[1e2,1e4,1e6].map(v=>({v,l:"10"+sup(Math.round(Math.log10(v))),grid:true}))});
-    const N=100,pts=[];for(let i=0;i<=N;i++){const nn=lerp(1,6,i/N);pts.push([bx(nn),by(biasOf(nn))]);}
-    svg.appendChild(el("path",{d:path(pts),fill:"none",stroke:C.coral,"stroke-width":2.6}));
-    svg.appendChild(el("circle",{cx:bx(n),cy:by(biasOf(n)),r:6,fill:C.coral,stroke:"#fff","stroke-width":1.7}));
-  }
-  function sup(n){const m={"-":"⁻",0:"⁰",1:"¹",2:"²",3:"³",4:"⁴",5:"⁵",6:"⁶",7:"⁷"};return String(n).split("").map(c=>m[c]||c).join("");}
-  function sync(){const n=+nEl.value;nVal.textContent=n.toFixed(2);nEl.style.setProperty("--p",((n-1)/5*100)+"%");biasEl.textContent=fmt(biasOf(n));draw();}
-  nEl.addEventListener("input",sync);sync();
-})();
-
-/* ===== the crime: reward-hacking (t) ===== */
-(function(){
-  const svg=document.getElementById("svg-rh"),W=720,H=300,M={l:54,r:58,t:16,b:44};
-  const tEl=document.getElementById("t-rh"),tVal=document.getElementById("t-rh-val");
-  let metric="naive";
-  const balance=t=>1/(1+Math.pow(t/0.55,2.2)), naiveScore=t=>1-1/(1+Math.pow(t/0.5,2.4)), anchoredScore=t=>0.62-0.02*t, wellHi=t=>0.5*balance(t);
-  const x=linScale(0,2,M.l,W-M.r), y=linScale(0,1.05,H-M.b,M.t);
-  function draw(){
-    clear(svg);
-    axes(svg,x,y,M,W,H,{xlabel:"tilt  t",ylabel:"code balance",ylabelCol:C.violet,
-      xticks:[0,0.5,1,1.5,2].map(v=>({v,l:v.toFixed(1)})),
-      yticks:[0,0.5,1].map((v,i)=>({v,l:v.toFixed(1),grid:i>0}))});
-    svg.appendChild(text(W-13,(M.t+H-M.b)/2,"optimizer score",{fill:C.coral,size:12,anchor:"middle",weight:600,rot:90}));
-    const N=80,real=[],met=[];
-    for(let i=0;i<=N;i++){const t=i/N*2;real.push([x(t),y(balance(t))]);met.push([x(t),y(metric==="naive"?naiveScore(t):anchoredScore(t))]);}
-    if(metric==="naive"){
-      const band=[];for(let i=0;i<=N;i++){const t=i/N*2;if(naiveScore(t)>=balance(t))band.push([x(t),y(naiveScore(t))]);}
-      const back=[];for(let i=N;i>=0;i--){const t=i/N*2;if(naiveScore(t)>=balance(t))back.push([x(t),y(balance(t))]);}
-      if(band.length)svg.appendChild(el("path",{d:path(band.concat(back))+" Z",fill:C.coral,opacity:.08}));
-    }
-    svg.appendChild(el("path",{d:path(real),fill:"none",stroke:C.violet,"stroke-width":2.6}));
-    svg.appendChild(el("path",{d:path(met),fill:"none",stroke:C.coral,"stroke-width":2.6,"stroke-dasharray":metric==="anchored"?"1 0":"6 4"}));
-    const t=+tEl.value,px=x(t),br=balance(t),ms=metric==="naive"?naiveScore(t):anchoredScore(t);
-    svg.appendChild(el("line",{x1:px,y1:M.t,x2:px,y2:H-M.b,stroke:C.ink,"stroke-width":1,"stroke-dasharray":"3 3",opacity:.5}));
-    svg.appendChild(el("circle",{cx:px,cy:y(br),r:5,fill:C.violet,stroke:"#fff","stroke-width":1.5}));
-    svg.appendChild(el("circle",{cx:px,cy:y(ms),r:5,fill:C.coral,stroke:"#fff","stroke-width":1.5}));
-    const ix=M.l+14,iy=M.t+4,iw=84,ih=66,base=iy+ih;
-    svg.appendChild(el("rect",{x:ix-8,y:iy-2,width:iw+16,height:ih+24,rx:8,fill:"#fff",stroke:C.line}));
-    svg.appendChild(text(ix+iw/2-4,iy+9,"logical wells",{fill:C.ink2,size:9,anchor:"middle"}));
-    [["lo",1,C.teal,ix+8],["hi",wellHi(t)/0.5,C.coral,ix+iw-34]].forEach(([lbl,h,col,bxx])=>{
-      const bh=Math.max(2,h*46);
-      svg.appendChild(el("rect",{x:bxx,y:base-bh,width:26,height:bh,fill:col,rx:2,opacity:lbl==="hi"?.95:.85}));
-      svg.appendChild(text(bxx+13,base+11,lbl==="hi"?"hi↓":"lo",{fill:C.ink2,size:9,anchor:"middle"}));
-    });
-    const lie=metric==="naive"&&ms>br+0.05;
-    svg.appendChild(text(W-M.r-4,M.t+12,metric==="anchored"?"stays honest ✓":(lie?"says ‘better’ ✗":"…"),{fill:metric==="anchored"?C.pass:C.coral,size:12,anchor:"end",weight:600}));
-  }
-  function sync(){tVal.textContent=(+tEl.value).toFixed(2);tEl.style.setProperty("--p",(tEl.value/2*100)+"%");draw();}
-  tEl.addEventListener("input",sync);
-  document.getElementById("rh-toggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;metric=b.dataset.m;[...e.currentTarget.children].forEach(x=>x.setAttribute("aria-pressed",x===b));draw();});
-  sync();
-})();
-
-/* ===== the payoff: symmetry ladder ===== */
-(function(){
-  const svg=document.getElementById("svg-lad"),W=720,H=300,M={l:66,r:24,t:28,b:60};
-  let k=2;const ks=[2,3,4],dims=[4,9,16],cols=[C.coral,C.open,C.teal];
-  const verdict={2:"loss → a biased qubit (better, not safe)",3:"loss → partial structure emerges",4:"loss → a detectable Z₄ syndrome → correctable"};
-  const sub=n=>({2:"₂",3:"₃",4:"₄"}[n]||n);
-  const x=linScale(1.4,4.6,M.l,W-M.r),y=linScale(0,18,H-M.b,M.t);
-  function draw(){
-    clear(svg);
-    svg.appendChild(el("line",{x1:M.l,y1:y(0),x2:W-M.r,y2:y(0),stroke:C.ink,"stroke-width":1.4}));
-    svg.appendChild(text(18,(M.t+y(0))/2,"protected manifold dim",{fill:C.ink,size:12,anchor:"middle",weight:600,rot:-90}));
-    [4,9,16].forEach(g=>svg.appendChild(el("line",{x1:M.l,y1:y(g),x2:W-M.r,y2:y(g),stroke:C.grid,"stroke-width":1})));
-    ks.forEach((kk,i)=>{
-      const cx=x(kk),bw=72,climbed=kk<=k,bh=y(0)-y(dims[i]);
-      svg.appendChild(el("rect",{x:cx-bw/2,y:y(dims[i]),width:bw,height:bh,rx:4,fill:climbed?cols[i]:"none",opacity:climbed?(kk===k?1:.5):1,stroke:cols[i],"stroke-width":climbed?0:1.5,"stroke-dasharray":climbed?"":"4 4"}));
-      svg.appendChild(text(cx,y(0)+22,"k="+kk+"  (Z"+sub(kk)+")",{fill:climbed?C.ink:C.ink2,size:12.5,anchor:"middle",weight:kk===k?600:400}));
-      if(climbed)svg.appendChild(text(cx,y(dims[i])-9,"dim "+dims[i]+" = "+Math.round(Math.sqrt(dims[i]))+"\u00B2",{fill:cols[i],size:11.5,anchor:"middle",weight:600}));
-    });
-    svg.appendChild(text((M.l+W-M.r)/2,H-14,verdict[k],{fill:cols[k-2],size:13.5,anchor:"middle",weight:600}));
-  }
-  document.getElementById("lad-step").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;k=+b.dataset.k;[...e.currentTarget.children].forEach(x=>x.setAttribute("aria-pressed",x===b));draw();});
-  draw();
-})();
-
-/* ===== the proof: KL ===== */
-(function(){
-  const svg=document.getElementById("svg-kl"),W=720,H=210,M={l:24,r:24,t:24,b:22};
-  const cases=[{pct:0,col:C.coral,label:"2-cat",verdict:"loss is invisible"},{pct:50,col:C.open,label:"3-cat",verdict:"partly detectable"},{pct:100,col:C.teal,label:"4-cat",verdict:"loss → Z\u2084 syndrome",min:true}];
-  const n=cases.length,gap=26,cw=(W-M.l-M.r-gap*(n-1))/n,top=M.t,ch=H-M.t-M.b;
-  cases.forEach((c,i)=>{
-    const cx=M.l+i*(cw+gap);
-    svg.appendChild(el("rect",{x:cx,y:top,width:cw,height:ch,rx:10,fill:"#fff",stroke:c.min?c.col:C.line,"stroke-width":c.min?2:1}));
-    const fh=ch*c.pct/100;
-    if(fh>0)svg.appendChild(el("rect",{x:cx,y:top+ch-fh,width:cw,height:fh,rx:10,fill:c.col,opacity:.14}));
-    if(c.min)svg.appendChild(text(cx+cw/2,top-7,"minimal correctable code",{fill:c.col,size:10,anchor:"middle",weight:600}));
-    svg.appendChild(text(cx+cw/2,top+50,c.pct+"%",{fill:c.col,size:32,anchor:"middle",weight:600}));
-    svg.appendChild(text(cx+cw/2,top+68,"of single-photon loss correctable",{fill:C.ink2,size:9,anchor:"middle"}));
-    svg.appendChild(text(cx+cw/2,top+ch-26,c.label,{fill:C.ink,size:14,anchor:"middle",weight:600}));
-    svg.appendChild(text(cx+cw/2,top+ch-10,c.verdict,{fill:c.col,size:11,anchor:"middle"}));
-  });
-})();
 </script>
 </body>
 </html>
