@@ -4,6 +4,13 @@
   "private": true,
   "description": "QC-Accelerate dossier — author-local tooling. render-figures seals living figures (pure Node, zero deps). Readers need no JS; CI never runs this.",
   "scripts": {
-    "render-figures": "node render_figures.js"
+    "render-figures": "node render_figures.js",
+    "render-edition": "node render_edition.js",
+    "check-edition": "node verify_edition.js",
+    "render-markdown": "node render_markdown.js",
+    "check-markdown": "node verify_markdown.js",
+    "check-projection": "node verify_projection.js",
+    "render-backcatalog": "node render_backcatalog.js",
+    "check-backcatalog": "node verify_backcatalog.js"
   }
 }
