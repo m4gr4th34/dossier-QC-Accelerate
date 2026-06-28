@@ -14,7 +14,7 @@ honestly: a claim's label tells the reader exactly how finished it is.
 
 Fill the editions early with clearly-labeled draft content and refine it in
 place. **Do not quarantine draft material into side pages** — put it in the
-interactive, self-explaining, and audit-trail editions where it belongs, wearing
+self-explaining front door and the audit-trail edition where it belongs, wearing
 an honest label, and sharpen it as you go.
 
 The one rule that makes this safe: **loose content must carry its honest label
@@ -113,8 +113,8 @@ labeled one is not.**
 
 ## What this project is
 The strategy room for **Dossier QC-Accelerate: Concrete ways AI and robotics could shorten the path to fault-tolerant, scalable quantum computing — what's already working, what's plausible, and what the remaining conceptual gates are.**
-Connected repo: this synced repository. The dossier's three reading
-surfaces (interactive, self-explaining, audit trail), its manuscript, its
+Connected repo: this synced repository. The dossier's two reading
+surfaces (the self-explaining front door and the audit trail), its manuscript, its
 verification script, and its claim ledger all live here.
 
 ## Standing context
@@ -159,8 +159,11 @@ verification script, and its claim ledger all live here.
   Do not create releases without the author's explicit instruction.
 - NEVER modify anything in timestamps/ — those are cryptographic proofs.
 - File map:
-  - index.html        — interactive edition (sliders + verification console)
-  - paper.html        — self-explaining edition (term/citation expansions)
+  - index.html        — GENERATED front door (self-explaining edition + survey landscape); render of editions/index.source.html over skin/edition.html. Never hand-edit (CI gate verify_edition). Run `npm run render-edition`.
+  - editions/         — authored source for the front door (index.source.html); edit THIS, not index.html
+  - skin/             — reskinnable chrome the editions render through (edition.html)
+  - index.md / llms.txt — markdown projection of the front door + LLM discovery index (generated; gates verify_markdown / verify_projection)
+  - paper.html        — redirect stub to index.html (self-explaining edition is now the front door)
   - dossier.html      — audit trail (red team, citation audit)
   - paper/            — optional LaTeX manuscript scaffold (on-demand legacy export; not shipped)
   - verification/     — verify script, audits, red-team report, format spec

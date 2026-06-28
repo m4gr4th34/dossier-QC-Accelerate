@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DOSSIER NNN — YOUR TITLE (Open Dossier)</title>
-<meta name="description" content="YOUR ONE-LINE DESCRIPTION. A survey that explains itself.">
+<title>Accelerating Quantum Computing Research Using AI and Robotics (Open Dossier)</title>
+<meta name="description" content="AI and robotics as co-authors of quantum-computing research: scoping the bias-preserving cat-qubit gate frontier, and a kept negative.. A survey that explains itself.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -303,13 +303,13 @@
       <a class="btn primary" href="index.html">The paper</a>
       <a class="btn" href="dossier.html">Audit trail</a>
       <a class="btn" href="lineage.html">Chapters</a>
-      <a class="btn" href="https://github.com/YOURUSER/YOURREPO">Source</a>
+      <a class="btn" href="https://github.com/m4gr4th34/dossier-QC-Accelerate">Source</a>
     </div>
     <div class="provenance" role="contentinfo" aria-label="Provenance and verification">
       <span class="pv-item"><span class="pv-k">Reading</span><span class="pv-v" id="pv-state">live tip</span></span>
       <a class="pv-item" id="pv-doi" href="#" target="_blank" rel="noopener"><span class="pv-k">Archived DOI</span><span class="pv-v" id="pv-doi-v">loading… ↗</span></a>
       <a class="pv-item" href="verify.html" target="_blank" rel="noopener"><span class="pv-k">Bitcoin timestamp</span><span class="pv-v">verify proof ↗</span></a>
-      <a class="pv-item" href="https://github.com/YOURUSER/YOURREPO" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
+      <a class="pv-item" href="https://github.com/m4gr4th34/dossier-QC-Accelerate" target="_blank" rel="noopener"><span class="pv-k">Source</span><span class="pv-v">full history ↗</span></a>
     </div>
     <div class="lineage-strip" id="lineageStrip" aria-label="Lineage"></div>
     <h1>{{title}}</h1>
@@ -329,7 +329,7 @@
 
 <footer>
   <b>About this edition:</b> this page is the complete survey in self-explaining form — the avenue <a href="#landscape">landscape</a> and the consistency console up top, the narrative below. This live edition is the paper. The <a href="dossier.html">audit trail</a> carries the citation audit and the receipts.
-  <br><br><span class="mono">An Open Dossier · CC BY 4.0 · AI-assistance: DESCRIBE YOUR USE and state your actual review basis · every verification label is true</span>
+  <br><br><span class="mono">An Open Dossier · CC BY 4.0 · AI-assistance: physics derivations, simulation code, figures, and prose were AI-generated (Claude) under the author's direction. All numerical claims are reproduced by the in-repo scripts under verification/; the author reviewed the argument and labelling, relied on those reproducible checks and the cited primary sources for verification, and takes final responsibility for the dossier as a whole.</span>
 </footer>
 
 </div>
@@ -369,7 +369,7 @@ document.querySelectorAll('.cite').forEach(btn=>{
 <script>
 // ---------------------------------------------------------------
 // SURVEY LANDSCAPE — single source of truth for the cards.
-// One object per avenue. Replace the PLACEHOLDER rows with yours.
+// Avenue cards are rendered from avenues.json at build; this is the render target.
 //   name     : avenue/option name
 //   thesis   : one-line plain-language thesis
 //   status   : ESTABLISHED | OPEN-UNVERIFIED | FORECAST | REPORTED
@@ -490,13 +490,13 @@ fetch('provenance.json').then(r=>r.json()).then(p=>{
   const d=document.getElementById('pv-doi'), v=document.getElementById('pv-doi-v');
   if(!p.version_doi || p.version_doi.indexOf('TODO')===0){
     v.textContent='DOI after first release';
-    d.href='https://github.com/YOURUSER/YOURREPO';
+    d.href='https://github.com/m4gr4th34/dossier-QC-Accelerate';
   } else {
     d.href='https://doi.org/'+p.version_doi; v.textContent=p.version_doi+' \u2197';
   }
   document.getElementById('pv-state').textContent='release '+p.release_tag+' (+ live edits)';
 }).catch(()=>{document.getElementById('pv-doi-v').textContent='see repository \u2197';
-  document.getElementById('pv-doi').href='https://github.com/YOURUSER/YOURREPO';});
+  document.getElementById('pv-doi').href='https://github.com/m4gr4th34/dossier-QC-Accelerate';});
 </script>
 <div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Figure, full size" aria-hidden="true">
   <img id="lbx-img" alt="">

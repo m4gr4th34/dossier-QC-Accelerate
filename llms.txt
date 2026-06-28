@@ -1,6 +1,6 @@
-# YOUR PLAIN-LANGUAGE TITLE
+# Accelerating Quantum Computing Research Using AI and Robotics
 
-> YOUR SURVEY ABSTRACT.
+> A self-explaining Open Dossier survey.
 
 ## Working draft
 
@@ -8,4 +8,5 @@
 
 ## Chapters
 
-No chapters frozen yet.
+- [Chapter 2 — Chapter 2 — AI Today, and Scoping Tomorrow’s Frontier](chapters/v2.0/index.md)
+- [Chapter 1 — Chapter 1 — Accelerating Quantum Computing: a descent to the floor](chapters/v1.0/index.md)

@@ -12,3 +12,12 @@ jobs:
           python-version: '3.12'
       - name: Recompute every quantitative claim in the manuscript
         run: python verification/verify_numbers.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Front door is generated, not hand-edited (index.html == render(source, skin))
+        run: node verify_edition.js
+      - name: Markdown projection matches the source
+        run: node verify_markdown.js
+      - name: Front door and markdown projection are content-equivalent
+        run: node verify_projection.js

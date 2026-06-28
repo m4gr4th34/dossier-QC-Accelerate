@@ -16,7 +16,7 @@ never loses dotfiles. Working through Claude Code / git clone avoids
 this entirely.
 
 ## Step 3 — Fill in the placeholders
-Work through the TODO markers: index.html, paper.html, dossier.html,
+Work through the TODO markers: editions/index.source.html, skin/edition.html (the front door is GENERATED — edit the source, then `npm run render-edition`), dossier.html,
 verification/verify_numbers.py, claim_ledger.csv, CITATION.cff,
 .zenodo.json, CLAUDE.md (Standing context), paper/.
 
