@@ -41,6 +41,10 @@ discovery metric, *kept* rather than hidden; and give a Knill–Laflamme proof t
 four-component cat turns single-photon loss into a detectable, asymptotically correctable
 Z₄ syndrome (with k = 4 the minimal such code).
 
+Chapter 2 then asks the next question: with a place to *store* a protected qubit, can you *operate* on one — run a logic gate — without breaking the protection? This is a third thing an AI search can do, past re-deriving and discovering: *scope* a frontier honestly.
+
+With a scorecard built so it cannot be reward-hacked, a search maps the bias-preserving gate's κ₁/κ₂ frontier with more freedom than any human design, seeded from the best human gate — and it returns a rigorous *kept negative*: the hand-designed gate already sits at the optimum of this control space, and handed a bias-breaking shortcut, the search drove it to zero on its own. A clean “no,” and a precise map of where the wall sits.
+
 **No novel physics is claimed.** The underlying results are prior work (Mirrahimi 2014; the
 self-correcting-memory literature; reinforcement-learning code-discovery efforts). The
 contribution is methodological: a reproducible, honestly-labelled synthesis in which a
