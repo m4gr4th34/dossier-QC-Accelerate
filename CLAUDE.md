@@ -1,30 +1,5 @@
 # CLAUDE.md — the single constitution for this dossier
 
-> ## ⚠ SANDBOX MODE — read this first
->
-> **This repository is a work-in-progress sandbox for previewing the Open Dossier
-> living-figures template. It is a plaything, not a publication.** Its purpose right now
-> is to let the author SEE what the final dossiers could look like in the latest template
-> skeleton, palette, and interactive figures.
->
-> While SANDBOX MODE is in effect:
-> - **Chapters are mockups, not sealed deliverables.** Rebuild any chapter freely on the
->   latest template — chrome, palette, figures, prose — without ceremony.
-> - **Existing git tags and Zenodo DOIs (v1.0, v2.0) are early-experiment archives, not
->   constraints.** They stay in git history and on Zenodo for the curious, but they do NOT
->   freeze the working tree. The live chapters/<tag>/ pages may diverge from their tagged
->   snapshots; that divergence is expected and fine.
-> - **"Frozen means frozen" is SUSPENDED.** Do not block, warn, or stop because a chapter
->   is DOI'd or timestamped. Overwriting chapters/v1.0/ or chapters/v2.0/ in place is
->   permitted and intended.
-> - **Illustrative / placeholder data is expected everywhere.** A light page-level WIP label
->   is sufficient. Do not re-litigate honesty doctrine on sandbox pages.
-> - **Goal: all chapters pretty, consistent, and click-through on the latest template.**
->
-> SANDBOX MODE ends only when the author explicitly declares the repo is graduating to a
-> real publication. Until then: build freely, and let the author read the pretty thing.
-
-
 Claude Code reads this automatically; it is ALSO the constitution for the
 strategy-room project chat (point the Project Instructions here). These rules
 are non-negotiable and apply to every session.
