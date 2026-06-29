@@ -1,4 +1,8 @@
-# Template resync status — `ab458cb` → `5c0e94c`
+# Template resync status — `ab458cb` → `5c0e94c` — **CLOSED**
+
+> Pin stamped to `5c0e94c`. "Synced through 5c0e94c" with two DELIBERATE, documented exclusions:
+> **#5** (back-catalog `live/`/reskin — `reskin-backcatalog.yml` absent by design, legacy chapters can't feed it) and
+> **render_math.js/katex** (skipped — no LaTeX rendering here). A drift audit seeing these absent should read this log, not treat them as unfinished.
 
 Single source of truth for where this dossier stands against the template lineage.
 **Read this before any template sync** — it records which upstream migrations were
@@ -27,6 +31,9 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
   (popcards, term/cite handlers) in the skin — the clean split #4 specifies. No separate work.
   (The "seal `avenues.json` into `chapters/<tag>/`" half of #3's upstream commits belongs to the
   freeze/back-catalog process = deferred #5, not the live front-door single-sourcing.)
+- ✅ **AUTHORING.md merge** — playbook updated to the single-source model (front-door surfaces
+  folded, generated/never-hand-edit + projection-clean-Unicode guidance added, doctrine specs
+  carried byte-identical) · `336a130`
 
 ## ⛔ Deferred — permanent unless a chapter is re-sealed new-model
 - **Migration #5 — back-catalog lifecycle (`live/<tag>/`)**
@@ -49,8 +56,7 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
     living figures in its source, or in the working draft — not a re-skin of v1.0/v2.0.
 
 ## Pending (light migrations — none touch the sealed back-catalog)
-- ⏭️ **#8** — EST→FORECAST ledger relabel
-- ⏭️ **`AUTHORING.md`** — hand-merge (236-line three-way; its own focused pass)
+- 🚫 **#8 — EST→FORECAST ledger relabel: N/A.** Our claim_ledger.csv has zero EST rows (authored on the current claim-type vocabulary from the start); the relabel targets an old shorthand we never used, and the ledger isn't vocabulary-gated. No work.
 
 ## Known follow-ups (non-blocking)
 - **Standalone editions drift on skin changes.** `dossier.html`, `verify.html`, and `lineage.html` are NOT
@@ -92,7 +98,7 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
   PDFs so FUTURE freezes don't repeat it — upstream machinery, no seal touch.
 
 ## Final step
-- ⏭️ Stamp `template-sync.json` → `5c0e94c` **after** the pending items land.
+- ✅ **Stamped `template-sync.json` → `5c0e94c`** (2026-06-28; this commit).
   This stamp means "synced through `5c0e94c` **except migration #5, by permanent design**."
   A drift audit comparing the pin to the template will see `reskin-backcatalog.yml` absent —
   that absence is deliberate and explained above, not unfinished work.
