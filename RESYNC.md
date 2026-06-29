@@ -12,6 +12,13 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
   three edition/markdown/projection gates live) · `2fabcfa`
 - ✅ **README reconcile (Decision 1)** — `README.md` "argument in one move" now bridges
   to Chapter 2's scoping result, matching the front door · `12dbf7f`
+- ✅ **Nav arc** — all 3 standalone pages (dossier/verify/lineage) to the 4-button front-door nav;
+  site-wide HTML-escape sweep · `debcc85`, `90afa4c`
+- ✅ **Migration #6 (adapted)** — lineage oldest-first, working draft at the foot, "The landscape"
+  dropped, `llms.txt` doubled-title fixed · `01a9dad`, `96e9899`. **`sealed()` kept ours**
+  (single record door to `chapters/<tag>/index.html`); the template's two-door version routes its
+  primary "Read (current edition)" link through `live/<tag>/`, which depends on the deferred #5 —
+  so #6 is adopted EXCEPT that door, by the same design as #5.
 
 ## ⛔ Deferred — permanent unless a chapter is re-sealed new-model
 - **Migration #5 — back-catalog lifecycle (`live/<tag>/`)**
@@ -36,7 +43,6 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
 ## Pending (light migrations — none touch the sealed back-catalog)
 - ⏭️ **#3** — avenues single-source (survey-shaped; applies)
 - ⏭️ **#4** — cite data split (skin vs content)
-- ⏭️ **#6** — lineage oldest-first / two-doors (carries the `llms.txt` doubled-title fix)
 - ⏭️ **#8** — EST→FORECAST ledger relabel
 - ⏭️ **`AUTHORING.md`** — hand-merge (236-line three-way; its own focused pass)
 
@@ -54,6 +60,12 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
   dossier.html's HTML content was found and fixed later (always byte-scan the WHOLE file). Other standalone/hand-authored files may carry similar literal
   `\uXXXX` escapes or PUA characters; worth a byte-scan when next editing them. When editing
   literal-vs-rendered characters, express both via escapes in code, never paste the glyph.
+- **Multi-line edits: literal full-block anchors only, never regex bounding.** Two edits this resync
+  nearly corrupted files via regex (the verify.html footer greedy-match; an Edit-5 `(?=...var...)`
+  lookahead that would have eaten the `(function(){` IIFE opener in lineage.html — caught pre-write
+  by an IIFE-survival + `node --check` guard). Every literal full-string anchor with a `count==1`
+  assert has landed clean; every regex-bounded multi-line replace has misfired or nearly did. Use
+  literal anchors + count asserts + a parse check for any code edit.
 
 ## Final step
 - ⏭️ Stamp `template-sync.json` → `5c0e94c` **after** the pending items land.
