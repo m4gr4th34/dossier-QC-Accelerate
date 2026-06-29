@@ -2,8 +2,7 @@
 ## A production playbook for AI agents (and the humans directing them)
 
 **Who this file is for:** any capable AI agent handed a research idea and
-this repository. Follow it and the output is a complete dossier: interactive
-edition, self-explaining edition, audit trail, lineage index, verified
+this repository. Follow it and the output is a complete dossier: a self-explaining front door, audit trail, lineage index, verified
 claims, honest labels. **The human's job is the ideas, the intuition, the
 reality checks, and the sign-offs. Everything else is yours.**
 
@@ -88,8 +87,28 @@ Start from `paper/manuscript-template.tex`. Conventions:
   sections, never silent edits: state what changed, what is and is not
   affected, the issue number, and that archived releases stay frozen.
 
-## Surface 2 — The interactive edition (`index.html`)
+## Surface 2 — The front door (`index.html`) — the self-explaining edition
 
+`index.html` is GENERATED, never hand-edited. Author the content in
+`editions/index.source.html` (frontmatter + body + cites slot) and run
+`npm run render-edition` to render it over `skin/edition.html` into
+`index.html`. The same source projects to markdown (`npm run render-markdown`
+→ `index.md` + `llms.txt`). Three CI gates enforce the single source:
+`check-edition` (index.html == render(source, skin)), `check-markdown`, and
+`check-projection` — so editing `index.html` by hand will fail CI. The skin
+is the reskinnable chrome; the source is the content; `BOUNDARY.md` records
+which is which. The front door merges what used to be two editions — the
+survey landscape and the self-explaining narrative — into one page.
+
+**Author in the projection-clean Unicode subset.** Because the source is
+projected to markdown, write literal Unicode characters (— α ² ε ≥ · " ×),
+NEVER HTML entities (`&mdash;`, `&alpha;`, `&sup2;`) or `<sub>`/`<sup>` — the
+markdown projector handles only a tiny entity set and will fail on the rest.
+(Learned the hard way in the single-source migration: paper.html-era prose
+full of entities had to be normalized character-by-character before it would
+project.)
+
+**The interactive instrument (top of the page).**
 - Port every Python check into the `buildChecks()` console verbatim
   (same model, same tolerances). The reader pressing "Run all checks"
   must reproduce CI.
@@ -100,7 +119,7 @@ Start from `paper/manuscript-template.tex`. Conventions:
 - The abstract ends with the format's tagline: **Don't trust this paper —
   run it.**
 
-## Surface 3 — The self-explaining edition (`paper.html`) — THE MAGIC
+**The self-explaining narrative — THE MAGIC.**
 
 This is the format's crown jewel and the most judgment-heavy artifact.
 Specs, learned from Dossier 001:
@@ -198,10 +217,10 @@ assess it) stated alongside with equal prominence.
 `AMENDED · DD MMM YYYY` `.openclaim` blocks at the exact site of the
 amended claim, stating: what changed, what is NOT affected, the issue
 link, and that the archived release stays frozen. Mirror every amendment
-across all four surfaces (tex Note added, paper.html block, index.html
-qualifier, dossier.html finding update) in one commit.
+across all surfaces (tex Note added, the index.html self-explaining block +
+console qualifier, dossier.html finding update) in one commit.
 
-## Surface 4 — The audit trail (`dossier.html`)
+## Surface 3 — The audit trail (`dossier.html`)
 
 - Red-team findings from the Phase 4 adversarial pass, each RESOLVED
   (green) or OPEN (amber), ranked by severity, including author
@@ -217,7 +236,7 @@ qualifier, dossier.html finding update) in one commit.
 Three surfaces carry the publication's provenance, and every one must stay
 true after each release:
 
-- **The provenance bar** (top of `index.html` and `paper.html`) and
+- **The provenance bar** (top of `index.html`) and
   **`verify.html`** read `provenance.json` at load time — so once that file
   carries the real version DOI and release tag, both update automatically.
   The `auto-timestamp` workflow rewrites `provenance.json` on each release
@@ -240,7 +259,7 @@ at first release (see DEPLOY.md's release step and the README Rituals section)
 deliberate content edit the author makes at release, not machinery, so it is
 never auto-applied by a template sync.
 
-**Publish CTA — keep it canonical.** The publish-like-this CTA band (before the footer on index.html, paper.html, and dossier.html) intentionally points at the canonical open-dossier-template's GETTING-STARTED.md — the instructions-first front door — not at this dossier's own repo and not at the template's repo root. Every dossier funnels new authors straight into the step-by-step guide. Leave these URLs as the canonical GETTING-STARTED.md.
+**Publish CTA — keep it canonical.** The publish-like-this CTA band (before the footer on index.html and dossier.html) intentionally points at the canonical open-dossier-template's GETTING-STARTED.md — the instructions-first front door — not at this dossier's own repo and not at the template's repo root. Every dossier funnels new authors straight into the step-by-step guide. Leave these URLs as the canonical GETTING-STARTED.md.
 
 ## The Project constitution (`CLAUDE.md`)
 
@@ -292,7 +311,7 @@ creativity on the content, not the chrome.
 - [ ] Every ledger label true; unverified claims hedged in prose
 - [ ] Citation audit complete; flags resolved or stated
 - [ ] Red-team pass done; findings published
-- [ ] All four surfaces carry the funnel link to the template
+- [ ] All surfaces carry the funnel link to the template
 - [ ] `.github/workflows/` and `.zenodo.json` present ON THE REMOTE
       (web uploads drop dotfiles — see DEPLOY.md)
 - [ ] Acknowledgments state the actual review basis
