@@ -3,7 +3,7 @@
     {
       "n": 1,
       "tag": "v1.0",
-      "title": "Chapter 1 — Accelerating Quantum Computing: a descent to the floor",
+      "title": "Accelerating Quantum Computing: a descent to the floor",
       "summary": "How AI and robotics might shorten the road to a real quantum computer — a descent from surface tricks to the floor of the problem, with a simulation at the bottom.",
       "released": "2026-06-25",
       "version_doi": "10.5281/zenodo.20838233",
@@ -13,7 +13,7 @@
     {
       "n": 2,
       "tag": "v2.0",
-      "title": "Chapter 2 — AI Today, and Scoping Tomorrow’s Frontier",
+      "title": "AI Today, and Scoping Tomorrow’s Frontier",
       "summary": "AI has quietly become a co-author of quantum-computing research. This chapter puts that to the test on one hard problem — and shows AI doing something past re-deriving and discovering: scoping a frontier, and saying honestly where to stop.",
       "released": "2026-06-25",
       "version_doi": "10.5281/zenodo.20856502",
