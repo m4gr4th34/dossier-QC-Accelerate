@@ -19,6 +19,14 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
   (single record door to `chapters/<tag>/index.html`); the template's two-door version routes its
   primary "Read (current edition)" link through `live/<tag>/`, which depends on the deferred #5 —
   so #6 is adopted EXCEPT that door, by the same design as #5.
+- ✅ **Migrations #3 + #4 — absorbed into #1 (no-ops).** Both introduced the source/skin
+  single-source partition upstream, which we adopted wholesale in migration #1. #3 (avenues
+  single-source): `bake_machinery.js` is byte-identical to template and bakes our 4 avenue
+  cards + console verdict from `avenues.json`; gated by `verify_projection`. #4 (cite data
+  split): cite DATA lives in the source's `<!--slot:cites-->` JSON (11 entries), cite MACHINERY
+  (popcards, term/cite handlers) in the skin — the clean split #4 specifies. No separate work.
+  (The "seal `avenues.json` into `chapters/<tag>/`" half of #3's upstream commits belongs to the
+  freeze/back-catalog process = deferred #5, not the live front-door single-sourcing.)
 
 ## ⛔ Deferred — permanent unless a chapter is re-sealed new-model
 - **Migration #5 — back-catalog lifecycle (`live/<tag>/`)**
@@ -41,8 +49,6 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
     living figures in its source, or in the working draft — not a re-skin of v1.0/v2.0.
 
 ## Pending (light migrations — none touch the sealed back-catalog)
-- ⏭️ **#3** — avenues single-source (survey-shaped; applies)
-- ⏭️ **#4** — cite data split (skin vs content)
 - ⏭️ **#8** — EST→FORECAST ledger relabel
 - ⏭️ **`AUTHORING.md`** — hand-merge (236-line three-way; its own focused pass)
 
