@@ -49,7 +49,7 @@
   h1{font-family:var(--serif);font-weight:800;font-size:clamp(27px,4.6vw,44px);line-height:1.12;margin:.4em 0 .25em;letter-spacing:-.014em}
   .byline{font-family:var(--serif);font-style:italic;color:var(--ink2)}
   .cta{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 4px}
-  .btn{font-family:var(--mono);font-size:13.5px;font-weight:600;text-decoration:none;padding:11px 16px;border:1.5px solid var(--ink);color:var(--ink);background:var(--card)}
+  .btn{font-family:var(--mono);font-size:13.5px;font-weight:600;text-decoration:none;padding:11px 16px;border:1.5px solid var(--ink);color:var(--ink);background:var(--card);white-space:nowrap}
   .btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
   .btn:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
   footer{margin-top:44px;padding:22px 0 56px;border-top:3px solid var(--ink);font-size:13.5px;color:var(--ink2)}
@@ -126,7 +126,7 @@
 <div class="wrap">
 
 <main>
-  <p class="intro">The working draft heads the list — the live editions, ahead of the latest sealed release. Sealed chapters follow below, oldest to newest, each a DOI-bearing release.</p>
+  <p class="intro">The timeline reads oldest to newest — Chapter 1 first, each a sealed, DOI-bearing release. The working draft is the living frontier at the foot of the list: the current editions, which become the next chapter when sealed.</p>
   <ol class="lineage" id="lineage"></ol>
 </main>
 
@@ -138,13 +138,14 @@
 </div>
 
 <script>
-// Renders lineage.json into the chapter list, newest-first: a synthetic
-// WORKING-DRAFT head entry (the live, unreleased tip — never stored in
-// lineage.json) sits above the sealed chapters, built with createElement/
-// textContent so titles/summaries can never inject markup. The working draft
-// ALWAYS shows (a brand-new dossier IS a working draft); a load failure still
-// shows it and appends a small note. No sealed chapter is marked "current" —
-// the working draft is the current, in-progress thing now.
+// Renders lineage.json into the chapter list, oldest to newest: the sealed
+// chapters come first (Chapter 1 at the top), then a synthetic WORKING-DRAFT
+// frontier entry (the live, unreleased tip — never stored in lineage.json)
+// sits at the FOOT, built with createElement/textContent so titles/summaries
+// can never inject markup. The working draft ALWAYS shows (a brand-new dossier
+// IS a working draft); a load failure still shows it and appends a small note.
+// No sealed chapter is marked "current" — the working-draft frontier is the
+// current, in-progress thing now.
 (function(){
   var ol = document.getElementById('lineage');
 
@@ -163,20 +164,16 @@
 
     var sum = document.createElement('p');
     sum.className = 'ch-summary';
-    sum.textContent = 'The next chapter, in progress — the live editions, ahead of the latest sealed release. No chapter number or DOI is claimed until it is sealed.';
+    sum.textContent = 'The living frontier — the current editions, ahead of the latest sealed release. Becomes the next chapter, with its own number and DOI, when sealed.';
     li.appendChild(sum);
 
     var meta = document.createElement('div');
     meta.className = 'ch-meta';
     var read = document.createElement('a');
     read.className = 'ch-read';
-    read.href = 'index.html';            // live self-explaining edition
+    read.href = 'index.html';            // live front door (self-explaining edition)
     read.textContent = 'Read the working draft →';
-    meta.appendChild(read);
-    var land = document.createElement('a');
-    land.href = 'index.html';            // live landscape
-    land.textContent = 'The landscape →';
-    meta.appendChild(land);
+    meta.appendChild(read);              // one read door — the landscape is now part of the front door
     li.appendChild(meta);
     return li;
   }
@@ -255,8 +252,8 @@
   }
 
   function render(chs){
-    ol.appendChild(draftHead());                 // working draft is ALWAYS the head
-    chs.forEach(function(c){ ol.appendChild(sealed(c)); });
+    chs.forEach(function(c){ ol.appendChild(sealed(c)); });  // sealed chapters oldest-first (Ch1..ChN); CSS counter numbers them top-down
+    ol.appendChild(draftHead());                             // the living frontier — ALWAYS at the foot, no number
   }
 
   fetch('lineage.json').then(function(r){ return r.json(); }).then(function(d){
