@@ -41,7 +41,7 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
 - ⏭️ **`AUTHORING.md`** — hand-merge (236-line three-way; its own focused pass)
 
 ## Known follow-ups (non-blocking)
-- **Standalone editions drift on skin changes.** `dossier.html` and `verify.html` are NOT
+- **Standalone editions drift on skin changes.** `dossier.html`, `verify.html`, and `lineage.html` are NOT
   skin-rendered (no render script touches them), so their chrome (nav, footer) does not update
   when `skin/edition.html` changes. This caused a nav-version drift after migrations #1+#2 (the
   front door moved to the 4-button nav; these two stayed on the old 5-button nav until manually
@@ -50,7 +50,8 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
   any skin nav/footer change must be hand-mirrored into these two files.
 - **Literal-escape mangle hazard in standalone files.** `dossier.html`'s footer carried a literal
   6-char `\u2190` string (rendered as visible text, not a `←` arrow) — a pre-existing escape
-  mangle, fixed in `debcc85`. Other standalone/hand-authored files may carry similar literal
+  mangle, fixed in `debcc85`; a further cluster of five literal `\u2192` escapes in
+  dossier.html's HTML content was found and fixed later (always byte-scan the WHOLE file). Other standalone/hand-authored files may carry similar literal
   `\uXXXX` escapes or PUA characters; worth a byte-scan when next editing them. When editing
   literal-vs-rendered characters, express both via escapes in code, never paste the glyph.
 
