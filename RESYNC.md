@@ -67,6 +67,24 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
   assert has landed clean; every regex-bounded multi-line replace has misfired or nearly did. Use
   literal anchors + count asserts + a parse check for any code edit.
 
+## Sealed-chapter nav audit (recorded so it isn't re-litigated)
+- **Live-tracking nav is AS-DESIGNED — do NOT "fix" it.** `freeze_chapter.py`'s `rewire()` deliberately
+  repoints a sealed chapter's cross-edition/lineage nav to the live root (`../../index.html`,
+  `../../dossier.html`, etc.) so an old chapter is not a navigational dead-end — its buttons return
+  the reader to the CURRENT live series, not to its frozen siblings. So from `chapters/v1.0/`, the
+  "easy-read/self-explaining" button correctly goes to the live front door (via the `paper.html`
+  redirect stub). The button LABELS are historical ("The landscape", "Self-explaining edition" =
+  what the live editions were called at seal time) — that is the "as-published, don't retro-theme"
+  doctrine working, not a bug. Relabeling them would fight the live-tracking design AND retro-theme
+  the record. Leave them.
+- **Known unfixed: `chapters/<tag>/paper.html` PDF button 404s.** `rewire()` covers `.html` nav +
+  `<img>`/`<script>` srcs but missed `<a href>` PDF paths, so `paper.html`'s `paper/manuscript.pdf`
+  stayed bare (404) while `index.html`'s got `../../` (resolves). Deliberately UNFIXED: editing the
+  frozen `chapters/<tag>/` dirs diverges the served copy from the Zenodo deposit, and the PDF button
+  is deprecated chrome retired from live editions (commit 1B), slated for Phase-3 removal — not worth
+  it for a dead button. Root-cause fix (if ever): extend the template's `rewire()` to cover `<a href>`
+  PDFs so FUTURE freezes don't repeat it — upstream machinery, no seal touch.
+
 ## Final step
 - ⏭️ Stamp `template-sync.json` → `5c0e94c` **after** the pending items land.
   This stamp means "synced through `5c0e94c` **except migration #5, by permanent design**."
