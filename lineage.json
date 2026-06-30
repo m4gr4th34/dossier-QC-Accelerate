@@ -8,7 +8,8 @@
       "released": "2026-06-25",
       "version_doi": "10.5281/zenodo.20838233",
       "concept_doi": "10.5281/zenodo.20838232",
-      "path": "chapters/v1.0/"
+      "path": "chapters/v1.0/",
+      "read": "paper.html"
     },
     {
       "n": 2,
@@ -18,7 +19,8 @@
       "released": "2026-06-25",
       "version_doi": "10.5281/zenodo.20856502",
       "concept_doi": "10.5281/zenodo.20838232",
-      "path": "chapters/v2.0/"
+      "path": "chapters/v2.0/",
+      "read": "paper.html"
     }
   ]
 }

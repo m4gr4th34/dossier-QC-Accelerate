@@ -156,18 +156,15 @@ chrome: index
       cdoiEl.textContent = 'DOI (all versions): ' + cdoi + ' ↗';
       meta.appendChild(cdoiEl);
     }
-    // TWO doors per chapter: the PRIMARY read door is the current-skin re-skin (live/<tag>/),
-    // the RECORD door is the frozen, DOI'd bytes (chapters/<tag>/, via c.path) the DOI cites.
+    // ONE record door per chapter: the frozen, DOI'd bytes the DOI cites (chapters/<tag>/, via c.path).
+    // The live/<tag>/ re-skin is not used here (#5 deferred) — read the record directly. The paper
+    // file differs by chapter model: legacy chapters keep the self-explaining edition at paper.html;
+    // new-model chapters have it at index.html. Per-entry override c.read; defaults to index.html.
     var read = document.createElement('a');
     read.className = 'ch-read';
-    read.href = 'live/' + (c.tag || '') + '/index.html';   // current-skin reading view
-    read.textContent = 'Read (current edition) →';
+    read.href = (c.path || '') + (c.read || 'index.html');
+    read.textContent = 'Read this chapter →';
     meta.appendChild(read);
-    var record = document.createElement('a');
-    record.href = (c.path || '') + 'index.html';           // the immutable record — the DOI'd bytes
-    record.target = '_blank'; record.rel = 'noopener';
-    record.textContent = 'Version of record ↗';
-    meta.appendChild(record);
 
     li.appendChild(meta);
     return li;
