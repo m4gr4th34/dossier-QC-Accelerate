@@ -27,18 +27,20 @@ This script reads no numbers and is independent of verify_numbers.py.
 """
 import json
 import os
+import re
 import sys
 
 # Fill-in sentinels that must not survive into a released publication surface.
 SENTINELS = [
-    "DESCRIBE YOUR USE",
     "PLACEHOLDER",
     "TODO-AFTER-FIRST-RELEASE",
     "YOURUSER",
     "YOURREPO",
-    "YOUR NAME",
     "NNN",
 ]
+
+# The uniform @@...@@ content fill-in convention (editions + config), matched by regex.
+PLACEHOLDER_RE = re.compile(r"@@[A-Z0-9 _-]+@@")
 
 # Author-facing publication surfaces (what a reader/citer actually sees).
 SURFACES = [
@@ -68,9 +70,9 @@ def _looks_like_sentinel(value):
     return any(s in v for s in SENTINELS)
 
 
-def _load_provenance():
+def _load_provenance(prov_path=PROVENANCE):
     try:
-        with open(PROVENANCE, encoding="utf-8", errors="replace") as fh:
+        with open(prov_path, encoding="utf-8", errors="replace") as fh:
             return json.load(fh)
     except (FileNotFoundError, ValueError):
         return {}
@@ -87,31 +89,31 @@ def _has_real_concept_doi(prov):
     return not _looks_like_sentinel(prov.get("concept_doi", ""))
 
 
-def _banner_absent():
+def _banner_absent(readme="README.md"):
     try:
-        with open("README.md", encoding="utf-8", errors="replace") as fh:
+        with open(readme, encoding="utf-8", errors="replace") as fh:
             return DRAFT_BANNER_MARKER not in fh.read().lower()
     except FileNotFoundError:
         # No README at all -> be strict (treat as released).
         return True
 
 
-def is_released():
+def is_released(prov_path=PROVENANCE, readme="README.md"):
     """Multi-signal release gate keyed primarily off provenance.json."""
-    prov = _load_provenance()
+    prov = _load_provenance(prov_path)
     signals = []
     if _has_real_tag(prov):
         signals.append("provenance.release_tag is set")
     if _has_real_concept_doi(prov):
         signals.append("provenance.concept_doi is a real DOI")
-    if _banner_absent():
+    if _banner_absent(readme):
         signals.append("README draft-preview banner is gone")
     return (len(signals) > 0), signals
 
 
-def scan():
+def scan(surfaces=SURFACES):
     hits = []
-    for path in SURFACES:
+    for path in surfaces:
         if not os.path.exists(path):
             continue
         with open(path, encoding="utf-8", errors="replace") as fh:
@@ -119,12 +121,14 @@ def scan():
                 for sentinel in SENTINELS:
                     if sentinel in line:
                         hits.append((path, lineno, sentinel, line.strip()))
+                for m in PLACEHOLDER_RE.finditer(line):
+                    hits.append((path, lineno, m.group(0), line.strip()))
     return hits
 
 
-def main():
-    hits = scan()
-    released, signals = is_released()
+def main(prov_path=PROVENANCE, readme="README.md", surfaces=SURFACES):
+    hits = scan(surfaces)
+    released, signals = is_released(prov_path, readme)
 
     if not hits:
         print("check_placeholders: no fill-in sentinels in publication surfaces. OK.")
