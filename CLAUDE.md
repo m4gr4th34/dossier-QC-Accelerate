@@ -160,11 +160,12 @@ verification script, and its claim ledger all live here.
 - NEVER modify anything in timestamps/ — those are cryptographic proofs.
 - File map:
   - index.html        — GENERATED front door (self-explaining edition + survey landscape); render of editions/index.source.html over skin/edition.html. Never hand-edit (CI gate verify_edition). Run `npm run render-edition`.
-  - editions/         — authored source for the front door (index.source.html); edit THIS, not index.html
+  - editions/         — skin-free content sources, one per edition: index/dossier/verify/lineage.source.html (frontmatter + slot:body/cites/foot, optional slot:head_extra). Edit THESE, never the rendered *.html; run `npm run render-edition`
   - skin/             — reskinnable chrome the editions render through (edition.html)
   - index.md / llms.txt — markdown projection of the front door + LLM discovery index (generated; gates verify_markdown / verify_projection)
   - paper.html        — redirect stub to index.html (self-explaining edition is now the front door)
-  - dossier.html      — audit trail (red team, citation audit)
+  - dossier.html      — audit trail (red team, citation audit); GENERATED from editions/dossier.source.html + skin (CI gate verify_edition). Never hand-edit.
+  - verify.html / lineage.html — independent-verification + chapter-index editions; GENERATED from editions/{verify,lineage}.source.html + skin (CI gate verify_edition). Never hand-edit.
   - paper/            — optional LaTeX manuscript scaffold (on-demand legacy export; not shipped)
   - verification/     — verify script, audits, red-team report, format spec
   - figures/          — vendored living-figures runtime (interactive SVG via data-figure)

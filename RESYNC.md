@@ -1,8 +1,11 @@
-# Template resync status — `ab458cb` → `5c0e94c` — **CLOSED**
+# Template resync status — `5c0e94c` → `faa7ecf` — **CLOSED**
 
-> Pin stamped to `5c0e94c`. "Synced through 5c0e94c" with two DELIBERATE, documented exclusions:
-> **#5** (back-catalog `live/`/reskin — `reskin-backcatalog.yml` absent by design, legacy chapters can't feed it) and
-> **render_math.js/katex** (skipped — no LaTeX rendering here). A drift audit seeing these absent should read this log, not treat them as unfinished.
+> Pin stamped to `faa7ecf`. "Synced through faa7ecf" with DELIBERATE, documented exclusions:
+> **#5** (back-catalog `live/`/reskin — `reskin-backcatalog.yml` absent by design, legacy chapters can't feed it),
+> the **freeze/back-catalog machinery upgrade** (held at project-current — same legacy-chapter blocker, see Deferred),
+> **render_math.js/katex** (skipped — no LaTeX), and **AUTHORING.md** (deliberate no-LaTeX trim kept).
+> This arc adopted the **trinity** — dossier/verify/lineage are now single-source/skin-rendered, closing the
+> standalone-editions follow-up. A drift audit seeing the exclusions absent should read this log, not treat them as unfinished.
 
 Single source of truth for where this dossier stands against the template lineage.
 **Read this before any template sync** — it records which upstream migrations were
@@ -35,6 +38,13 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
   folded, generated/never-hand-edit + projection-clean-Unicode guidance added, doctrine specs
   carried byte-identical) · `336a130`
 
+- ✅ **Trinity — dossier/verify/lineage under the shared source-render skin** (`5c0e94c`→`faa7ecf` arc).
+  `dossier.html`/`verify.html`/`lineage.html` are now GENERATED from `editions/{dossier,verify,lineage}.source.html`
+  over `skin/edition.html` (manifest-driven `render_edition.js`; `verify_edition` round-trips all four). Audit body +
+  front-door prose lifted byte-identical (6908→6908 / 20753→20753); all upstream skin/verify fill-ins re-applied
+  (repo URL, title, description, the survey avenue comment — the last would have tripped the Pass-1 placeholder gate
+  if copied raw). CLOSES the "standalone editions drift" follow-up below · `97860c1`
+
 ## ⛔ Deferred — permanent unless a chapter is re-sealed new-model
 - **Migration #5 — back-catalog lifecycle (`live/<tag>/`)**
   - **Reason:** `render_backcatalog.js` re-skins each chapter from its OWN sealed source,
@@ -55,11 +65,26 @@ wholesale rewrite of `template-sync.json` (which stays a clean 3-field machine p
     content verbatim and cannot inject new figures). It belongs in a future chapter authored with
     living figures in its source, or in the working draft — not a re-skin of v1.0/v2.0.
 
+- **Freeze / back-catalog machinery upgrade — deferred (same legacy-chapter blocker as #5).**
+  The `5c0e94c`→`faa7ecf` delta upgrades `freeze-chapter.yml`, `freeze_chapter.py`, `render_backcatalog.js`,
+  `verify_backcatalog.js` to the three-edition model and ships `reskin-backcatalog.yml`. All held at project-current;
+  `reskin-backcatalog.yml` stays absent. **Reason:** the new reskin/freeze path runs `render_backcatalog` over every
+  lineage chapter, which EXITS 1 on `v1.0`/`v2.0` (no sealed edition sources — the #5 root cause); adopting it would
+  red-CI on push and break the next freeze.
+  - **⚠️ Forward block — do NOT freeze v3 until two template-room fixes land upstream and resync down:**
+    (a) `render_backcatalog` must tolerate/skip legacy chapters lacking sealed edition sources; (b) the freeze must
+    seal ALL FOUR edition sources, not index alone, so v3 becomes a proper single-source chapter. With the current
+    machinery a v3 freeze would seal an incomplete chapter and/or fail on the legacy back-catalog.
+- **AUTHORING.md wholesale port — deferred (deliberate no-LaTeX trim).** Project `AUTHORING.md` (318L) is a deliberate
+  trim of the template's (502L), dropping LaTeX/math authoring guidance the project doesn't use (consistent with the
+  render_math/katex exclusion). The one relevant upstream change (generated-files discipline generalized to three
+  editions) is a future surgical merge, not a wholesale overwrite.
+
 ## Pending (light migrations — none touch the sealed back-catalog)
 - 🚫 **#8 — EST→FORECAST ledger relabel: N/A.** Our claim_ledger.csv has zero EST rows (authored on the current claim-type vocabulary from the start); the relabel targets an old shorthand we never used, and the ledger isn't vocabulary-gated. No work.
 
 ## Known follow-ups (non-blocking)
-- **Standalone editions drift on skin changes.** `dossier.html`, `verify.html`, and `lineage.html` are NOT
+- ✅ **RESOLVED (trinity adoption, `97860c1`) — Standalone editions drift on skin changes.** `dossier.html`, `verify.html`, and `lineage.html` are NOT
   skin-rendered (no render script touches them), so their chrome (nav, footer) does not update
   when `skin/edition.html` changes. This caused a nav-version drift after migrations #1+#2 (the
   front door moved to the 4-button nav; these two stayed on the old 5-button nav until manually
